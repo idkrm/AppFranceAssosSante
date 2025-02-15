@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <size android:width="60dp" android:height="10dp"/>
+    <solid android:color="@color/turquoise_logo"/> <!-- Couleur rouge -->
+    <corners android:radius="20dp"/> <!-- Arrondir un peu les coins -->
+</shape>
