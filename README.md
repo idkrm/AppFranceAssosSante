@@ -8,4 +8,9 @@ Membres du groupe :
 - XU Irène 202
 - WU Mei-ling 202
 
-Architecture : application mobile native (android)
+Architecture : application mobile native (Android)\
+\
+Technologies utilisées :
+- Front-end : Kotlin/XML
+- Back-end : Node.js, MongoDB
+- API Rest
