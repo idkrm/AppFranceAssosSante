@@ -11,7 +11,10 @@
     <color name="orange_logo">#EA5F44</color>
     <color name="turquoise_logo">#0DACB6</color>
     <color name="bleu_logo">#3C3786</color>
+
     <color name="violet_splash">#A6A3C8</color>
     <color name="orange_splash">#F5BEB3</color>
     <color name="turquoise_splash">#9DDDE1</color>
+
+    <color name="fond_bleu">#E7F5F6</color>
 </resources>
