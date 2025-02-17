@@ -29,14 +29,15 @@
         <!-- spinner choix assos -->
         <Spinner
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"/>
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/spinner_style"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ou"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:gravity="center"
