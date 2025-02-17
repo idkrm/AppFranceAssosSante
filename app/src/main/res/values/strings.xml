@@ -13,4 +13,13 @@
     <string name="accueil_part5">Vous ne savez pas à quelle association donner ? 🤔</string>
     <string name="accueil_part6">Découvrez les différentes associations et trouvez celle qui vous tient à cœur. 💙</string>
     <string name="accueil_part7">Découvrir les associations</string>
+
+    <string name="choisir_assos">Choisir une association</string>
+    <string name="ou">OU</string>
+    <string name="toute_assos">👉  Découvrir toutes les associations</string>
+    <string name="suivant">Suivant</string>
+
+    <string name="mail">Adresse mail</string>
+    <string name="mdp">Mot de passe</string>
+    <string name="se_connecter">Se connecter</string>
 </resources>
