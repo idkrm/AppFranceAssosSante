@@ -22,4 +22,16 @@
     <string name="mail">Adresse mail</string>
     <string name="mdp">Mot de passe</string>
     <string name="se_connecter">Se connecter</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="choisir_un_montant">Choisir un montant</string>
+    <string name="retour">Retour</string>
+    <string name="type_don">Type de don</string>
+    <string name="don_unique">Don unique</string>
+    <string name="don_recurrent">Don réccurent</string>
+    <string name="mensuel">Mensuel</string>
+    <string name="annuel">Annuel</string>
+    <string name="carte_bancaire">Carte bancaire - </string>
+    <string name="paypal">Paypal - </string>
+    <string name="googlepay">GooglePay -</string>
 </resources>
