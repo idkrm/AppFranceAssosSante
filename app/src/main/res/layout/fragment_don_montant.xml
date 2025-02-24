@@ -37,8 +37,7 @@
             android:id="@+id/minus_plus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
             <Button
                 android:id="@+id/buttonMinus"
                 android:layout_width="wrap_content"
@@ -60,22 +59,31 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <Button
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/suivant"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
-        android:textColor="@color/black"
-        android:background="@drawable/btn_suivant"
-        android:layout_marginTop="10dp"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/retour"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
-        android:textColor="@color/black"
-        android:background="@drawable/btn_retour"
-        android:layout_marginTop="10dp"/>
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/suivant"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/suivant"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:textColor="@color/black"
+            android:background="@drawable/btn_suivant"
+            android:layout_marginTop="10dp"/>
+        <Button
+            android:id="@+id/retour"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/retour"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:textColor="@color/black"
+            android:background="@drawable/btn_retour"
+            android:layout_marginTop="15dp"/>
+    </LinearLayout>
 </LinearLayout>

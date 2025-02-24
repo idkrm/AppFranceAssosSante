@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AccueilFragment : Fragment() {
     override fun onCreateView(
@@ -16,7 +17,16 @@ class AccueilFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_accueil, container, false)
 
         val btn_don = view.findViewById<Button>(R.id.btn_don)
+        btn_don.setOnClickListener {
+            val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)
+            bottomNav?.selectedItemId = R.id.navigation_don // selectionne "don" dans le menu
+        }
+
         val btn_assos = view.findViewById<Button>(R.id.btn_assos)
+        btn_assos.setOnClickListener {
+            val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)
+            bottomNav?.selectedItemId = R.id.navigation_assoc // selectionne "assos"
+        }
 
         return view
     }

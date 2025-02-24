@@ -6,6 +6,8 @@
     <string name="profil">Profil</string>
     <string name="accessibilite">Accessibilité</string>
     <string name="faire_un_don">Faire un don</string>
+
+    <!-- accueil -->
     <string name="accueil_part1">📢 Soutenez les associations ! 💙</string>
     <string name="accueil_part2">Votre don est essentiel pour défendre les droits des patients et améliorer notre système de santé.\nGrâce à vous, nous pouvons informer, accompagner et faire entendre la voix de tous face aux enjeux de santé publique.</string>
     <string name="accueil_part3">🙏 Chaque contribution compte !</string>
@@ -14,24 +16,30 @@
     <string name="accueil_part6">Découvrez les différentes associations et trouvez celle qui vous tient à cœur. 💙</string>
     <string name="accueil_part7">Découvrir les associations</string>
 
+    <!-- don -->
     <string name="choisir_assos">Choisir une association</string>
     <string name="ou">OU</string>
-    <string name="toute_assos">👉  Découvrir toutes les associations</string>
-    <string name="suivant">Suivant</string>
-
-    <string name="mail">Adresse mail</string>
-    <string name="mdp">Mot de passe</string>
-    <string name="se_connecter">Se connecter</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="toute_assos">👉  <u>Découvrir toutes les associations</u></string>
     <string name="choisir_un_montant">Choisir un montant</string>
-    <string name="retour">Retour</string>
     <string name="type_don">Type de don</string>
     <string name="don_unique">Don unique</string>
     <string name="don_recurrent">Don réccurent</string>
     <string name="mensuel">Mensuel</string>
     <string name="annuel">Annuel</string>
-    <string name="carte_bancaire">Carte bancaire - </string>
+    <string name="carte_bancaire">Carte bancaire  - </string>
     <string name="paypal">Paypal - </string>
-    <string name="googlepay">GooglePay -</string>
+    <string name="googlepay">GooglePay  -</string>
+
+    <!-- btn -->
+    <string name="retour">Retour</string>
+    <string name="suivant">Suivant</string>
+    <string name="sinscrire"><u>S\'inscrire</u></string>
+
+    <!-- connexion/inscription -->
+    <string name="mail">Adresse mail</string>
+    <string name="mdp">Mot de passe</string>
+    <string name="se_connecter">Se connecter</string>
+    <string name="pas_encore_inscrit">Pas encore inscrit ?</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

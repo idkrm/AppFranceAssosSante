@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_accueil -> AccueilFragment()
                 R.id.navigation_assoc -> AssosFragment()
                 R.id.navigation_don -> DonFragment()
-                R.id.navigation_profil -> ProfilFragment()
+                R.id.navigation_profil -> SeConnecterFragment()
                 else -> AccueilFragment()
             }
 

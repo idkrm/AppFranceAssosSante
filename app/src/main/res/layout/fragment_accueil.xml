@@ -20,13 +20,11 @@
             android:text="@string/accueil_part1"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="18sp"
             android:layout_marginBottom="10dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/accueil_part2"
-            android:textSize="18sp"
             android:textColor="@color/black"
             android:layout_marginBottom="20dp"/>
         <TextView
@@ -35,14 +33,12 @@
             android:text="@string/accueil_part3"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="18sp"
             android:layout_marginBottom="10dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/accueil_part4"
-            android:textColor="@color/black"
-            android:textSize="18sp"/>
+            android:textColor="@color/black"/>
 
         <Button
             android:id="@+id/btn_don"
@@ -71,14 +67,12 @@
             android:layout_height="wrap_content"
             android:text="@string/accueil_part5"
             android:textStyle="bold"
-            android:textSize="18sp"
             android:layout_marginBottom="10dp"
             android:textColor="@color/black"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/accueil_part6"
-            android:textSize="18sp"
             android:textColor="@color/black"/>
 
         <Button
