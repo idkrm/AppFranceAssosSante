@@ -32,19 +32,19 @@ class MainActivity : AppCompatActivity() {
 
             when (item.itemId) { // la page accueil met le fond du header en bleu, le reste en blanc
                 R.id.navigation_accueil -> {
-                    nomPage.text = "France Assos Santé"
+                    nomPage.text = getString(R.string.app_name)
                     headerColor.setBackgroundColor(ContextCompat.getColor(this, R.color.fond_bleu))
                 }
                 R.id.navigation_assoc -> {
-                    nomPage.text = "Les associations"
+                    nomPage.text = getString(R.string.assoc)
                     headerColor.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
                 }
                 R.id.navigation_don -> {
-                    nomPage.text = "Faire un don"
+                    nomPage.text = getString(R.string.faire_un_don)
                     headerColor.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
                 }
                 R.id.navigation_profil -> {
-                    nomPage.text = "Se connecter"
+                    nomPage.text = getString(R.string.profil)
                     headerColor.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
                 }
             }

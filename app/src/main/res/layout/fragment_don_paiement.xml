@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mode de paiement"
+            android:text="@string/mode_de_paiement"
             android:textSize="25sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -36,11 +36,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp">
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center">
                     <RadioButton
-                        android:id="@+id/btn_rd_cb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/carte_bancaire"/>
@@ -48,28 +50,29 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/cb"
-                        android:layout_toRightOf="@id/btn_rd_cb"
                         android:layout_marginStart="10dp"/>
-                </RelativeLayout>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp">
                     <RadioButton
                         android:id="@+id/btn_rd_paypal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/paypal" />
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="70dp"
+                        android:layout_height="30dp"
                         android:src="@drawable/paypal" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp">
                     <RadioButton
                         android:id="@+id/btn_rd_Gpay"
                         android:layout_width="wrap_content"
@@ -80,6 +83,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/gpay"
+                        android:layout_marginStart="10dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp">
+                    <RadioButton
+                        android:id="@+id/btn_rd_Apay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/apple_pay"
+                        android:gravity="center"/>
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/apay"
                         android:layout_marginStart="10dp"/>
                 </LinearLayout>
 
@@ -99,7 +120,7 @@
             android:id="@+id/payer"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Payer"
+            android:text="@string/payer"
             android:paddingStart="30dp"
             android:paddingEnd="30dp"
             android:textColor="@color/black"
