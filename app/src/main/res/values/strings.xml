@@ -41,5 +41,17 @@
     <string name="se_connecter">Se connecter</string>
     <string name="pas_encore_inscrit">Pas encore inscrit ?</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- accessibilite -->
+    <string name="lecture">Lecture à voix haute</string>
+    <string name="taille">Taille du texte</string>
+    <string name="daltonisme">Daltonisme</string>
+    <string name="deuteranopie">Deutéranopie (vert)</string>
+    <string name="protanopie">Protanopie (rouge)</string>
+    <string name="tritanopie">Tritanopie (bleu)</string>
+
+    <!-- langue -->
+    <string name="langages">Langages</string>
+    <string name="fr">Français (Défaut)</string>
+    <string name="en">Anglais</string>
+    <string name="cn">Mandarin</string>
 </resources>
