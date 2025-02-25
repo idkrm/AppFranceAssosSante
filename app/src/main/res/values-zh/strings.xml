@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">"法国健康协会"</string>
+    <string name="accueil">首页</string>
+    <string name="don">捐赠</string>
+    <string name="assoc">协会</string>
+    <string name="profil">个人资料</string>
+    <string name="accessibilite">无障碍</string>
+    <string name="faire_un_don">进行捐赠</string>
+
+    <!-- accueil -->
+    <string name="accueil_part1">📢 支持协会！💙</string>
+    <string name="accueil_part2">您的捐赠对于维护患者权益和改善我们的医疗体系至关重要。</string>
+    <string name="accueil_part3">🙏 每一份贡献都很重要！</string>
+    <string name="accueil_part4">让我们共同努力，为所有人创造一个更公平、更可及的医疗环境。</string>
+    <string name="accueil_part5">不知道该向哪个协会捐赠？🤔</string>
+    <string name="accueil_part6">探索不同的协会，找到您最关心的那个。💙</string>
+    <string name="accueil_part7">发现协会</string>
+
+    <!-- don -->
+    <string name="choisir_assos">选择一个协会</string>
+    <string name="ou">或</string>
+    <string name="toute_assos">👉  <u>查看所有协会</u></string>
+    <string name="choisir_un_montant">选择金额</string>
+    <string name="type_don">捐赠类型</string>
+    <string name="don_unique">一次性捐赠</string>
+    <string name="don_recurrent">定期捐赠</string>
+    <string name="mensuel">每月</string>
+    <string name="annuel">每年</string>
+    <string name="carte_bancaire">银行卡 - </string>
+    <string name="paypal">Paypal - </string>
+    <string name="googlepay">GooglePay - </string>
+    <string name="apple_pay">Apple Pay - </string>
+    <string name="mode_de_paiement">支付方式</string>
+    <string name="payer">支付</string>
+
+    <!-- btn -->
+    <string name="retour">返回</string>
+    <string name="suivant">下一步</string>
+    <string name="sinscrire"><u>注册</u></string>
+
+    <!-- connexion/inscription -->
+    <string name="mail">电子邮件地址</string>
+    <string name="mdp">密码</string>
+    <string name="se_connecter">登录</string>
+    <string name="pas_encore_inscrit">还没有注册？</string>
+
+    <!-- accessibilite -->
+    <string name="lecture">语音朗读</string>
+    <string name="taille">文字大小</string>
+    <string name="daltonisme">色盲模式</string>
+    <string name="deuteranopie">绿色盲（去绿）</string>
+    <string name="protanopie">红色盲（去红）</string>
+    <string name="tritanopie">蓝色盲（去蓝）</string>
+
+    <!-- langue -->
+    <string name="langages">语言</string>
+    <string name="fr">法语（默认）</string>
+    <string name="en">英语</string>
+    <string name="cn">普通话</string>
+</resources>

@@ -1,6 +1,7 @@
 package com.example.appfranceassossante
 
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +17,11 @@ class MainActivity : AppCompatActivity() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
         loadFragment(AccueilFragment()) // par defaut c'est le fragment de l'accueil
 
-        // permet de naviguer entre les fragments
+        // pour ajuster la couleur de fond du header et le titre de la page
+        val nomPage = findViewById<TextView>(R.id.page)
+        val headerColor = findViewById<RelativeLayout>(R.id.header)
+
+        // permet de naviguer entre les fragments depuis la barre de nav
         bottomNav.setOnItemSelectedListener { item ->
             val fragment: Fragment = when (item.itemId) {
                 R.id.navigation_accueil -> AccueilFragment()
@@ -25,10 +30,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_profil -> SeConnecterFragment()
                 else -> AccueilFragment()
             }
-
-            // ajuste la couleur de fond du header
-            val nomPage = findViewById<TextView>(R.id.page)
-            val headerColor = findViewById<RelativeLayout>(R.id.header)
 
             when (item.itemId) { // la page accueil met le fond du header en bleu, le reste en blanc
                 R.id.navigation_accueil -> {
@@ -51,6 +52,13 @@ class MainActivity : AppCompatActivity() {
 
             loadFragment(fragment)
             true
+        }
+
+        val access = findViewById<ImageView>(R.id.img_handicap)
+        access.setOnClickListener{
+            nomPage.text = getString(R.string.accessibilite)
+            headerColor.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            loadFragment(AccessibiliteFragment())
         }
     }
 
