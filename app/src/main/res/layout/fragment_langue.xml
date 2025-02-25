@@ -25,26 +25,28 @@
             android:layout_gravity="start"/>
 
         <RadioGroup
+            android:id="@+id/langue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <RadioButton
-                android:id="@+id/radio_protanopie"
+                android:id="@+id/fr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:checked="true"
                 android:text="@string/fr"/>
 
             <RadioButton
-                android:id="@+id/radio_deuteranopie"
+                android:id="@+id/en"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="@string/en"/>
 
             <RadioButton
-                android:id="@+id/radio_tritanopie"
+                android:id="@+id/zh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"

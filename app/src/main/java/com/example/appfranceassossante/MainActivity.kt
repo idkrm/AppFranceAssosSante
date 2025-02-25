@@ -1,5 +1,7 @@
 package com.example.appfranceassossante
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -8,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,4 +70,24 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragment_container, fragment)
             .commit()
     }
+
+    //applique la langue
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(updateBaseContextLocale(newBase))
+    }
+
+    //recupere la langue et l'applique a l'app
+    private fun updateBaseContextLocale(context: Context): Context {
+        val sharedPreferences= context.getSharedPreferences("Settings", Context.MODE_PRIVATE)
+        val language = sharedPreferences.getString("My_Lang", "fr") ?: "fr"
+
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+
+        val config = context.resources.configuration
+        config.setLocale(locale)
+
+        return context.createConfigurationContext(config)
+    }
+
 }
