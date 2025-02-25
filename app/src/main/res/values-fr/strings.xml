@@ -58,4 +58,21 @@
     <string name="fr">Français (Défaut)</string>
     <string name="en">Anglais</string>
     <string name="cn">Mandarin</string>
+
+    <!-- profil -->
+    <string name="info">Mes informations</string>
+    <string name="civilite">Civilité : </string>
+    <string name="nom">Nom : </string>
+    <string name="prenom">Prénom : </string>
+    <string name="mail2">Adresse mail : </string>
+    <string name="mesdon">Mes dons</string>
+    <string name="mesdonhisto">Voir l\'historique de mes dons</string>
+    <string name="paramapp">Paramètre de l\'appli</string>
+    <string name="changelangue">Changer de langue</string>
+    <string name="plusinfo">Plus d\'informations</string>
+    <string name="mention">Mentions légales</string>
+    <string name="politique">Politique de confidentialité</string>
+    <string name="condition">Conditions de service</string>
+    <string name="deco">Se déconnecter</string>
+    <string name="suppression">Supprimer mon compte</string>
 </resources>

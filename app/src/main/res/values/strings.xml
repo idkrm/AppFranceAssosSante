@@ -57,4 +57,19 @@
     <string name="fr">French (Default)</string>
     <string name="en">English</string>
     <string name="cn">Mandarin</string>
+    <string name="info">My information</string>
+    <string name="civilite">"Civility : "</string>
+    <string name="nom">"Name : "</string>
+    <string name="mail2">"Email address : "</string>
+    <string name="prenom">First name :</string>
+    <string name="mesdon">My donations</string>
+    <string name="mesdonhisto">See my donation history</string>
+    <string name="paramapp">App settings</string>
+    <string name="changelangue">Change language</string>
+    <string name="plusinfo">More information</string>
+    <string name="mention">Legal notices</string>
+    <string name="politique">Privacy Policy</string>
+    <string name="condition">Condition of service</string>
+    <string name="deco">Log out</string>
+    <string name="suppression">Delete my account</string>
 </resources>
