@@ -2,6 +2,7 @@ package com.example.appfranceassossante
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -89,5 +90,4 @@ class MainActivity : AppCompatActivity() {
 
         return context.createConfigurationContext(config)
     }
-
 }

@@ -1,9 +1,12 @@
 package com.example.appfranceassossante
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.CompoundButton
@@ -19,7 +22,7 @@ class AccessibiliteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        //spinner changement de taille du texte
         val view = inflater.inflate(R.layout.fragment_accessibilite, container, false)
         val spinner = view.findViewById<Spinner>(R.id.spinner_taille)
         val taille = arrayOf(18, 20, 22, 24, 26)
@@ -28,6 +31,7 @@ class AccessibiliteFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
+        //btn daltonisme
         val radioBtn = view.findViewById<RadioGroup>(R.id.group_daltonisme)
         val dalto = view.findViewById<CheckBox>(R.id.checkbox_daltonisme)
 
@@ -48,6 +52,4 @@ class AccessibiliteFragment : Fragment() {
         // Inflate the layout for this fragment
         return view
     }
-
-
 }
