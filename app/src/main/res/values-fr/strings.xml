@@ -75,4 +75,12 @@
     <string name="condition">Conditions de service</string>
     <string name="deco">Se déconnecter</string>
     <string name="suppression">Supprimer mon compte</string>
+    <string name="dejainscrit">"Déjà inscrit ? "</string>
+    <string name="connection">Connecte toi !</string>
+    <string name="champs">Les champs marqués d’un * sont obligatoires</string>
+    <string name="civilite2">Civilité *</string>
+    <string name="madame">Madame</string>
+    <string name="monsieur">Monsieur</string>
+    <string name="sansreponse">Ne souhaite pas répondre</string>
+    <string name="autre">Autre</string>
 </resources>

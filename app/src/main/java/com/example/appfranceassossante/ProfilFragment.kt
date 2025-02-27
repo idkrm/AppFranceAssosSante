@@ -17,7 +17,7 @@ class ProfilFragment : Fragment() {
         val btnlangue = view.findViewById<Button>(R.id.langue)
         btnlangue.setOnClickListener{
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            // remplace le fragment actuel par le fragment qui suit ("DonMontantFragment")
+            // remplace le fragment actuel par le fragment qui suit ("LangueFragment")
             transaction.replace(R.id.fragment_container, LangueFragment())
             transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
             transaction.commit()

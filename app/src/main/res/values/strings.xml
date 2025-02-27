@@ -58,9 +58,9 @@
     <string name="en">English</string>
     <string name="cn">Mandarin</string>
     <string name="info">My information</string>
-    <string name="civilite">"Civility : "</string>
-    <string name="nom">"Name : "</string>
-    <string name="mail2">"Email address : "</string>
+    <string name="civilite">Civility : </string>
+    <string name="nom">Name : </string>
+    <string name="mail2">Email address : </string>
     <string name="prenom">First name :</string>
     <string name="mesdon">My donations</string>
     <string name="mesdonhisto">See my donation history</string>
@@ -72,4 +72,18 @@
     <string name="condition">Condition of service</string>
     <string name="deco">Log out</string>
     <string name="suppression">Delete my account</string>
+
+    <!-- inscription -->
+    <string name="dejainscrit">Already registered ? </string>
+    <string name="connection">Log in !</string>
+    <string name="champs">Fields marked with * are required</string>
+    <string name="civilite2">Civility *</string>
+    <string name="madame">Mrs</string>
+    <string name="monsieur">Mr</string>
+    <string name="sansreponse">Do not wish to respond</string>
+    <string name="autre">Other</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 </resources>

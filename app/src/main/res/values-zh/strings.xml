@@ -73,4 +73,12 @@
     <string name="condition">服务条件</string>
     <string name="deco">断开</string>
     <string name="suppression">删除我的帐户</string>
+    <string name="monsieur">" 先生"</string>
+    <string name="sansreponse">不想回答</string>
+    <string name="autre">其他</string>
+    <string name="champs">标有 * 的字段为必填字段</string>
+    <string name="civilite2">礼貌 :*</string>
+    <string name="dejainscrit">已经注册了 ?</string>
+    <string name="connection">登录 !</string>
+    <string name="madame">女士</string>
 </resources>
