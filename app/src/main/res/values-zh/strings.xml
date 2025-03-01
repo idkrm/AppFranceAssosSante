@@ -73,12 +73,19 @@
     <string name="condition">服务条件</string>
     <string name="deco">断开</string>
     <string name="suppression">删除我的帐户</string>
-    <string name="monsieur">" 先生"</string>
+    <string name="monsieur">先生</string>
     <string name="sansreponse">不想回答</string>
     <string name="autre">其他</string>
     <string name="champs">标有 * 的字段为必填字段</string>
-    <string name="civilite2">礼貌 :*</string>
+    <string name="civilite2">礼貌 *</string>
     <string name="dejainscrit">已经注册了 ?</string>
     <string name="connection">登录 !</string>
     <string name="madame">女士</string>
+    <string name="inscription_nom">姓名 *</string>
+    <string name="inscription_prenom">名字 *</string>
+    <string name="inscription_adrmail">电子邮件 *</string>
+    <string name="inscription_mdp">密码 *</string>
+    <string name="inscription_handicap">残疾 *</string>
+    <string name="inscription_confirmer_adrmail">确认电邮地址 *</string>
+    <string name="inscription_confirmer_mdp">确认密码 *</string>
 </resources>
