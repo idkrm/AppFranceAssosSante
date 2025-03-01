@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".SplashActivity">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="35">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/coinSupG">
+            <View
+                android:layout_width="65dp"
+                android:layout_height="11dp"
+                android:background="@drawable/ligne_turquoise"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="-30dp"
+                android:rotation="-30" />
+            <View
+                android:layout_width="60dp"
+                android:layout_height="11dp"
+                android:background="@drawable/ligne_bleu"
+                android:layout_marginTop="-15dp"
+                android:layout_marginStart="30dp"
+                android:rotation="-30" />
+            <View
+                android:layout_width="60dp"
+                android:layout_height="11dp"
+                android:background="@drawable/ligne_bleu"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="-20dp"
+                android:rotation="-30" />
+            <View
+                android:layout_width="30dp"
+                android:layout_height="11dp"
+                android:background="@drawable/ligne_orange"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="40dp"
+                android:rotation="-30" />
+            <View
+                android:layout_width="100dp"
+                android:layout_height="11dp"
+                android:background="@drawable/ligne_orange"
+                android:layout_marginTop="60dp"
+                android:layout_marginStart="-30dp"
+                android:rotation="-30" />
+            <View
+                android:layout_width="60dp"
+                android:layout_height="11dp"
+                android:background="@drawable/ligne_turquoise"
+                android:layout_marginTop="14dp"
+                android:layout_marginStart="70dp"
+                android:rotation="-30" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:background="@drawable/rect_bleu"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="30">
+
+        <View
+            android:id="@+id/rect_orange"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/rect_orange"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="35">
+
+
+        <View
+            android:id="@+id/rect_turquoise"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/rect_turquoise"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="60dp"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rotation="180"
+            android:layout_below="@+id/rect_turquoise"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true">
+
+            <View
+                android:layout_width="65dp"
+                android:layout_height="11dp"
+                android:layout_marginStart="-30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ligne_turquoise"
+                android:rotation="-30" />
+
+            <View
+                android:layout_width="60dp"
+                android:layout_height="11dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="-15dp"
+                android:background="@drawable/ligne_bleu"
+                android:rotation="-30" />
+
+            <View
+                android:layout_width="60dp"
+                android:layout_height="11dp"
+                android:layout_marginStart="-20dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/ligne_bleu"
+                android:rotation="-30" />
+
+            <View
+                android:layout_width="30dp"
+                android:layout_height="11dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/ligne_orange"
+                android:rotation="-30" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="11dp"
+                android:layout_marginStart="-30dp"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/ligne_orange"
+                android:rotation="-30" />
+
+            <View
+                android:layout_width="60dp"
+                android:layout_height="11dp"
+                android:layout_marginStart="70dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/ligne_turquoise"
+                android:rotation="-30" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>
