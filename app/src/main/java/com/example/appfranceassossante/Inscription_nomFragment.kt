@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +35,34 @@ class Inscription_nomFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_inscription_nom, container, false)
+
+        val view = inflater.inflate(R.layout.fragment_inscription_nom, container, false)
+
+        val btnsuivant = view.findViewById<Button>(R.id.suivant)
+        btnsuivant.setOnClickListener{
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            // remplace le fragment actuel par le fragment qui suit ("Inscription_prenomFragment")
+            transaction.replace(R.id.fragment_container, Inscription_prenomFragment())
+            transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
+            transaction.commit()
+        }
+
+        val btnretour = view.findViewById<Button>(R.id.retour)
+        btnretour.setOnClickListener{
+            requireActivity().supportFragmentManager.popBackStack() // retire le fragment actuel
+        }
+
+        val btnconnection = view.findViewById<Button>(R.id.connnection)
+        btnconnection.setOnClickListener{
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            // remplace le fragment actuel par le fragment qui suit ("SeConnecterFragment")
+            transaction.replace(R.id.fragment_container, SeConnecterFragment())
+            transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
+            transaction.commit()
+        }
+
+        // Inflate the layout for this fragment
+        return view
     }
 
     companion object {
