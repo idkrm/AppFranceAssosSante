@@ -94,5 +94,7 @@
     <string name="inscription_confirmer_adrmail">Confirm the email address *</string>
     <string name="inscription_confirmer_mdp">Confirm the password *</string>
     <string name="nom_de_l_assos">Assos\'s name</string>
+    <string name="assospers">Organization :</string>
+    <string name="donhisto">See donations made to the association</string>
 
 </resources>

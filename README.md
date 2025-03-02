@@ -6,7 +6,7 @@ Membres du groupe :
 - YAN Lucie 201
 - PHUNG Lucie 202
 - XU Irène 202
-- WU Mei-ling 202
+- WU Mei-li[gradle.properties](gradle.properties)ng 202
 
 Architecture : application mobile native (Android)\
 \
