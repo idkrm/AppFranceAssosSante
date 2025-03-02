@@ -64,9 +64,11 @@
         <View
             android:layout_width="200dp"
             android:layout_height="150dp"
-            android:background="@drawable/rect_bleu"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="28dp"
+            android:layout_marginBottom="34dp"
+            android:background="@drawable/rect_bleu" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -76,11 +78,11 @@
 
         <View
             android:id="@+id/rect_orange"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:background="@drawable/rect_orange"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"/>
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="90dp"/>
 
         <ImageView
             android:id="@+id/logo"
@@ -102,9 +104,10 @@
             android:id="@+id/rect_turquoise"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:background="@drawable/rect_turquoise"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="60dp"/>
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="17dp"
+            android:background="@drawable/rect_turquoise" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
