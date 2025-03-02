@@ -84,15 +84,23 @@
     <string name="autre">Other</string>
     <string name="inscription_nom">Lastname *</string>
     <string name="inscription_prenom">Firstname *</string>
-
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="inscription_adrmail">Email address *</string>
     <string name="inscription_mdp">Password *</string>
     <string name="inscription_handicap">Handicap *</string>
     <string name="inscription_confirmer_adrmail">Confirm the email address *</string>
     <string name="inscription_confirmer_mdp">Confirm the password *</string>
+
+    <!-- profil admin -->
+    <string name="assospers">Organization :</string>
+    <string name="donhisto">See donations made to the association</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="nom_de_l_assos">Assos\'s name</string>
+    <string name="total">Total donations</string>
+    <string name="totalrecu">"Total received for the year "</string>
+    <string name="deuxpts">:</string>
+    <string name="donsrec">Recurring donations</string>
 
 </resources>

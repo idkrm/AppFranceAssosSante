@@ -26,11 +26,7 @@ class LangueFragment : Fragment() {
 
         val btnretour = view.findViewById<Button>(R.id.btnretour)
         btnretour.setOnClickListener{
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            // remplace le fragment actuel par le fragment qui suit ("ProfilFragment")
-            transaction.replace(R.id.fragment_container, ProfilFragment())
-            transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
-            transaction.commit()
+            requireActivity().supportFragmentManager.popBackStack() // retire le fragment actuel
         }
 
         val radioGroup = view.findViewById<RadioGroup>(R.id.langue)

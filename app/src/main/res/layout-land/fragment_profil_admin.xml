@@ -99,6 +99,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:text="@string/assospers"/>
+
+                    <TextView
+                        android:id="@+id/assospersonne"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
@@ -110,7 +127,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginBottom="15dp"
                 android:orientation="vertical">
 
@@ -118,29 +135,10 @@
                     android:id="@+id/don"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/mesdonhisto"
-                    android:background="@drawable/fond_rose_arrondi"/>
+                    android:background="@drawable/fond_rose_arrondi"
+                    android:text="@string/donhisto" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:layout_marginBottom="15dp"
-                android:text="@string/paramapp"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/langue"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/changelangue"
-                    android:background="@drawable/fond_violet_arrondi"/>
-            </LinearLayout>
         </LinearLayout>
 
     </FrameLayout>
@@ -154,8 +152,29 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginBottom="15dp"
+                android:text="@string/paramapp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp">
+
+                <Button
+                    android:id="@+id/langue"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/changelangue"
+                    android:background="@drawable/fond_violet_arrondi"/>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -196,23 +215,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_marginTop="26dp"
                 android:orientation="vertical">
 
                 <Button
                     android:layout_width="300dp"
                     android:layout_height="match_parent"
                     android:text="@string/deco"
-                    android:layout_marginBottom="20dp"
                     android:textColor="@color/rouge2"
                     android:background="@drawable/btn_se_deconnecter"/>
 
-                <Button
-                    android:layout_width="200dp"
-                    android:layout_height="match_parent"
-                    android:text="@string/suppression"
-                    android:textColor="@color/rouge2"
-                    android:background="@drawable/btn_se_deconnecter"/>
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>

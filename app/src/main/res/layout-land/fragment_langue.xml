@@ -18,6 +18,14 @@
         android:background="@drawable/fond_bleu_arrondi"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/langages"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="start"/>
+
         <RadioGroup
             android:id="@+id/langue"
             android:layout_width="wrap_content"

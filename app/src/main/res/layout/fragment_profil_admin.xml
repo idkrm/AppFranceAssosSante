@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,6 +88,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="@string/assospers"/>
+
+            <TextView
+                android:id="@+id/assospersonne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
     </LinearLayout>
 
     <TextView
@@ -107,7 +124,7 @@
             android:id="@+id/don"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/mesdonhisto"
+            android:text="@string/donhisto"
             android:background="@drawable/fond_rose_arrondi"/>
     </LinearLayout>
 
@@ -181,12 +198,5 @@
             android:textColor="@color/rouge2"
             android:background="@drawable/btn_se_deconnecter"/>
 
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:text="@string/suppression"
-            android:textColor="@color/rouge2"
-            android:textSize="15dp"
-            android:background="@drawable/btn_se_deconnecter"/>
     </LinearLayout>
 </LinearLayout>
