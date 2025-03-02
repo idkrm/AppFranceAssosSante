@@ -1,0 +1,10 @@
+package com.example.appfranceassossante
+
+import java.util.Date
+
+open class Don(
+    val montant: Double,
+    val association : String,
+    val date: Date,
+    val emailUtilisateur: String
+)

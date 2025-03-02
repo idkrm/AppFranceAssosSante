@@ -1,4 +1,4 @@
-package com.example.appfranceassossante
+package com.example.appfranceassossante.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.example.appfranceassossante.R
 
-class Inscription_mdpFragment : Fragment() {
+class Inscription_prenomFragment : Fragment(){
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -15,13 +16,13 @@ class Inscription_mdpFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
-        val view = inflater.inflate(R.layout.fragment_inscription_mdp, container, false)
+        val view = inflater.inflate(R.layout.fragment_inscription_prenom, container, false)
 
         val btnsuivant = view.findViewById<Button>(R.id.suivant)
         btnsuivant.setOnClickListener{
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            // remplace le fragment actuel par le fragment qui suit ("Inscription_confirmer_mdpFragment")
-            transaction.replace(R.id.fragment_container, Inscription_confirmer_mdpFragment())
+            // remplace le fragment actuel par le fragment qui suit ("Inscription_adrmailFragment")
+            transaction.replace(R.id.fragment_container, Inscription_adrmailFragment())
             transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
             transaction.commit()
         }

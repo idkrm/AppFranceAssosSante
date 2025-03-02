@@ -1,3 +1,5 @@
+val mongoDbPassword: String? = project.findProperty("MONGO_DB_PASSWORD") as String?
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -8,6 +10,10 @@ android {
     namespace = "com.example.appfranceassossante"
     compileSdk = 35
 
+    buildFeatures {
+        buildConfig = true  // Active la fonctionnalité BuildConfig
+    }
+
     defaultConfig {
         applicationId = "com.example.appfranceassossante"
         minSdk = 24
@@ -16,6 +22,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // Ajout de MONGO_DB_PASSWORD à BuildConfig
+        buildConfigField("String", "MONGO_DB_PASSWORD", "\"${project.findProperty("MONGO_DB_PASSWORD") ?: ""}\"")
     }
 
     buildTypes {
@@ -25,6 +33,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        getByName("release") {
+            buildConfigField("String", "MONGO_DB_PASSWORD", "\"${project.findProperty("MONGO_DB_PASSWORD")}\"")
         }
     }
     compileOptions {
@@ -60,4 +71,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation("org.mongodb:mongodb-driver-kotlin:1.7.2")
+    implementation("org.mongodb:mongodb-driver-sync:4.9.1")
+
+    // implementation(libs.mongodb.driver.kotlin) // pour utiliser mongodb
 }
