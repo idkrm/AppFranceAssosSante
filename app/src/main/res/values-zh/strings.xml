@@ -91,4 +91,5 @@
     <string name="nom_de_l_assos">Assos\'s name</string>
     <string name="assospers">协会 :</string>
     <string name="donhisto">查看对协会的捐款</string>
+    <string name="deuxpts">" : "</string>
 </resources>
