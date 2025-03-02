@@ -10,6 +10,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.appfranceassossante.fragments.DonFragment
+import com.example.appfranceassossante.fragments.SeConnecterFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Locale
 

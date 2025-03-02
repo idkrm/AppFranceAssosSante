@@ -1,17 +1,18 @@
-package com.example.appfranceassossante
+package com.example.appfranceassossante.fragments
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.fragment.app.Fragment
+import com.example.appfranceassossante.MainActivity
+import com.example.appfranceassossante.R
 import java.util.Locale
 
 class LangueFragment : Fragment() {
