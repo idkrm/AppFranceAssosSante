@@ -185,6 +185,7 @@
             android:layout_height="match_parent"
             android:text="@string/suppression"
             android:textColor="@color/rouge2"
+            android:textSize="15dp"
             android:background="@drawable/btn_se_deconnecter"/>
     </LinearLayout>
 </LinearLayout>
