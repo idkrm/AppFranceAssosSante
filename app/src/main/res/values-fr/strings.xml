@@ -95,6 +95,7 @@
     <!-- profil admin -->
     <string name="assospers">Association :</string>
     <string name="donhisto">Voir les dons faites à l’association</string>
+    <string name="totalrecu">"Total reçu pour l'année "</string>
     <string name="deuxpts">" : "</string>
     <string name="total">Total des dons</string>
     <string name="donsrec">Dons récurrents</string>
