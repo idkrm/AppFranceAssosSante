@@ -47,41 +47,56 @@
             android:text="@string/civilite2"
             android:textSize="25sp" />
 
-        <RadioGroup
+        <LinearLayout
             android:id="@+id/civilite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:orientation="horizontal">
+
+            <RadioGroup android:id="@+id/civilite1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="200dp"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/monsieur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/monsieur" />
+
+                <RadioButton
+                    android:id="@+id/madame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/madame" />
+
+            </RadioGroup>
+
+            <RadioGroup android:id="@+id/civilite2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/monsieur"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="@string/monsieur" />
+                <RadioButton
+                    android:id="@+id/autre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/autre" />
 
-            <RadioButton
-                android:id="@+id/madame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="@string/madame" />
+                <RadioButton
+                    android:id="@+id/sansreponse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/sansreponse" />
 
-            <RadioButton
-                android:id="@+id/sansreponse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="@string/sansreponse" />
-
-            <RadioButton
-                android:id="@+id/autre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="@string/autre" />
-        </RadioGroup>
+            </RadioGroup>
+        </LinearLayout>
     </LinearLayout>
 
     <Button
