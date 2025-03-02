@@ -93,5 +93,6 @@
     <string name="inscription_handicap">Handicap *</string>
     <string name="inscription_confirmer_adrmail">Confirm the email address *</string>
     <string name="inscription_confirmer_mdp">Confirm the password *</string>
+    <string name="nom_de_l_assos">Assos\'s name</string>
 
 </resources>

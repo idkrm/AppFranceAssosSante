@@ -88,4 +88,5 @@
     <string name="inscription_handicap">残疾 *</string>
     <string name="inscription_confirmer_adrmail">确认电邮地址 *</string>
     <string name="inscription_confirmer_mdp">确认密码 *</string>
+    <string name="nom_de_l_assos">Assos\'s name</string>
 </resources>
