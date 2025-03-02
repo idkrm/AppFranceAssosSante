@@ -58,8 +58,6 @@
     <string name="fr">Français (Défaut)</string>
     <string name="en">Anglais</string>
     <string name="cn">Mandarin</string>
-
-    <!-- profil -->
     <string name="info">Mes informations</string>
     <string name="civilite">Civilité : </string>
     <string name="nom">Nom : </string>
@@ -75,6 +73,8 @@
     <string name="condition">Conditions de service</string>
     <string name="deco">Se déconnecter</string>
     <string name="suppression">Supprimer mon compte</string>
+
+    <!-- inscription -->
     <string name="dejainscrit">"Déjà inscrit ? "</string>
     <string name="connection">Connecte toi !</string>
     <string name="champs">Les champs marqués d’un * sont obligatoires</string>
@@ -91,6 +91,8 @@
     <string name="inscription_confirmer_adrmail">Confirmer l\'adresse mail *</string>
     <string name="inscription_confirmer_mdp">Confirmer le mot de passe *</string>
     <string name="nom_de_l_assos">Assos\'s name</string>
+
+    <!-- profil admin -->
     <string name="assospers">Association :</string>
     <string name="donhisto">Voir les dons faites à l’association</string>
 </resources>
