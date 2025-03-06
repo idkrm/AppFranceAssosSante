@@ -94,13 +94,15 @@
     <string name="assospers">Organization :</string>
     <string name="donhisto">See donations made to the association</string>
 
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-    <string name="nom_asso">Association's name</string>
+    <!-- les dons-->
+    <string name="nom_asso">Association\'s name</string>
     <string name="total">Total donations</string>
     <string name="totalrecu">"Total received this year "</string>
     <string name="deuxpts">:</string>
     <string name="donsrec">Recurring donations</string>
 
+    <!-- mes dons-->
+    <string name="histo">History of my donations</string>
+    <string name="mesdonsrec">My recurring donations</string>
+    <string name="annuledon">Cancel a donation</string>
 </resources>

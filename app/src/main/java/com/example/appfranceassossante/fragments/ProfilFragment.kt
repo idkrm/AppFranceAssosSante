@@ -23,6 +23,15 @@ class ProfilFragment : Fragment() {
             transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
             transaction.commit()
         }
+
+        val btnhistodon = view.findViewById<Button>(R.id.don)
+        btnhistodon.setOnClickListener{
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            // remplace le fragment actuel par le fragment qui suit ("MesDonsFragment")
+            transaction.replace(R.id.fragment_container, MesDonsFragment())
+            transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
+            transaction.commit()
+        }
         return view
     }
 }

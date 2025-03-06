@@ -99,4 +99,7 @@
     <string name="deuxpts">" : "</string>
     <string name="total">Total des dons</string>
     <string name="donsrec">Dons récurrents</string>
+    <string name="histo">Hisorique de mes dons</string>
+    <string name="mesdonsrec">Mes dons récurrents</string>
+    <string name="annuledon">Annuler un don</string>
 </resources>

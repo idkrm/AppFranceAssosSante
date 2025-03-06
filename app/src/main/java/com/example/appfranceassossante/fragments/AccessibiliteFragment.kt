@@ -1,12 +1,9 @@
-package com.example.appfranceassossante
+package com.example.appfranceassossante.fragments
 
-import android.content.Context
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.CompoundButton
@@ -14,6 +11,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
+import com.example.appfranceassossante.R
 
 
 class AccessibiliteFragment : Fragment() {

@@ -95,4 +95,7 @@
     <string name="deuxpts">" : "</string>
     <string name="total">捐款总额</string>
     <string name="donsrec">经常性捐款</string>
+    <string name="histo">我的捐款历史</string>
+    <string name="mesdonsrec">我的经常性捐款</string>
+    <string name="annuledon">取消捐贈</string>
 </resources>

@@ -1,8 +1,6 @@
 package com.example.appfranceassossante
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -10,6 +8,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.appfranceassossante.fragments.AccessibiliteFragment
+import com.example.appfranceassossante.fragments.AccueilFragment
+import com.example.appfranceassossante.fragments.AssosFragment
 import com.example.appfranceassossante.fragments.DonFragment
 import com.example.appfranceassossante.fragments.SeConnecterFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView

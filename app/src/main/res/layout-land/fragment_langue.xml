@@ -7,7 +7,7 @@
     android:layout_margin="20dp"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".AccessibiliteFragment">
+    tools:context=".fragments.AccessibiliteFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
