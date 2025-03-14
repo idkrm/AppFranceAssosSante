@@ -55,6 +55,8 @@
             android:layout_gravity="center"
             android:layout_width="400dp"
             android:layout_height="40dp"
+            android:inputType="textPassword"
+            android:hint="@string/caractere_min"
             android:padding="10dp">
         </EditText>
 

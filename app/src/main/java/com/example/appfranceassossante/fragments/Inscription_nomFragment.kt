@@ -41,7 +41,7 @@ class Inscription_nomFragment : Fragment() {
             val nomSansEspace = nom.text.toString().trim()
 
             if (nomSansEspace.isEmpty())
-                nom.error = "Veuillez entrer votre nom"
+                nom.error = getString(R.string.error_message_nom)
             else {
                 userViewModel.setNom(nomSansEspace) // Enregistre le nom
 

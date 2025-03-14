@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
@@ -27,21 +28,18 @@ class InscriptionFragment : Fragment() {
 
         val civilites = view.findViewById<RadioGroup>(R.id.civilite)
 
-        var idChecked = false
-
         var choix = ""
 
         civilites.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId != -1) { // Vérifie si un bouton est sélectionné
                 val radioButton = view.findViewById<RadioButton>(checkedId)
-                idChecked = true
                 choix = radioButton.text.toString()
             }
         }
 
         val btnsuivant = view.findViewById<Button>(R.id.suivant)
         btnsuivant.setOnClickListener{
-            if (idChecked){
+            if (civilites.checkedRadioButtonId != -1){
                 userViewModel.setCivilite(choix)
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 // remplace le fragment actuel par le fragment qui suit ("Inscription_nomFragment")
@@ -49,8 +47,8 @@ class InscriptionFragment : Fragment() {
                 transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
                 transaction.commit()
             }
-            //else
-                //civilites.error = "Veuillez choisir votre civilité"
+            else
+                Toast.makeText(context,  getString(R.string.error_message_civ), Toast.LENGTH_SHORT).show()
         }
 
         val btnconnection = view.findViewById<Button>(R.id.connnection)

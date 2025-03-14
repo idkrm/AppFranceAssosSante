@@ -98,4 +98,17 @@
     <string name="histo">我的捐款历史</string>
     <string name="mesdonsrec">我的经常性捐款</string>
     <string name="annuledon">取消捐贈</string>
+    <string name="caractere_min">至少 8 个字符</string>
+    <string name="retaper_mdp">重新输入您的密码</string>
+    <string name="retaper_mail">重新输入您的电子邮件</string>
+    <string name="error_message_handicap">选择一个选项</string>
+    <string name="error_message_civ">请选择您的职称</string>
+    <string name="error_message_nom">请输入您的姓名</string>
+    <string name="error_message_prenom">请输入您的名字</string>
+    <string name="error_message_mail">请输入您的电子邮件地址</string>
+    <string name="error_message_mdp">请输入一个密码</string>
+    <string name="error_message_confirmer_mail">请重新输入您的电子邮件地址</string>
+    <string name="error_message_confirmer_mail_saisi">输入的电子邮件与之前输入的电子邮件不一致</string>
+    <string name="error_message_confirmer_mdp">请重新输入您的密码</string>
+    <string name="error_message_confirmer_mdp_saisi">输入的密码与之前输入的密码不一致</string>
 </resources>

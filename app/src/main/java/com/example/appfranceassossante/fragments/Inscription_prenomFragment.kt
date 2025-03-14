@@ -21,17 +21,17 @@ class Inscription_prenomFragment : Fragment(){
     ): View? {
         // Inflate the layout for this fragment
 
+        userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+
         val view = inflater.inflate(R.layout.fragment_inscription_prenom, container, false)
         val prenom = view.findViewById<EditText>(R.id.prenom)
         val btnsuivant = view.findViewById<Button>(R.id.suivant)
-
-        userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
 
         btnsuivant.setOnClickListener{
             val prenomSansEspace = prenom.text.toString().trim()
 
             if(prenomSansEspace.isEmpty())
-                prenom.error = "Veuillez entrer votre prénom"
+                prenom.error = getString(R.string.error_message_prenom)
             else {
                 userViewModel.setPrenom(prenomSansEspace) // Enregistre le prénom
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()

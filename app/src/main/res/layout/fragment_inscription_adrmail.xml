@@ -53,6 +53,8 @@
             android:background="@drawable/edit_text"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:inputType="textEmailAddress"
+            android:hint="Ex: lucie.yan@gmail.com"
             android:padding="10dp">
         </EditText>
 

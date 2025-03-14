@@ -55,6 +55,7 @@
             android:layout_gravity="center"
             android:layout_width="400dp"
             android:layout_height="40dp"
+            android:hint="@string/retaper_mail"
             android:padding="10dp">
         </EditText>
 

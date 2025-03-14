@@ -105,4 +105,17 @@
     <string name="histo">History of my donations</string>
     <string name="mesdonsrec">My recurring donations</string>
     <string name="annuledon">Cancel a donation</string>
+    <string name="caractere_min">8 characters minimum</string>
+    <string name="retaper_mdp">Retype your password</string>
+    <string name="retaper_mail">Retype your email</string>
+    <string name="error_message_handicap">Choose an option</string>
+    <string name="error_message_civ">Please select your title</string>
+    <string name="error_message_nom">Please enter your lastname</string>
+    <string name="error_message_prenom">Please enter your firstname</string>
+    <string name="error_message_mail">Please enter your mail</string>
+    <string name="error_message_mdp">Please enter a password</string>
+    <string name="error_message_confirmer_mail">Please enter your email again</string>
+    <string name="error_message_confirmer_mail_saisi">The email entered does not match the one previously entered</string>
+    <string name="error_message_confirmer_mdp">Please enter your password again</string>
+    <string name="error_message_confirmer_mdp_saisi">The password entered does not match the one previously entered</string>
 </resources>
