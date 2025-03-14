@@ -1,14 +1,14 @@
-package com.example.appfranceassossante;
+package com.example.appfranceassossante
 
-import android.content.Context;
-import android.widget.ArrayAdapter;
+import android.app.Activity
+import android.content.Context
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
 
-import androidx.annotation.NonNull;
+class AssosAdapter(activity: Activity, itemResource: Int, habitats : List<Assos>) :
+    ArrayAdapter<Assos?>(activity, itemResource, habitats) {
+    public override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
-public class AssosAdapter extends ArrayAdapter<Assos> {
-
-
-    public AssosAdapter(@NonNull Context context, int resource) {
-        super(context, resource);
     }
 }

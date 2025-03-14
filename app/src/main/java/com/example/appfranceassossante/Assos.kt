@@ -1,5 +1,6 @@
-package com.example.appfranceassossante;
+package com.example.appfranceassossante
 
-class Assos(
-        val nom: String
+class Assos (
+    val nom: String,
+    val category: String
 )
