@@ -58,6 +58,22 @@ class MongoDBConnection{
         }
     }
 
+    fun isEmailAlreadyUsed(email: String): Boolean {
+        return try {
+            // Accéder à la collection "users"
+            val collection: MongoCollection<Document> = database.getCollection("users")
+
+            // Rechercher un document avec l'email donné
+            val document = collection.find(Document("email", email)).first()
+
+            // Si un document est trouvé, l'email est déjà utilisé
+            document != null
+        } catch (e: Exception) {
+            println("Erreur lors de la vérification de l'email : ${e.message}")
+            false
+        }
+    }
+
 //    // créer une clé composé
 //    fun createUniqueComposedIndexDonation() {
 //        val collection: MongoCollection<Document> = database.getCollection("donation")

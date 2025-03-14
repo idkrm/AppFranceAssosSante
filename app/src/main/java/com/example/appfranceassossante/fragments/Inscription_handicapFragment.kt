@@ -70,9 +70,11 @@ class Inscription_handicapFragment : Fragment() {
 
             Toast.makeText(context, R.string.message_inscription_reussie, Toast.LENGTH_SHORT).show()
 
+            userViewModel.reinitialiserDonnees()
+
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            // remplace le fragment actuel par le fragment qui suit ("ProfilFragment")
-            transaction.replace(R.id.fragment_container, ProfilFragment())
+            // remplace le fragment actuel par le fragment qui suit ("SeConnecterFragment")
+            transaction.replace(R.id.fragment_container, SeConnecterFragment())
             transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
             transaction.commit()
         } else {

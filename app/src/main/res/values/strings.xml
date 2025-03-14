@@ -120,4 +120,7 @@
     <string name="error_message_confirmer_mdp_saisi">The password entered does not match the one previously entered</string>
     <string name="message_inscription_reussie">Successful registration</string>
     <string name="error_message_inscription_pas_reussi">Please complete all fields</string>
+    <string name="error_message_user_non_existant">This user is not exist</string>
+    <string name="error_message_mail_existant">This email is already in use</string>
+    <string name="error_message_mdp_incorrect">Password incorrect</string>
 </resources>

@@ -58,4 +58,13 @@ class UserViewModel : ViewModel() {
             "handicap" to _handicap.value,
         )
     }
+
+    fun reinitialiserDonnees() {
+        _civilite.value = null
+        _nom.value = null
+        _prenom.value = null
+        _mail.value = null
+        _mdp.value = null
+        _handicap.value = null
+    }
 }
