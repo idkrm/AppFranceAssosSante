@@ -1,6 +1,13 @@
 package com.example.appfranceassossante
 
 class Assos(
-    val nom: String,
-    val category: String
-)
+    private val nom: String,
+    private val logo: Int,
+) {
+    fun getAssosName(): String{
+        return nom
+    }
+    fun getAssosLogo(): Int{
+        return logo
+    }
+}

@@ -10,12 +10,14 @@
         android:padding="3dp">
         <ImageView
             android:layout_width="155dp"
-            android:layout_height="130dp" />
+            android:layout_height="130dp"
+            android:id="@+id/assos_image" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nom_asso"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:id="@+id/assos_name" />
     </LinearLayout>
 
 </LinearLayout>
