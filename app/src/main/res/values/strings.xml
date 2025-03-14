@@ -123,4 +123,5 @@
     <string name="error_message_user_non_existant">This user is not exist</string>
     <string name="error_message_mail_existant">This email is already in use</string>
     <string name="error_message_mdp_incorrect">Password incorrect</string>
+    <string name="error_message_champs_vides">Complete all fields</string>
 </resources>

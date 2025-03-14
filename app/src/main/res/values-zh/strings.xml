@@ -113,4 +113,8 @@
     <string name="error_message_confirmer_mdp_saisi">输入的密码与之前输入的密码不一致</string>
     <string name="message_inscription_reussie">注册成功</string>
     <string name="error_message_inscription_pas_reussi">请填写所有项目</string>
+    <string name="error_message_user_non_existant">这个用户不存在</string>
+    <string name="error_message_mail_existant">这个邮件已被使用</string>
+    <string name="error_message_mdp_incorrect">密码错误</string>
+    <string name="error_message_champs_vides">填写所有项目</string>
 </resources>

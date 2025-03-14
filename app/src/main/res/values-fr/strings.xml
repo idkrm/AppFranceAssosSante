@@ -120,4 +120,5 @@
     <string name="error_message_user_non_existant">Cet utilisateur n\'existe pas</string>
     <string name="error_message_mail_existant">Ce mail est déjà utilisé</string>
     <string name="error_message_mdp_incorrect">Mot de passe incorrect</string>
+    <string name="error_message_champs_vides">Complétez tous les champs</string>
 </resources>
