@@ -90,7 +90,7 @@
     <string name="inscription_handicap">Handicap *</string>
     <string name="inscription_confirmer_adrmail">Confirmer l\'adresse mail *</string>
     <string name="inscription_confirmer_mdp">Confirmer le mot de passe *</string>
-    <string name="nom_asso">Nom de l'association</string>
+    <string name="nom_asso">Nom de l\'association</string>
 
     <!-- profil admin -->
     <string name="assospers">Association :</string>

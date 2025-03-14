@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.UserViewModel
 
 class Inscription_adrmailFragment : Fragment() {
+
+    private lateinit var userViewModel: UserViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -17,6 +20,8 @@ class Inscription_adrmailFragment : Fragment() {
         // Inflate the layout for this fragment
 
         val view = inflater.inflate(R.layout.fragment_inscription_adrmail, container, false)
+
+        //userViewModel.
 
         val btnsuivant = view.findViewById<Button>(R.id.suivant)
         btnsuivant.setOnClickListener{

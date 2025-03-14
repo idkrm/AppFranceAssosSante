@@ -38,16 +38,26 @@ android {
             buildConfigField("String", "MONGO_DB_PASSWORD", "\"${project.findProperty("MONGO_DB_PASSWORD")}\"")
         }
     }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/native-image/reflect-config.json"
+            excludes += "META-INF/native-image/native-image.properties"
+        }
+    }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
     }
+
 }
 
 dependencies {
@@ -71,8 +81,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("org.mongodb:mongodb-driver-kotlin:1.7.2")
-    implementation("org.mongodb:mongodb-driver-sync:4.9.1")
+    //implementation(libs.mongodb.driver.kotlin)
+    implementation(libs.mongodb.driver.sync)
 
     // implementation(libs.mongodb.driver.kotlin) // pour utiliser mongodb
 }

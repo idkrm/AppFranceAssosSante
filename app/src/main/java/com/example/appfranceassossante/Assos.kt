@@ -1,5 +1,5 @@
-package com.example.appfranceassossante;
+package com.example.appfranceassossante
 
-class Assos(
-        val nom: String
+open class Assos (
+    val nom: String
 )

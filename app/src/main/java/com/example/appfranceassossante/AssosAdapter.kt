@@ -1,14 +1,10 @@
-package com.example.appfranceassossante;
+package com.example.appfranceassossante
 
-import android.content.Context;
-import android.widget.ArrayAdapter;
+import android.content.Context
+import android.widget.ArrayAdapter
 
-import androidx.annotation.NonNull;
-
-public class AssosAdapter extends ArrayAdapter<Assos> {
+class AssosAdapter (context: Context, resource: Int, items: List<Assos>) : ArrayAdapter<Assos>(context, resource, items) {
 
 
-    public AssosAdapter(@NonNull Context context, int resource) {
-        super(context, resource);
-    }
+
 }
