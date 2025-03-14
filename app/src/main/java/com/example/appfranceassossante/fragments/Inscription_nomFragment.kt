@@ -5,28 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import androidx.fragment.app.Fragment
-import com.example.appfranceassossante.ARG_PARAM1
-import com.example.appfranceassossante.ARG_PARAM2
+import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.UserViewModel
 
-/**
- * A simple [Fragment] subclass.
- * Use the [Inscription_nomFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class Inscription_nomFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var userViewModel: UserViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,15 +22,35 @@ class Inscription_nomFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
+        // Initialiser le ViewModel
+        userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+
         val view = inflater.inflate(R.layout.fragment_inscription_nom, container, false)
 
+        val nom = view.findViewById<EditText>(R.id.nom)
+
+        /*
+        // Restaurer le nom si déjà saisi
+        userViewModel.nom.observe(viewLifecycleOwner) {
+            nom.setText(it)
+        }
+         */
+
         val btnsuivant = view.findViewById<Button>(R.id.suivant)
-        btnsuivant.setOnClickListener{
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            // remplace le fragment actuel par le fragment qui suit ("Inscription_prenomFragment")
-            transaction.replace(R.id.fragment_container, Inscription_prenomFragment())
-            transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
-            transaction.commit()
+        btnsuivant.setOnClickListener {
+            val nomSansEspace = nom.text.toString().trim()
+
+            if (nomSansEspace.isEmpty())
+                nom.error = getString(R.string.error_message_nom)
+            else {
+                userViewModel.setNom(nomSansEspace) // Enregistre le nom
+
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                // remplace le fragment actuel par le fragment qui suit ("Inscription_prenomFragment")
+                transaction.replace(R.id.fragment_container, Inscription_prenomFragment())
+                transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
+                transaction.commit()
+            }
         }
 
         val btnretour = view.findViewById<Button>(R.id.retour)
@@ -58,28 +66,7 @@ class Inscription_nomFragment : Fragment() {
             transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
             transaction.commit()
         }
-
         // Inflate the layout for this fragment
         return view
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Inscription_nomFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Inscription_nomFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

@@ -16,7 +16,7 @@ class MongoDBConnection{
         return MongoClients.create(CONNECTION_STRING)
     }
 
-    fun saveUser(civilite:String, nom:String, prenom:String, email:String,mdp:String,handicap:String) {
+    fun saveUser(civilite:String, nom:String, prenom:String, email:String, mdp:String,handicap:String) {
         try {
             // Sélectionner la collection
             val collection: MongoCollection<Document> = database.getCollection("users")
@@ -55,6 +55,22 @@ class MongoDBConnection{
             )
         } else {
             null // Si l'utilisateur n'est pas trouvé
+        }
+    }
+
+    fun isEmailAlreadyUsed(email: String): Boolean {
+        return try {
+            // Accéder à la collection "users"
+            val collection: MongoCollection<Document> = database.getCollection("users")
+
+            // Rechercher un document avec l'email donné
+            val document = collection.find(Document("email", email)).first()
+
+            // Si un document est trouvé, l'email est déjà utilisé
+            document != null
+        } catch (e: Exception) {
+            println("Erreur lors de la vérification de l'email : ${e.message}")
+            false
         }
     }
 

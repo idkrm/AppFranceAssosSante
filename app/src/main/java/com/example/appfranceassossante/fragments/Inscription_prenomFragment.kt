@@ -5,10 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.UserViewModel
 
 class Inscription_prenomFragment : Fragment(){
+
+    private lateinit var userViewModel: UserViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -16,15 +21,25 @@ class Inscription_prenomFragment : Fragment(){
     ): View? {
         // Inflate the layout for this fragment
 
-        val view = inflater.inflate(R.layout.fragment_inscription_prenom, container, false)
+        userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
 
+        val view = inflater.inflate(R.layout.fragment_inscription_prenom, container, false)
+        val prenom = view.findViewById<EditText>(R.id.prenom)
         val btnsuivant = view.findViewById<Button>(R.id.suivant)
+
         btnsuivant.setOnClickListener{
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            // remplace le fragment actuel par le fragment qui suit ("Inscription_adrmailFragment")
-            transaction.replace(R.id.fragment_container, Inscription_adrmailFragment())
-            transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
-            transaction.commit()
+            val prenomSansEspace = prenom.text.toString().trim()
+
+            if(prenomSansEspace.isEmpty())
+                prenom.error = getString(R.string.error_message_prenom)
+            else {
+                userViewModel.setPrenom(prenomSansEspace) // Enregistre le prénom
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                // remplace le fragment actuel par le fragment qui suit ("Inscription_adrmailFragment")
+                transaction.replace(R.id.fragment_container, Inscription_adrmailFragment())
+                transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
+                transaction.commit()
+            }
         }
 
         val btnretour = view.findViewById<Button>(R.id.retour)

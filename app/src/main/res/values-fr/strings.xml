@@ -90,7 +90,7 @@
     <string name="inscription_handicap">Handicap *</string>
     <string name="inscription_confirmer_adrmail">Confirmer l\'adresse mail *</string>
     <string name="inscription_confirmer_mdp">Confirmer le mot de passe *</string>
-    <string name="nom_asso">Nom de l'association</string>
+    <string name="nom_asso">Nom de l\'association</string>
 
     <!-- profil admin -->
     <string name="assospers">Association :</string>
@@ -102,4 +102,23 @@
     <string name="histo">Hisorique de mes dons</string>
     <string name="mesdonsrec">Mes dons récurrents</string>
     <string name="annuledon">Annuler un don</string>
+    <string name="caractere_min">8 caractères minimum</string>
+    <string name="retaper_mdp">Retaper votre mot de passe</string>
+    <string name="retaper_mail">Retaper votre mail</string>
+    <string name="error_message_handicap">Choisir une option</string>
+    <string name="error_message_civ">Veuillez choisir votre civilité</string>
+    <string name="error_message_nom">Veuillez entrer votre nom</string>
+    <string name="error_message_prenom">Veuillez entrer votre prénom</string>
+    <string name="error_message_mail">Veuillez entrer votre mail</string>
+    <string name="error_message_mdp">Veuillez entrer un mot de passe</string>
+    <string name="error_message_confirmer_mail">Veuillez resaisir votre mail</string>
+    <string name="error_message_confirmer_mail_saisi">Le mail saisi ne correspond pas à celui saisit précédemment</string>
+    <string name="error_message_confirmer_mdp">Veuillez resaisir votre mot de passe</string>
+    <string name="error_message_confirmer_mdp_saisi">Le mot de passe saisi ne correspond pas à celui saisit précédemment</string>
+    <string name="message_inscription_reussie">Inscription réussie</string>
+    <string name="error_message_inscription_pas_reussi">Veuillez remplir tous les champs</string>
+    <string name="error_message_user_non_existant">Cet utilisateur n\'existe pas</string>
+    <string name="error_message_mail_existant">Ce mail est déjà utilisé</string>
+    <string name="error_message_mdp_incorrect">Mot de passe incorrect</string>
+    <string name="error_message_champs_vides">Complétez tous les champs</string>
 </resources>

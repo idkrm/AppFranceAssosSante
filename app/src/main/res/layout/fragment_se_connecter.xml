@@ -27,6 +27,7 @@
                 android:layout_marginBottom="5dp"/>
 
             <EditText
+                android:id="@+id/co_mail"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:padding="10dp"
@@ -47,6 +48,7 @@
                 android:layout_marginBottom="5dp"/>
 
             <EditText
+                android:id="@+id/co_mdp"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:padding="10dp"
