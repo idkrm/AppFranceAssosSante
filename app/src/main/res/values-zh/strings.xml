@@ -111,4 +111,6 @@
     <string name="error_message_confirmer_mail_saisi">输入的电子邮件与之前输入的电子邮件不一致</string>
     <string name="error_message_confirmer_mdp">请重新输入您的密码</string>
     <string name="error_message_confirmer_mdp_saisi">输入的密码与之前输入的密码不一致</string>
+    <string name="message_inscription_reussie">注册成功</string>
+    <string name="error_message_inscription_pas_reussi">请填写所有项目</string>
 </resources>

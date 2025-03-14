@@ -47,4 +47,15 @@ class UserViewModel : ViewModel() {
     fun setHandicap(value: String) {
         _handicap.value = value
     }
+
+    fun collectUserData(): Map<String, String?> {
+        return mapOf(
+            "civilite" to _civilite.value,
+            "nom" to _nom.value,
+            "prenom" to _prenom.value,
+            "email" to _mail.value,
+            "mot de passe" to _mdp.value,
+            "handicap" to _handicap.value,
+        )
+    }
 }

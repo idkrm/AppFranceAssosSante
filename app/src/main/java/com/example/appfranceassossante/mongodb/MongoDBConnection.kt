@@ -16,7 +16,7 @@ class MongoDBConnection{
         return MongoClients.create(CONNECTION_STRING)
     }
 
-    fun saveUser(civilite:String, nom:String, prenom:String, email:String,mdp:String,handicap:String) {
+    fun saveUser(civilite:String, nom:String, prenom:String, email:String, mdp:String,handicap:String) {
         try {
             // Sélectionner la collection
             val collection: MongoCollection<Document> = database.getCollection("users")

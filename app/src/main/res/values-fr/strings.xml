@@ -115,4 +115,6 @@
     <string name="error_message_confirmer_mail_saisi">Le mail saisi ne correspond pas à celui saisit précédemment</string>
     <string name="error_message_confirmer_mdp">Veuillez resaisir votre mot de passe</string>
     <string name="error_message_confirmer_mdp_saisi">Le mot de passe saisi ne correspond pas à celui saisit précédemment</string>
+    <string name="message_inscription_reussie">Inscription réussie</string>
+    <string name="error_message_inscription_pas_reussi">Veuillez remplir tous les champs</string>
 </resources>

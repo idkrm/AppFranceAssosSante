@@ -11,10 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.UserViewModel
+import com.example.appfranceassossante.mongodb.MongoDBConnection
 
 class Inscription_handicapFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
+    private lateinit var mongoDBConnection: MongoDBConnection
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,6 +25,7 @@ class Inscription_handicapFragment : Fragment() {
         // Inflate the layout for this fragment
 
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+        mongoDBConnection = MongoDBConnection()
 
         val view = inflater.inflate(R.layout.fragment_inscription_handicap, container, false)
         val handicap = view.findViewById<Spinner>(R.id.handicap)
@@ -34,11 +37,7 @@ class Inscription_handicapFragment : Fragment() {
                 Toast.makeText(context, getString(R.string.error_message_handicap), Toast.LENGTH_SHORT).show()
             else{
                 userViewModel.setHandicap(handic) // Enregistre l'handicap
-                val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                // remplace le fragment actuel par le fragment qui suit ("ProfilFragment")
-                transaction.replace(R.id.fragment_container, ProfilFragment())
-                transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
-                transaction.commit()
+                saveUserToMongoDB()
             }
         }
 
@@ -51,13 +50,34 @@ class Inscription_handicapFragment : Fragment() {
             transaction.commit()
         }
 
-        val btnsinsrire = view.findViewById<Button>(R.id.sinscrire)
-        btnsinscrire.setOnClickListener{
-
-        }
-
         // Inflate the layout for this fragment
         return view
+    }
+
+    private fun saveUserToMongoDB() {
+        val userData = userViewModel.collectUserData()
+
+        // Vérifiez que toutes les données nécessaires sont présentes
+        if (userData.values.all { it != null }) {
+            mongoDBConnection.saveUser(
+                userData["civilite"] ?: "",
+                userData["nom"] ?: "",
+                userData["prenom"] ?: "",
+                userData["email"] ?: "",
+                userData["mot de passe"] ?: "",
+                userData["handicap"] ?: ""
+            )
+
+            Toast.makeText(context, R.string.message_inscription_reussie, Toast.LENGTH_SHORT).show()
+
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            // remplace le fragment actuel par le fragment qui suit ("ProfilFragment")
+            transaction.replace(R.id.fragment_container, ProfilFragment())
+            transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
+            transaction.commit()
+        } else {
+            Toast.makeText(context, R.string.error_message_inscription_pas_reussi, Toast.LENGTH_SHORT).show()
+        }
     }
 
 }

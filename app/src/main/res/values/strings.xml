@@ -118,4 +118,6 @@
     <string name="error_message_confirmer_mail_saisi">The email entered does not match the one previously entered</string>
     <string name="error_message_confirmer_mdp">Please enter your password again</string>
     <string name="error_message_confirmer_mdp_saisi">The password entered does not match the one previously entered</string>
+    <string name="message_inscription_reussie">Successful registration</string>
+    <string name="error_message_inscription_pas_reussi">Please complete all fields</string>
 </resources>
