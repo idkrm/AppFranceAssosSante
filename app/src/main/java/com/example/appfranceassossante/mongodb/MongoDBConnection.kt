@@ -1,4 +1,5 @@
 package com.example.appfranceassossante.mongodb
+import com.example.appfranceassossante.Don
 import com.example.appfranceassossante.Utilisateur
 import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoClient
@@ -111,5 +112,36 @@ class MongoDBConnection{
 //        }
 //    }
 
+    //recuperer les dons de l'utilisateur
+    fun getUserDonations(email: String): List<Don> {
+        val donationsList = mutableListOf<Don>()
+
+        try {
+            val collection: MongoCollection<Document> = database.getCollection("donation")
+
+            //recherche avec le mail
+            val query = Document("emailUtilisateur", email)
+            val cursor = collection.find(query).iterator()
+
+            while (cursor.hasNext()) {
+                val document = cursor.next()
+
+                val donation = Don(
+                    montant = document.getDouble("montant") ?: 0.0,
+                    date = document.getDate("date") ?: Date(),
+                    association = document.getString("association") ?: "",
+                    emailUtilisateur = document.getString("emailUtilisateur") ?: "",
+                    paiement = document.getString("paiement") ?: ""
+                )
+
+                donationsList.add(donation)
+            }
+            cursor.close()
+        } catch (e: Exception) {
+            println("Erreur lors de la récupération des dons : ${e.message}")
+        }
+
+        return donationsList
+    }
 
 }

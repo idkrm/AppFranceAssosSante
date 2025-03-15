@@ -28,15 +28,15 @@
             </SearchView>
         </LinearLayout>
 
-       <LinearLayout
-           android:layout_width="0dp"
-           android:layout_height="wrap_content"
-           android:layout_weight="0.1" >
-           <Button
-               android:layout_width="50dp"
-               android:layout_height="50dp"
-               android:background="@drawable/filtre" />
-       </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1" >
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/filtre" />
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -36,6 +36,54 @@
         android:padding="20dp"
         android:layout_marginBottom="15dp"
         android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*"
+            android:background="@drawable/fond_violet_arrondi">
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Association"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="8dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="8dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Montant"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="8dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Paiement"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="8dp"/>
+            </TableRow>
+        </TableLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -50,9 +98,9 @@
             android:layout_weight="1"
             android:text="@string/mesdonsrec"
             android:textStyle="bold"/>
-
-
     </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"

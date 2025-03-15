@@ -7,6 +7,7 @@ class DonRecurrent(
     date: Date,
     association : String,
     emailUtilisateur: String,
+    paiement: String,
     val frequence: String,
     val dateFin: Date
-) : Don(montant,association, date, emailUtilisateur)  // Héritage de la classe Don
+) : Don(montant,association, date, emailUtilisateur, paiement)  // Héritage de la classe Don
