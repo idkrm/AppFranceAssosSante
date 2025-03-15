@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nom_asso"
-            android:layout_gravity="center"
+            android:textAlignment="center"
             android:id="@+id/assos_name" />
     </LinearLayout>
 
