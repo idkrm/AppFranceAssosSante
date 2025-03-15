@@ -3,46 +3,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="1"
     android:orientation="vertical"
     android:padding="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp">
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.8">
+            android:layout_weight="0.9">
             <SearchView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:queryHint="Rechercher..."
-                android:background="@drawable/rect_recherche">
+                android:background="@drawable/rect_recherche"
+                android:imeOptions="actionSearch"
+                android:focusable="false"
+                android:iconifiedByDefault="false"
+                android:id="@+id/search_bar" >
             </SearchView>
         </LinearLayout>
+
        <LinearLayout
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" >
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="0.1" >
            <Button
                android:layout_width="50dp"
                android:layout_height="50dp"
                android:background="@drawable/filtre" />
        </LinearLayout>
+
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-            <GridView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:numColumns="3"
-                android:horizontalSpacing="10dp"
-                android:verticalSpacing="15dp"
-                android:id="@+id/grilleAssos" />
-    </LinearLayout>
+
+    <GridView
+        android:id="@+id/grilleAssos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:gravity="center"/>
 
 </LinearLayout>
