@@ -5,13 +5,14 @@ import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Indexes
+import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import org.bson.Document
 import java.util.Date
 
 class MongoDBConnection{
-    private val mongoDbPassword = "unmdppourmongodb" // à cacher !!!
-    private val CONNECTION_STRING = "mongodb+srv://luciole:$mongoDbPassword@appfranceassossantedb.oq2bv.mongodb.net/?retryWrites=true&w=majority&appName=AppFranceAssosSanteDB"
-    private val database = getMongoClient().getDatabase("AppFranceAssosSanteDB")
+    private val db_password = "unmdppourmongodb" // à cacher !!!
+    private val CONNECTION_STRING = "mongodb+srv://irenehu010:kotlin@cluster0.cspqh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    private val database = getMongoClient().getDatabase("sample_mflix")
 
     private fun getMongoClient(): MongoClient {
         return MongoClients.create(CONNECTION_STRING)
@@ -74,6 +75,7 @@ class MongoDBConnection{
             false
         }
     }
+
 
 //    // créer une clé composé
 //    fun createUniqueComposedIndexDonation() {

@@ -1,6 +1,7 @@
 package com.example.appfranceassossante.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.UserViewModel
-import com.example.appfranceassossante.Utilisateur
 import com.example.appfranceassossante.mongodb.MongoDBConnection
+
+
 
 class SeConnecterFragment : Fragment() {
 
@@ -23,7 +25,7 @@ class SeConnecterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        mongoDBConnection = MongoDBConnection()
+        //mongoDBConnection = MongoDBConnection()
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
 
         val view = inflater.inflate(R.layout.fragment_se_connecter, container, false)
