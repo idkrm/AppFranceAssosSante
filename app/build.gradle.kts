@@ -83,10 +83,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     //implementation(libs.mongodb.driver.kotlin)
     implementation(libs.mongodb.driver.sync)
-    // implementation(libs.mongodb.driver.kotlin) // pour utiliser mongodb
 
-    //retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.logging.interceptor) // pour afficher les logs des requêtes (optionnel)
+    implementation(libs.mongodb.driver.kotlin.coroutine)
+    implementation("org.slf4j:slf4j-simple:1.7.30")
+
+
+    // implementation(libs.mongodb.driver.kotlin) // pour utiliser mongodb
 }
