@@ -10,9 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
-import com.example.appfranceassossante.UserViewModel
+import com.example.appfranceassossante.models.UserViewModel
 import com.example.appfranceassossante.mongodb.MongoDBConnection
-import com.mongodb.client.MongoCollection
 
 class Inscription_adrmailFragment : Fragment() {
 

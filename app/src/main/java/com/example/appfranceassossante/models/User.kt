@@ -1,6 +1,6 @@
-package com.example.appfranceassossante
+package com.example.appfranceassossante.models
 
-class Utilisateur(
+data class User(
     val email: String,
     var civilite: String,
     var nom: String,

@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.SearchView
-import com.example.appfranceassossante.Assos
+import com.example.appfranceassossante.models.Assos
 import com.example.appfranceassossante.AssosAdapter
 import com.example.appfranceassossante.R
 

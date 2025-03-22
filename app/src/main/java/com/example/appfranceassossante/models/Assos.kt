@@ -1,4 +1,4 @@
-package com.example.appfranceassossante
+package com.example.appfranceassossante.models
 
 class Assos(
     private val nom: String,

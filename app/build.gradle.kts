@@ -83,6 +83,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     //implementation(libs.mongodb.driver.kotlin)
     implementation(libs.mongodb.driver.sync)
-
     // implementation(libs.mongodb.driver.kotlin) // pour utiliser mongodb
+
+    //retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor) // pour afficher les logs des requêtes (optionnel)
 }

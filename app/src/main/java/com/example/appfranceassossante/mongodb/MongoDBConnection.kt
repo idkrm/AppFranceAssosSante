@@ -1,10 +1,9 @@
 package com.example.appfranceassossante.mongodb
-import com.example.appfranceassossante.Don
-import com.example.appfranceassossante.Utilisateur
+import com.example.appfranceassossante.models.Don
+import com.example.appfranceassossante.models.User
 import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoCollection
-import com.mongodb.client.model.Indexes
 import org.bson.Document
 import java.util.Date
 
@@ -38,7 +37,7 @@ class MongoDBConnection{
         }
     }
 
-    fun findUserByEmail(email: String): Utilisateur? {
+    fun findUserByEmail(email: String): User? {
         val collection: MongoCollection<Document> = database.getCollection("users")
 
         // Rechercher l'utilisateur par email dans la collection
@@ -46,7 +45,7 @@ class MongoDBConnection{
 
         // Si un utilisateur est trouvé, le convertir en objet Utilisateur
         return if (document != null) {
-            Utilisateur(
+            User(
                 civilite = document.getString("civilite"),
                 nom = document.getString("nom"),
                 prenom = document.getString("prenom"),

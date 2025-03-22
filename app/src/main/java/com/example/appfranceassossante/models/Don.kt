@@ -1,4 +1,4 @@
-package com.example.appfranceassossante
+package com.example.appfranceassossante.models
 
 import java.util.Date
 

@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.appfranceassossante.R
-import com.example.appfranceassossante.UserViewModel
+import com.example.appfranceassossante.models.UserViewModel
 
 class ProfilAdminFragment : Fragment() {
 

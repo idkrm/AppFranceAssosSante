@@ -1,4 +1,4 @@
-package com.example.appfranceassossante
+package com.example.appfranceassossante.models
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

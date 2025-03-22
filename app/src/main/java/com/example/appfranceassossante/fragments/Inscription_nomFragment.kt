@@ -9,7 +9,7 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
-import com.example.appfranceassossante.UserViewModel
+import com.example.appfranceassossante.models.UserViewModel
 
 
 class Inscription_nomFragment : Fragment() {

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.appfranceassossante.models.Don
 
 class DonationAdapter(private val donations: List<Don>) : RecyclerView.Adapter<DonationAdapter.DonationViewHolder>() {
 
