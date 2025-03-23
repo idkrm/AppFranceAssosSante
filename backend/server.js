@@ -21,7 +21,6 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 
 
 // Utiliser les routes pour les utilisateurs
-// Utilisation des routes
 app.use('/users', userRoutes);
 app.use('/associations', assosRoutes);
 app.use('/donations', donRoutes);
@@ -29,5 +28,5 @@ app.use('/donations', donRoutes);
 // Démarrer le serveur
 const PORT = 5000;
 app.listen(PORT, () => {
-  console.log('Serveur en écoute sur le port ${PORT}');
+  console.log(`Serveur en écoute sur le port ${PORT}`);
 });

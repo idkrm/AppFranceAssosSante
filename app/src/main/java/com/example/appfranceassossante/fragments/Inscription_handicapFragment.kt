@@ -11,12 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.models.UserViewModel
-import com.example.appfranceassossante.mongodb.MongoDBConnection
+//import com.example.appfranceassossante.mongodb.MongoDBConnection
 
 class Inscription_handicapFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
-    private lateinit var mongoDBConnection: MongoDBConnection
+    //private lateinit var mongoDBConnection: MongoDBConnection
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +25,7 @@ class Inscription_handicapFragment : Fragment() {
         // Inflate the layout for this fragment
 
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
-        mongoDBConnection = MongoDBConnection()
+        //mongoDBConnection = MongoDBConnection()
 
         val view = inflater.inflate(R.layout.fragment_inscription_handicap, container, false)
         val handicap = view.findViewById<Spinner>(R.id.handicap)
@@ -58,15 +58,15 @@ class Inscription_handicapFragment : Fragment() {
         val userData = userViewModel.collectUserData()
 
         // Vérifiez que toutes les données nécessaires sont présentes
-        if (userData.values.all { it != null }) {
-            mongoDBConnection.saveUser(
-                userData["civilite"] ?: "",
-                userData["nom"] ?: "",
-                userData["prenom"] ?: "",
-                userData["email"] ?: "",
-                userData["mot de passe"] ?: "",
-                userData["handicap"] ?: ""
-            )
+//        if (userData.values.all { it != null }) {
+//            mongoDBConnection.saveUser(
+//                userData["civilite"] ?: "",
+//                userData["nom"] ?: "",
+//                userData["prenom"] ?: "",
+//                userData["email"] ?: "",
+//                userData["mot de passe"] ?: "",
+//                userData["handicap"] ?: ""
+//            )
 
             Toast.makeText(context, R.string.message_inscription_reussie, Toast.LENGTH_SHORT).show()
 
@@ -77,9 +77,9 @@ class Inscription_handicapFragment : Fragment() {
             transaction.replace(R.id.fragment_container, SeConnecterFragment())
             transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
             transaction.commit()
-        } else {
-            Toast.makeText(context, R.string.error_message_inscription_pas_reussi, Toast.LENGTH_SHORT).show()
-        }
+//        } else {
+//            Toast.makeText(context, R.string.error_message_inscription_pas_reussi, Toast.LENGTH_SHORT).show()
+//        }
     }
 
 }

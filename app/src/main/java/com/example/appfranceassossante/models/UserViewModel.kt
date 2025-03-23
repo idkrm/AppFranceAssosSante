@@ -3,12 +3,12 @@ package com.example.appfranceassossante.models
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.appfranceassossante.mongodb.MongoDBConnection
-import com.mongodb.kotlin.client.coroutine.MongoDatabase
+//import com.example.appfranceassossante.mongodb.MongoDBConnection
+//import com.mongodb.kotlin.client.coroutine.MongoDatabase
 
 class UserViewModel : ViewModel() {
 
-    private val mongoDBConnection = MongoDBConnection()
+   // private val mongoDBConnection = MongoDBConnection()
 
     private val _civilite = MutableLiveData<String>()
     val civilite: LiveData<String> get() = _civilite

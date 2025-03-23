@@ -13,8 +13,10 @@ import com.example.appfranceassossante.fragments.AccueilFragment
 import com.example.appfranceassossante.fragments.AssosFragment
 import com.example.appfranceassossante.fragments.DonFragment
 import com.example.appfranceassossante.fragments.SeConnecterFragment
+import com.example.appfranceassossante.models.User
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Locale
+import CreateUserTask
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +69,20 @@ class MainActivity : AppCompatActivity() {
             headerColor.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
             loadFragment(AccessibiliteFragment())
         }
+        // TEST
+        val newUser = User(
+            nom = "doe",
+            prenom = "john",
+            email = "johndoe@example.com",
+            mdp = "password123",
+            civilite = "M",
+            handicap = "Aucun",
+            role = "utilisateur"
+        )
+
+        val createUserTask = CreateUserTask()
+        createUserTask.execute(newUser)
+
     }
 
     private fun loadFragment(fragment: Fragment) {
@@ -82,7 +98,7 @@ class MainActivity : AppCompatActivity() {
 
     //recupere la langue et l'applique a l'app
     private fun updateBaseContextLocale(context: Context): Context {
-        val sharedPreferences= context.getSharedPreferences("Settings", Context.MODE_PRIVATE)
+        val sharedPreferences= context.getSharedPreferences("Settings", MODE_PRIVATE)
         val language = sharedPreferences.getString("My_Lang", "fr") ?: "fr"
 
         val locale = Locale(language)
@@ -93,4 +109,6 @@ class MainActivity : AppCompatActivity() {
 
         return context.createConfigurationContext(config)
     }
+
+
 }

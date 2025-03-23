@@ -11,12 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.models.UserViewModel
-import com.example.appfranceassossante.mongodb.MongoDBConnection
+//import com.example.appfranceassossante.mongodb.MongoDBConnection
 
 class Inscription_adrmailFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
-    private lateinit var mongoDBConnection: MongoDBConnection
+    //private lateinit var mongoDBConnection: MongoDBConnection
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,8 +36,8 @@ class Inscription_adrmailFragment : Fragment() {
             if(mailSansEspace.isEmpty()){
                 mail.error = getString(R.string.error_message_mail)
             }
-            if(mongoDBConnection.isEmailAlreadyUsed(mailSansEspace))
-                Toast.makeText(context, getString(R.string.error_message_mail_existant), Toast.LENGTH_SHORT).show()
+            //if(mongoDBConnection.isEmailAlreadyUsed(mailSansEspace))
+              //  Toast.makeText(context, getString(R.string.error_message_mail_existant), Toast.LENGTH_SHORT).show()
             else {
                 userViewModel.setMail(mailSansEspace) // Enregistre le mail
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()

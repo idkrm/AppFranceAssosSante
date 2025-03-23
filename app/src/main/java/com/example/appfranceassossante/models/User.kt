@@ -6,5 +6,6 @@ data class User(
     var nom: String,
     var mdp: String,
     var prenom: String,
-    var handicap: String
+    var handicap: String,
+    var role: String,
 )

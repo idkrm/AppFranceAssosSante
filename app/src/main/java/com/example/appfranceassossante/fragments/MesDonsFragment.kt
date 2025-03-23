@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appfranceassossante.models.Don
 import com.example.appfranceassossante.DonationAdapter
 import com.example.appfranceassossante.R
-import com.example.appfranceassossante.mongodb.MongoDBConnection
+//import com.example.appfranceassossante.mongodb.MongoDBConnection
 
 class MesDonsFragment : Fragment() {
 
@@ -37,9 +37,9 @@ class MesDonsFragment : Fragment() {
         val email = sharedPreferences.getString("user_email", null)
 
         if (email != null) {
-            val mongoDbConnection = MongoDBConnection()
-            val userDonations = mongoDbConnection.getUserDonations(email)
-            donations.addAll(userDonations)
+            //val mongoDbConnection = MongoDBConnection()
+            //val userDonations = mongoDbConnection.getUserDonations(email)
+            //donations.addAll(userDonations)
 
             donationAdapter = DonationAdapter(donations)
             recyclerView.adapter = donationAdapter
