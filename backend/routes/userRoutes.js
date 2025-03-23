@@ -2,16 +2,27 @@ const express = require('express');
 const User = require('../models/User');
 const router = express.Router();
 
-// Route pour créer un nouvel utilisateur
 router.post('/register', async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, civilite, handicap } = req.body;
 
-    // Créer un nouvel utilisateur
-    const newUser = new User({ username, email, password });
+    // Vérifier si un utilisateur avec cet email existe déjà
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Un utilisateur avec cet email existe déjà.' });
+    }
+
+    // Définir le rôle comme "utilisateur" pour tous les nouveaux enregistrements
+    const role = 'utilisateur';  // Rôle par défaut pour les nouveaux utilisateurs
+
+    // Créer un nouvel utilisateur avec le rôle par défaut "utilisateur"
+    const newUser = new User({ username, email, password, civilite, handicap, role });
+
+    // Sauvegarder l'utilisateur dans la base de données
     await newUser.save();
 
-    res.status(201).json({ message: 'Utilisateur créé', user: newUser });
+    // Répondre avec une confirmation de la création de l'utilisateur
+    res.status(201).json({ message: 'Utilisateur créé avec succès', user: newUser });
   } catch (error) {
     console.error('Erreur lors de la création de l\'utilisateur:', error);
     res.status(500).json({ message: 'Erreur du serveur' });
@@ -32,7 +43,7 @@ router.get('/users', async (req, res) => {
 // Route pour mettre à jour un utilisateur
 router.put('/update/:id', async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, civilite, handicap } = req.body;
     const userId = req.params.id;  // L'ID de l'utilisateur à mettre à jour
 
     // Mise à jour de l'utilisateur

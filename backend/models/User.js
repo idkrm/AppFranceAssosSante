@@ -1,23 +1,43 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
+  email: {
+      type: String,
+      required: true,
+      unique: true,
+  },
   username: {
     type: String,
     required: true,
-    unique: true
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true
   },
   password: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
+  civilite: {
+    type: String,
+    enum: ['H', 'F','Autre'],
+    required: true,
+  },
+  nom: {
+    type: String,
+    required: true,
+  },
+  prenom: {
+    type: String,
+    required: true,
+  },
+  handicap: {
+    type: String,
+    default: null, // Champs optionnel
+  },
+  role: {
+    type: String,
+    enum: ['utilisateur', 'administrateur'],
+    required: true,
+  },
 });
 
-// Création du modèle User basé sur le schéma
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
