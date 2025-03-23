@@ -1,5 +1,5 @@
 const express = require('express');
-const Association = require('../models/Association');
+const Association = require('../models/Assos');
 
 const router = express.Router();
 

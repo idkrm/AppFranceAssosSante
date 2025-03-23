@@ -1,8 +1,8 @@
 const express = require('express');
-const Donation = require('../models/Donation');
-const RecurringDonation = require('../models/RecurringDonation');
+const Donation = require('../models/Don');
+const RecurringDonation = require('../models/DonRec');
 const User = require('../models/User');
-const Association = require('../models/Association');
+const Association = require('../models/Assos');
 
 const router = express.Router();
 
