@@ -86,7 +86,7 @@ dependencies {
 
     implementation(libs.mongodb.driver.kotlin.coroutine)
     implementation("org.slf4j:slf4j-simple:1.7.30")
-
-
+    //couroutines
+    implementation(libs.kotlinx.coroutines.android)
     // implementation(libs.mongodb.driver.kotlin) // pour utiliser mongodb
 }

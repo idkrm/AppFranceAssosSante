@@ -6,17 +6,13 @@ const userSchema = new mongoose.Schema({
       required: true,
       unique: true,
   },
-  username: {
-    type: String,
-    required: true,
-  },
-  password: {
+  mdp: {
     type: String,
     required: true,
   },
   civilite: {
     type: String,
-    enum: ['H', 'F','Autre'],
+    enum: ['M', 'F','Autre'],
     required: true,
   },
   nom: {

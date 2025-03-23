@@ -17,6 +17,9 @@ import com.example.appfranceassossante.models.User
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Locale
 import CreateUserTask
+import android.util.Log
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,20 +72,25 @@ class MainActivity : AppCompatActivity() {
             headerColor.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
             loadFragment(AccessibiliteFragment())
         }
-        // TEST
-        val newUser = User(
-            nom = "doe",
-            prenom = "john",
-            email = "johndoe@example.com",
-            mdp = "password123",
-            civilite = "M",
-            handicap = "Aucun",
-            role = "utilisateur"
-        )
 
-        val createUserTask = CreateUserTask()
-        createUserTask.execute(newUser)
+    }
+    // Fonction pour appeler la tâche de création d'utilisateur
+    private fun createUser(user: User) {
+        // Lancer la coroutine dans le scope global
+        GlobalScope.launch {
+            val createUserTask = CreateUserTask()  // Crée une instance de la classe CreateUserTask
+            val result = createUserTask.createUser(user)  // Appelle la fonction suspendue
 
+            // Appeler la méthode onPostExecute (ou UI callback) pour gérer le résultat
+            runOnUiThread {
+                onPostExecute(result)  // Mettre à jour l'UI avec le résultat
+            }
+        }
+    }
+
+    // Fonction pour traiter la réponse après l'exécution de la tâche
+    private fun onPostExecute(result: String) {
+        Log.d("CreateUserTask", result)  // Affiche le résultat dans le log
     }
 
     private fun loadFragment(fragment: Fragment) {

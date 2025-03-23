@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.post('/register', async (req, res) => {
   try {
-    const { username, email, password, civilite, handicap } = req.body;
+    const { nom, prenom, email, mdp, civilite, handicap } = req.body;
 
     // Vérifier si un utilisateur avec cet email existe déjà
     const existingUser = await User.findOne({ email });
@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
     const role = 'utilisateur';  // Rôle par défaut pour les nouveaux utilisateurs
 
     // Créer un nouvel utilisateur avec le rôle par défaut "utilisateur"
-    const newUser = new User({ username, email, password, civilite, handicap, role });
+    const newUser = new User({ nom, prenom, email, mdp, civilite, handicap, role });
 
     // Sauvegarder l'utilisateur dans la base de données
     await newUser.save();
@@ -43,13 +43,13 @@ router.get('/users', async (req, res) => {
 // Route pour mettre à jour un utilisateur
 router.put('/update/:id', async (req, res) => {
   try {
-    const { username, email, password, civilite, handicap } = req.body;
+    const { nom, prenom, email, password, civilite, handicap } = req.body;
     const userId = req.params.id;  // L'ID de l'utilisateur à mettre à jour
 
     // Mise à jour de l'utilisateur
     const updatedUser = await User.findByIdAndUpdate(
       userId,  // ID de l'utilisateur à mettre à jour
-      { username, email, password },  // Données à mettre à jour
+      { nom, prenom, email, password },  // Données à mettre à jour
       { new: true }  // Retourne le nouvel utilisateur mis à jour
     );
 
