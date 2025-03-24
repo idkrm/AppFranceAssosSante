@@ -79,17 +79,17 @@ class MainActivity : AppCompatActivity() {
         }
         // TEST
         val newUser = User(
-            "nouveauMail@ex.fr",
-            "F",
-            "doe",
-            "unNvmdp",
-            "Jane",
-            "non",
-            "Utilisateur",
+            nom = "doe",
+            prenom = "john",
+            email = "johndoe@example.com",
+            mdp = "password123",
+            civilite = "M",
+            handicap = "Aucun",
+            admin = null,
         )
-        val updateUserTask = UpdateUserTask(this)
-        val email = "johndoe@example.com"
-        updateUserTask.execute(email, newUser)
+
+        val createUserTask = CreateUserTask(this)
+        createUserTask.execute(newUser)
 
         //FIN TEST
     }
@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         // Lancer la coroutine dans le scope global
         lifecycleScope.launch {
             try {
-                val createUserTask = CreateUserTask()
+                val createUserTask = CreateUserTask( )
                 val result = createUserTask.createUser(user)
                 withContext(Dispatchers.Main) {
                     handleCreateUserResult(result)

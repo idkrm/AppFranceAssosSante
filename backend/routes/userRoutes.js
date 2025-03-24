@@ -10,13 +10,10 @@ router.post('/register', async (req, res) => {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'Un utilisateur avec cet email existe déjà.' });
-    }
-
-    // Définir le rôle comme "utilisateur" pour tous les nouveaux enregistrements
-    const role = 'utilisateur';  // Rôle par défaut pour les nouveaux utilisateurs
+    };
 
     // Créer un nouvel utilisateur avec le rôle par défaut "utilisateur"
-    const newUser = new User({ nom, prenom, email, mdp, civilite, handicap, role });
+    const newUser = new User({ nom, prenom, email, mdp, civilite, handicap });
 
     // Sauvegarder l'utilisateur dans la base de données
     await newUser.save();

@@ -27,10 +27,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: null, // Champs optionnel
   },
-  role: {
-    type: String,
-    enum: ['utilisateur', 'administrateur'],
-    required: true,
+  admin: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Assos',
+    default: null, // Champs optionnel
   },
 });
 

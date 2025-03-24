@@ -82,7 +82,7 @@ class CreateUserTask(private val context: Context) {
                                 mdp = jsonResponse.getString("mdp"),
                                 civilite = jsonResponse.optString("civilite"),
                                 handicap = jsonResponse.optString("handicap"),
-                                role = jsonResponse.optString("role")
+                                admin = jsonResponse.optString("admin")
                             )
                         }
                     }
