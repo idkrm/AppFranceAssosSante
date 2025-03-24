@@ -23,6 +23,7 @@ class InscriptionFragment : Fragment() {
     ): View? {
 
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+        userViewModel.reinitialiserDonnees()
 
         val view = inflater.inflate(R.layout.fragment_inscription, container, false)
 

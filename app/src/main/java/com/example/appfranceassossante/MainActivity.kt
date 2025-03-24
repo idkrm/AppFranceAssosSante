@@ -17,13 +17,14 @@ import com.example.appfranceassossante.models.User
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Locale
 import CreateUserTask
-import DeleteUserTask
-import GetUserTask
+import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
 import androidx.core.content.ContentProviderCompat.requireContext
-import com.example.appfranceassossante.apiService.UpdateUserTask
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,8 +93,39 @@ class MainActivity : AppCompatActivity() {
 
         //FIN TEST
     }
+    // Fonction pour appeler la tâche de création d'utilisateur
+    private fun createUser(user: User) {
+        // Lancer la coroutine dans le scope global
+        lifecycleScope.launch {
+            try {
+                val createUserTask = CreateUserTask()
+                val result = createUserTask.createUser(user)
+                withContext(Dispatchers.Main) {
+                    handleCreateUserResult(result)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error creating user", e)
+                withContext(Dispatchers.Main) {
+                    // Afficher un message d'erreur à l'utilisateur
+                }
+            }
+        }
+    }
 
+    private fun handleCreateUserResult(result: Boolean) {
+        if (result) {
+            Log.d(TAG, "Utilisateur a été créé avec succès")
+            // Naviguer vers l'écran suivant ou afficher un message de succès
+        } else {
+            Log.d(TAG, "Echec de la création de l'utilisateur")
+            // Afficher un message d'erreur à l'utilisateur
+        }
+    }
 
+    // Fonction pour traiter la réponse après l'exécution de la tâche
+    private fun onPostExecute(result: String) {
+        Log.d("CreateUserTask", result)  // Affiche le résultat dans le log
+    }
 
     private fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()

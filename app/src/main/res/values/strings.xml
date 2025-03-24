@@ -124,4 +124,6 @@
     <string name="error_message_mail_existant">This email is already in use</string>
     <string name="error_message_mdp_incorrect">Password incorrect</string>
     <string name="error_message_champs_vides">Complete all fields</string>
+    <string name="error_connexion">Connection error</string>
+    <string name="error_message_connexion">Server connection error</string>
 </resources>

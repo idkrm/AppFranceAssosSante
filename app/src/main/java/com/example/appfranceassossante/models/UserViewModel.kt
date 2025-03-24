@@ -3,12 +3,9 @@ package com.example.appfranceassossante.models
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-//import com.example.appfranceassossante.mongodb.MongoDBConnection
-//import com.mongodb.kotlin.client.coroutine.MongoDatabase
+import com.example.appfranceassossante.models.User
 
 class UserViewModel : ViewModel() {
-
-   // private val mongoDBConnection = MongoDBConnection()
 
     private val _civilite = MutableLiveData<String>()
     val civilite: LiveData<String> get() = _civilite
@@ -27,6 +24,9 @@ class UserViewModel : ViewModel() {
 
     private val _handicap = MutableLiveData<String>()
     val handicap : LiveData<String> get() = _handicap
+
+    private val _role = MutableLiveData<String>()
+    val role : LiveData<String> get() = _role
 
     fun setCivilite(value: String) {
         _civilite.value = value
@@ -52,14 +52,19 @@ class UserViewModel : ViewModel() {
         _handicap.value = value
     }
 
-    fun collectUserData(): Map<String, String?> {
-        return mapOf(
-            "civilite" to _civilite.value,
-            "nom" to _nom.value,
-            "prenom" to _prenom.value,
-            "email" to _mail.value,
-            "mot de passe" to _mdp.value,
-            "handicap" to _handicap.value,
+    fun setRole(value: String) {
+        _role.value = value
+    }
+
+    fun collectUserData(): User {
+        return User(
+            civilite = _civilite.value ?: "",
+            nom = _nom.value ?: "",
+            prenom = _prenom.value ?: "",
+            email = _mail.value ?: "",
+            mdp = _mdp.value ?: "",
+            handicap = _handicap.value ?: "",
+            role = _role.value ?: ""
         )
     }
 
@@ -70,6 +75,17 @@ class UserViewModel : ViewModel() {
         _mail.value = null
         _mdp.value = null
         _handicap.value = null
+        _role.value = null
+    }
+
+    fun updateUserData(user: User){
+        setCivilite(user.civilite)
+        setNom(user.nom)
+        setPrenom(user.prenom)
+        setMail(user.email)
+        setMdp(user.mdp)
+        setHandicap(user.handicap)
+        setRole(user.role)
     }
 
     /*

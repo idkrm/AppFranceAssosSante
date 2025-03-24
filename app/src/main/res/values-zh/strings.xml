@@ -117,4 +117,6 @@
     <string name="error_message_mail_existant">这个邮件已被使用</string>
     <string name="error_message_mdp_incorrect">密码错误</string>
     <string name="error_message_champs_vides">填写所有项目</string>
+    <string name="error_connexion">连接错误</string>
+    <string name="error_message_connexion">服务器连接错误</string>
 </resources>
