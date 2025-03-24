@@ -1,54 +1,51 @@
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import com.example.appfranceassossante.models.User
-import kotlinx.coroutines.launch
 
-class CreateUserTask(private val context: Context) {
+class DeleteUserTask(private val context: Context) {
 
-    suspend fun createUserInBG(user: User): Boolean {
+    suspend fun deleteUserInBG(email: String): Boolean {
         return withContext(Dispatchers.IO) {
             try {
-                val url = URL("http://10.0.2.2:5000/users/register")
+
+                val url = URL("http://10.0.2.2:5000/users/delete")
                 val connection = url.openConnection() as HttpURLConnection
-                connection.requestMethod = "POST"
+                connection.requestMethod = "DELETE"
                 connection.setRequestProperty("Content-Type", "application/json")
                 connection.doOutput = true
 
                 val jsonBody = JSONObject().apply {
-                    put("nom", user.nom)
-                    put("prenom", user.prenom)
-                    put("email", user.email)
-                    put("mdp", user.mdp)
-                    put("civilite", user.civilite)
-                    put("handicap", user.handicap)
+                    put("email", email)
                 }
+                Log.d("DeleteUserTask", "JSON envoyé: $jsonBody") //
 
                 val outputStream: OutputStream = connection.outputStream
                 outputStream.write(jsonBody.toString().toByteArray())
                 outputStream.flush()
 
                 val responseCode = connection.responseCode
-                if (responseCode == HttpURLConnection.HTTP_CREATED) {
+                val responseMessage = connection.responseMessage//
+                Log.d("DeleteUserTask", "Code: $responseCode, Message: $responseMessage") //
+                if (responseCode == HttpURLConnection.HTTP_OK) {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Utilisateur créé avec succès", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Utilisateur supprimé avec succès", Toast.LENGTH_SHORT).show()
                     }
                     true
                 } else {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Erreur lors de la création. Code: $responseCode", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Erreur lors de la suppression. Code: $responseCode", Toast.LENGTH_SHORT).show()
                     }
                     false
                 }
             } catch (e: Exception) {
-                Log.e("CreateUserTask", "Erreur réseau", e)
+                Log.e("DeleteUserTask", "Erreur réseau", e)
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, "Erreur de connexion: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
@@ -57,10 +54,10 @@ class CreateUserTask(private val context: Context) {
         }
     }
 
-    fun execute(user: User) {
+    fun execute(email: String) {
         kotlinx.coroutines.CoroutineScope(Dispatchers.Main).launch {
-            val success = createUserInBG(user)
-            Log.d(TAG, "Tâche terminée - Succès: $success")
+            val success = deleteUserInBG(email)
+            Log.d("DeleteUserTask", "Tâche terminée - Succès: $success")
         }
     }
 }

@@ -65,23 +65,57 @@ router.put('/update/:id', async (req, res) => {
 });
 
 // Route pour supprimer un utilisateur
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete', async (req, res) => {
+    console.log("Requête DELETE reçue");
   try {
-    const userId = req.params.id;  // L'ID de l'utilisateur à supprimer
+    const { email } = req.body; // Destructuration pour extraire l'email
+
+    if (!email) {
+      return res.status(400).json({ message: 'Email requis' });
+    }
 
     // Suppression de l'utilisateur
-    const deletedUser = await User.findByIdAndDelete(userId);
+    const deletedUser = await User.findOneAndDelete({ email: email });
 
     if (!deletedUser) {
       return res.status(404).json({ message: 'Utilisateur non trouvé' });
     }
 
-    res.status(200).json({ message: 'Utilisateur supprimé' });
+    res.status(200).json({
+      message: 'Utilisateur supprimé',
+      deletedUser: {
+        email: deletedUser.email,
+        id: deletedUser._id
+      }
+    });
   } catch (error) {
-    console.error('Erreur lors de la suppression de l\'utilisateur:', error);
+    console.error('Erreur lors de la suppression:', error);
+    res.status(500).json({
+      message: 'Erreur du serveur',
+      error: error.message
+    });
+  }
+});
+
+// Route pour récupérer un utilisateur par email
+router.get('/user/:email', async (req, res) => {
+  try {
+    const userEmail = req.params.email;  // L'email passé dans les paramètres de l'URL
+
+    // Recherche de l'utilisateur par email
+    const user = await User.findOne({ email: userEmail });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' });
+    }
+
+    res.status(200).json(user);  // Répond avec l'utilisateur trouvé
+  } catch (error) {
+    console.error('Erreur lors de la récupération de l\'utilisateur par email:', error);
     res.status(500).json({ message: 'Erreur du serveur' });
   }
 });
+
 
 
 module.exports = router;
