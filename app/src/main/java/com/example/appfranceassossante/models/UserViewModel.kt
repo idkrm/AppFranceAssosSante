@@ -24,8 +24,8 @@ class UserViewModel : ViewModel() {
     private val _handicap = MutableLiveData<String>()
     val handicap : LiveData<String> get() = _handicap
 
-    private val _admin = MutableLiveData<String>()
-    val admin : LiveData<String> get() = _admin
+    private val _admin = MutableLiveData<Assos?>()
+    val admin : LiveData<Assos?> get() = _admin
 
     fun setCivilite(value: String) {
         _civilite.value = value
@@ -51,7 +51,7 @@ class UserViewModel : ViewModel() {
         _handicap.value = value
     }
 
-    fun setAdmin(value: String?) {
+    fun setAdmin(value: Assos?) {
         _admin.value = value
     }
 
@@ -63,7 +63,7 @@ class UserViewModel : ViewModel() {
             email = _mail.value ?: "",
             mdp = _mdp.value ?: "",
             handicap = _handicap.value ?: "",
-            admin = _admin.value ?: ""
+            admin = _admin.value
         )
     }
 

@@ -1,5 +1,7 @@
 package com.example.appfranceassossante.models
 
+import androidx.lifecycle.MutableLiveData
+
 data class User(
     val email: String,
     var civilite: String,
@@ -7,5 +9,5 @@ data class User(
     var mdp: String,
     var prenom: String,
     var handicap: String,
-    var admin: String?,
+    var admin: Assos?,
 )

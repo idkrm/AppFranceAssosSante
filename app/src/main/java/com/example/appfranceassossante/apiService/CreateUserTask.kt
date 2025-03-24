@@ -3,6 +3,7 @@ import com.example.appfranceassossante.models.User
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.widget.Toast
+import com.example.appfranceassossante.models.Assos
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONException
@@ -31,6 +32,12 @@ class CreateUserTask(private val context: Context) {
                     put("mdp", user.mdp)
                     put("civilite", user.civilite)
                     put("handicap", user.handicap)
+                    user.admin?.let {
+                        put("admin", JSONObject().apply {
+                            put("nom", it.getAssosName())
+                            put("logo", it.getAssosLogo())
+                        })
+                    }
                 }
 
                 connection.outputStream.use { outputStream ->
@@ -82,7 +89,12 @@ class CreateUserTask(private val context: Context) {
                                 mdp = jsonResponse.getString("mdp"),
                                 civilite = jsonResponse.optString("civilite"),
                                 handicap = jsonResponse.optString("handicap"),
-                                admin = jsonResponse.optString("admin")
+                                admin = jsonResponse.optJSONObject("admin")?.let {
+                                    Assos(
+                                        nom = it.optString("nom", ""),
+                                        logo = it.optInt("logo", 0)
+                                    )
+                                }
                             )
                         }
                     }
