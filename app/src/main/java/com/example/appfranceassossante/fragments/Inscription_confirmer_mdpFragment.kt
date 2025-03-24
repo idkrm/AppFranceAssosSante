@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.models.UserViewModel
 
@@ -20,6 +21,8 @@ class Inscription_confirmer_mdpFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+        userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
 
         val view = inflater.inflate(R.layout.fragment_inscription_confirmer_mdp, container, false)
         val confirmerMdp = view.findViewById<EditText>(R.id.confirmer_mdp)

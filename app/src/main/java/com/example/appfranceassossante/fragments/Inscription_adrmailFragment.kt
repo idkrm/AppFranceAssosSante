@@ -16,7 +16,6 @@ import com.example.appfranceassossante.models.UserViewModel
 class Inscription_adrmailFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
-    //private lateinit var mongoDBConnection: MongoDBConnection
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
