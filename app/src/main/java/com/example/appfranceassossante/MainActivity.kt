@@ -21,6 +21,7 @@ import DeleteUserTask
 import GetUserTask
 import android.util.Log
 import androidx.core.content.ContentProviderCompat.requireContext
+import com.example.appfranceassossante.apiService.UpdateUserTask
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -76,25 +77,18 @@ class MainActivity : AppCompatActivity() {
             loadFragment(AccessibiliteFragment())
         }
         // TEST
+        val newUser = User(
+            "nouveauMail@ex.fr",
+            "F",
+            "doe",
+            "unNvmdp",
+            "Jane",
+            "non",
+            "Utilisateur",
+        )
+        val updateUserTask = UpdateUserTask(this)
         val email = "johndoe@example.com"
-        val getUserTask = GetUserTask(this)
-
-        getUserTask.execute(email) { userData ->
-            userData?.let {
-                try {
-                    val nom = it.getString("nom")
-                    val prenom = it.getString("prenom")
-
-                    Log.d("UserInfo", "Nom complet: $prenom $nom")
-                    Log.d("UserInfo", "Données complètes: ${it.toString()}")
-
-                } catch (e: Exception) {
-                    Log.e("UserInfo", "Erreur de parsing JSON", e)
-                }
-            } ?: run {
-                Log.d("UserInfo", "Aucune donnée utilisateur trouvée")
-            }
-        }
+        updateUserTask.execute(email, newUser)
 
         //FIN TEST
     }

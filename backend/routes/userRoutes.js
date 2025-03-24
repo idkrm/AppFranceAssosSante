@@ -40,27 +40,38 @@ router.get('/users', async (req, res) => {
   }
 });
 
-// Route pour mettre à jour un utilisateur
-router.put('/update/:id', async (req, res) => {
+router.put('/update/:userEmail', async (req, res) => {
   try {
-    const { nom, prenom, email, password, civilite, handicap } = req.body;
-    const userId = req.params.id;  // L'ID de l'utilisateur à mettre à jour
+    const { nom, prenom, email, mdp, civilite, handicap } = req.body;
+    const userEmail = req.params.userEmail;
 
-    // Mise à jour de l'utilisateur
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,  // ID de l'utilisateur à mettre à jour
-      { nom, prenom, email, password },  // Données à mettre à jour
-      { new: true }  // Retourne le nouvel utilisateur mis à jour
+    // Correction: Utiliser un objet pour le filtre
+    const updatedUser = await User.findOneAndUpdate(
+      { email: userEmail },
+      {
+        $set: {
+          nom,
+          prenom,
+          email,
+          mdp,
+          civilite,
+          handicap
+        }
+      },
+      { new: true }
     );
 
     if (!updatedUser) {
       return res.status(404).json({ message: 'Utilisateur non trouvé' });
     }
 
-    res.status(200).json({ message: 'Utilisateur mis à jour', user: updatedUser });
+    res.status(200).json(updatedUser);
   } catch (error) {
-    console.error('Erreur lors de la mise à jour de l\'utilisateur:', error);
-    res.status(500).json({ message: 'Erreur du serveur' });
+    console.error('Erreur:', error);
+    res.status(500).json({
+      message: 'Erreur du serveur',
+      error: error.message
+    });
   }
 });
 
