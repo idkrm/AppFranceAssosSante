@@ -1,31 +1,38 @@
+import android.content.Context
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
 
-class GetUserTask {
-    suspend fun getUserByEmail(email: String): String {
-        return withContext(Dispatchers.IO) {  // Exécute en arrière-plan (thread IO)
+class GetUserTask(private val context: Context) {
+
+    suspend fun getUserInBG(email: String): JSONObject? {
+        return withContext(Dispatchers.IO) {
             try {
-                val url = URL("http://10.0.2.2:5000/users/user?email=$email") // URL du serveur avec l'email en paramètre
+                val url = URL("http://10.0.2.2:5000/users/user/$email")
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "GET"
-                connection.setRequestProperty("Content-Type", "application/json")
 
-                // Lire la réponse du serveur
-                val responseCode = connection.responseCode
-                return@withContext if (responseCode == HttpURLConnection.HTTP_OK) {
-                    val inputStream = connection.inputStream
-                    val response = inputStream.bufferedReader().use { it.readText() }
-                    response
+                if (connection.responseCode == HttpURLConnection.HTTP_OK) {
+                    val response = connection.inputStream.bufferedReader().use { it.readText() }
+                    JSONObject(response)
                 } else {
-                    "Erreur lors de la récupération de l'utilisateur. Code de réponse: $responseCode"
+                    null
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
-                return@withContext "Erreur de connexion : ${e.message}"
+                Log.e("GetUserTask", "Error fetching user", e)
+                null
             }
+        }
+    }
+
+    fun execute(email: String, callback: (JSONObject?) -> Unit) {
+        kotlinx.coroutines.CoroutineScope(Dispatchers.Main).launch {
+            val userData = getUserInBG(email)
+            callback(userData)
         }
     }
 }

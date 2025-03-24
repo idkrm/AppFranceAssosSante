@@ -18,6 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Locale
 import CreateUserTask
 import DeleteUserTask
+import GetUserTask
 import android.util.Log
 import androidx.core.content.ContentProviderCompat.requireContext
 import kotlinx.coroutines.GlobalScope
@@ -75,10 +76,26 @@ class MainActivity : AppCompatActivity() {
             loadFragment(AccessibiliteFragment())
         }
         // TEST
-        val email="test2@example.com"
+        val email = "johndoe@example.com"
+        val getUserTask = GetUserTask(this)
 
-        val deleteUserTask = DeleteUserTask(this)
-        deleteUserTask.execute(email)
+        getUserTask.execute(email) { userData ->
+            userData?.let {
+                try {
+                    val nom = it.getString("nom")
+                    val prenom = it.getString("prenom")
+
+                    Log.d("UserInfo", "Nom complet: $prenom $nom")
+                    Log.d("UserInfo", "Données complètes: ${it.toString()}")
+
+                } catch (e: Exception) {
+                    Log.e("UserInfo", "Erreur de parsing JSON", e)
+                }
+            } ?: run {
+                Log.d("UserInfo", "Aucune donnée utilisateur trouvée")
+            }
+        }
+
         //FIN TEST
     }
 
