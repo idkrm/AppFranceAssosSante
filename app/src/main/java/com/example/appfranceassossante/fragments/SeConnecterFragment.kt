@@ -86,10 +86,10 @@ class SeConnecterFragment : Fragment() {
 
     private fun successfulLogin(user: User) {
         userViewModel.updateUserData(user)
-        val fragment = when (user.role) {
-            "administrateur" -> ProfilAdminFragment() // remplace le fragment actuel par le fragment qui suit ("ProfilAdminFragment")
-            else -> ProfilFragment() // remplace le fragment actuel par le fragment qui suit ("ProfilFragment")
-        }
+        val fragment = when (user.admin) {
+            null -> ProfilFragment() // remplace le fragment actuel par le fragment qui suit ("ProfilFragment")
+            else -> ProfilAdminFragment() // remplace le fragment actuel par le fragment qui suit ("ProfilAdminFragment")
+    }
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)
         transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)

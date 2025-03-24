@@ -21,8 +21,6 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
-import androidx.core.content.ContentProviderCompat.requireContext
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 

@@ -3,7 +3,6 @@ package com.example.appfranceassossante.models
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.appfranceassossante.models.User
 
 class UserViewModel : ViewModel() {
 
@@ -25,8 +24,8 @@ class UserViewModel : ViewModel() {
     private val _handicap = MutableLiveData<String>()
     val handicap : LiveData<String> get() = _handicap
 
-    private val _role = MutableLiveData<String>()
-    val role : LiveData<String> get() = _role
+    private val _admin = MutableLiveData<String>()
+    val admin : LiveData<String> get() = _admin
 
     fun setCivilite(value: String) {
         _civilite.value = value
@@ -52,8 +51,8 @@ class UserViewModel : ViewModel() {
         _handicap.value = value
     }
 
-    fun setRole(value: String) {
-        _role.value = value
+    fun setAdmin(value: String?) {
+        _admin.value = value
     }
 
     fun collectUserData(): User {
@@ -64,7 +63,7 @@ class UserViewModel : ViewModel() {
             email = _mail.value ?: "",
             mdp = _mdp.value ?: "",
             handicap = _handicap.value ?: "",
-            role = _role.value ?: ""
+            admin = _admin.value ?: ""
         )
     }
 
@@ -75,7 +74,7 @@ class UserViewModel : ViewModel() {
         _mail.value = null
         _mdp.value = null
         _handicap.value = null
-        _role.value = null
+        _admin.value = null
     }
 
     fun updateUserData(user: User){
@@ -85,7 +84,7 @@ class UserViewModel : ViewModel() {
         setMail(user.email)
         setMdp(user.mdp)
         setHandicap(user.handicap)
-        setRole(user.role)
+        setAdmin(user.admin)
     }
 
     /*
