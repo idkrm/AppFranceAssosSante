@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appfranceassossante.models.Don
 
-class DonationAdapter(private val donations: List<Don>) : RecyclerView.Adapter<DonationAdapter.DonationViewHolder>() {
+class DonationAdapter(private var donations: List<Don>) : RecyclerView.Adapter<DonationAdapter.DonationViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DonationViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_don, parent, false)
@@ -21,6 +21,11 @@ class DonationAdapter(private val donations: List<Don>) : RecyclerView.Adapter<D
 
     override fun getItemCount(): Int {
         return donations.size
+    }
+
+    fun updateData(newDonations: List<Don>) {
+        donations = newDonations
+        notifyDataSetChanged()
     }
 
     class DonationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

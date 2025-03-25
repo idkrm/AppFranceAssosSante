@@ -82,8 +82,8 @@
     <string name="monsieur">Mr</string>
     <string name="sansreponse">Do not wish to respond</string>
     <string name="autre">Other</string>
-    <string name="inscription_nom">Lastname *</string>
-    <string name="inscription_prenom">Firstname *</string>
+    <string name="inscription_nom">Last name *</string>
+    <string name="inscription_prenom">First name *</string>
     <string name="inscription_adrmail">Email address *</string>
     <string name="inscription_mdp">Password *</string>
     <string name="inscription_handicap">Handicap *</string>
