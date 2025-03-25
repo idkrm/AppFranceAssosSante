@@ -1,6 +1,7 @@
 package com.example.appfranceassossante.fragments
 
 import CreateUserTask
+import GetUserTask
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,14 +18,10 @@ import com.example.appfranceassossante.models.User
 import com.example.appfranceassossante.models.UserViewModel
 import kotlinx.coroutines.launch
 
-//import com.example.appfranceassossante.mongodb.MongoDBConnection
-
-
-
 class SeConnecterFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
-    private lateinit var createUserTask: CreateUserTask
+    private lateinit var getUserTask: GetUserTask
 
     private lateinit var mail: EditText
     private lateinit var mdp: EditText
@@ -34,7 +31,7 @@ class SeConnecterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
-        createUserTask = CreateUserTask(requireContext())
+        getUserTask = GetUserTask(requireContext())
 
         val view = inflater.inflate(R.layout.fragment_se_connecter, container, false)
 
@@ -71,7 +68,7 @@ class SeConnecterFragment : Fragment() {
     private fun tryLogin(email: String, motdp: String) {
         lifecycleScope.launch {
             try {
-                val user = createUserTask.findUserByMail(email)
+                val user = getUserTask.getUserInBG(email)
                 when {
                     user == null -> showToast(R.string.error_message_user_non_existant)
                     !motdp.equals(user.mdp) -> showToast(R.string.error_message_mdp_incorrect)

@@ -163,6 +163,7 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/legacy"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/mention"
@@ -170,6 +171,7 @@
             android:background="@drawable/fond_gris_arrondi"/>
 
         <Button
+            android:id="@+id/policy"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/politique"
@@ -177,6 +179,7 @@
             android:background="@drawable/fond_gris_arrondi"/>
 
         <Button
+            android:id="@+id/condition"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/condition"

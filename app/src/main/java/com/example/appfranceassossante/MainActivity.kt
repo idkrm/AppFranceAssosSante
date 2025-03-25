@@ -96,8 +96,8 @@ class MainActivity : AppCompatActivity() {
         // Lancer la coroutine dans le scope global
         lifecycleScope.launch {
             try {
-                val createUserTask = CreateUserTask()
-                val result = createUserTask.createUser(user)
+                val createUserTask = CreateUserTask(this@MainActivity)
+                val result = createUserTask.createUserInBG(user)
                 withContext(Dispatchers.Main) {
                     handleCreateUserResult(result)
                 }

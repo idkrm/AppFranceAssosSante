@@ -80,7 +80,7 @@ class Inscription_handicapFragment : Fragment() {
         }
         lifecycleScope.launch {
             try {
-                val userCreated = createUserTask.createUser(userData)
+                val userCreated = createUserTask.createUserInBG(userData)
                 if (userCreated) {
                     showToast(R.string.message_inscription_reussie)
                     userViewModel.reinitialiserDonnees()

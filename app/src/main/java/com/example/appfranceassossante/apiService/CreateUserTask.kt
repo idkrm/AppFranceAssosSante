@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class CreateUserTask(private val context: Context) {
 
-    suspend fun createUser(user: User): Boolean {
+    suspend fun createUserInBG(user: User): Boolean {
         return withContext(Dispatchers.IO) {
             try {
                 val url = URL("http://10.0.2.2:5000/users/register")
@@ -63,60 +63,6 @@ class CreateUserTask(private val context: Context) {
         }
     }
 
-    suspend fun findUserByMail(email: String): User? {
-        return withContext(Dispatchers.IO) {
-            try {
-                val url = URL("http://10.0.2.2:5000/users/findUser")
-                val connection = url.openConnection() as HttpURLConnection
-                connection.requestMethod = "POST"
-                connection.setRequestProperty("Content-Type", "application/json")
-                connection.doOutput = true
-
-                JSONObject().apply {
-                    put("email", email)
-                }.toString().toByteArray().let { jsonData ->
-                    connection.outputStream.use { it.write(jsonData) }
-                }
-
-                when (connection.responseCode) {
-                    HttpURLConnection.HTTP_OK -> {
-                        connection.inputStream.bufferedReader().use { reader ->
-                            val jsonResponse = JSONObject(reader.readText())
-                            User(
-                                nom = jsonResponse.optString("nom"),
-                                prenom = jsonResponse.optString("prenom"),
-                                email = jsonResponse.getString("email"),
-                                mdp = jsonResponse.getString("mdp"),
-                                civilite = jsonResponse.optString("civilite"),
-                                handicap = jsonResponse.optString("handicap"),
-                                admin = jsonResponse.optJSONObject("admin")?.let {
-                                    Assos(
-                                        nom = it.optString("nom", ""),
-                                        logo = it.optInt("logo", 0)
-                                    )
-                                }
-                            )
-                        }
-                    }
-                    HttpURLConnection.HTTP_NOT_FOUND -> null
-                    else -> {
-                        Log.e(TAG, "Erreur serveur: ${connection.responseCode}")
-                        null
-                    }
-                }
-            } catch (e: SocketTimeoutException) {
-                Log.e(TAG, "Timeout serveur", e)
-                null
-            } catch (e: JSONException) {
-                Log.e(TAG, "Erreur de parsing JSON", e)
-                null
-            } catch (e: Exception) {
-                Log.e(TAG, "Erreur réseau", e)
-                null
-            }
-        }
-    }
-
     private suspend fun showToast(message: String) {
         withContext(Dispatchers.Main) {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
@@ -125,7 +71,7 @@ class CreateUserTask(private val context: Context) {
 
     fun execute(user: User) {
         kotlinx.coroutines.CoroutineScope(Dispatchers.Main).launch {
-            val success = createUser(user)
+            val success = createUserInBG(user)
             Log.d(TAG, "Tâche terminée - Succès: $success")
         }
     }
