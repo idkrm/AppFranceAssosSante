@@ -89,4 +89,6 @@ dependencies {
     //couroutines
     implementation(libs.kotlinx.coroutines.android)
     // implementation(libs.mongodb.driver.kotlin) // pour utiliser mongodb
+
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

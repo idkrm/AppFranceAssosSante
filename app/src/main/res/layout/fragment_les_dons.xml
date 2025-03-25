@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="20dp"
     android:orientation="vertical">
 
@@ -27,6 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
+            android:textStyle="bold"
             android:text="@string/total"/>
 
         <Spinner
@@ -78,6 +84,15 @@
             android:layout_height="match_parent"
             android:text="Place pour le diagramme"/>
 
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/graph_bar"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="15dp"
+            app:domainTitle="R.string.annee"
+            app:rangeTitle="R.string.euro"
+            app:lineLabelsPosition="left|bottom"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -92,9 +107,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
+            android:textStyle="bold"
             android:text="@string/donsrec"/>
 
         <Spinner
+            android:id="@+id/totalrec"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/spinner_style"
@@ -141,5 +158,71 @@
             android:layout_height="match_parent"
             android:text="Place pour le tableau"/>
 
+        <!-- Tableau des dons -->
+        <TableLayout
+            android:id="@+id/tabledon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="12"
+            android:layout_marginTop="10dp">
+
+            <TableRow>
+                <TextView
+                    android:text="Année\Mois"
+                    android:textStyle="bold"
+                    android:padding="8dp"/>
+                <TextView
+                    android:text="@string/jan"
+                    android:textStyle="bold"
+                    android:padding="8dp"/>
+                <TextView
+                    android:text="@string/fev"
+                    android:textStyle="bold"
+                    android:padding="8dp"/>
+                <TextView
+                    android:text="@string/mars"
+                    android:textStyle="bold"
+                    android:padding="8dp"/>
+                <TextView
+                    android:text="@string/avr"
+                    android:textStyle="bold"
+                    android:padding="8dp"/>
+                <TextView
+                    android:text="@string/mai"
+                    android:textStyle="bold"
+                    android:padding="8dp"/>
+                <TextView
+                    android:text="@string/juin"
+                    android:textStyle="bold"
+                    android:padding="8dp"/>
+                <TextView
+                    android:text="@string/juil"
+                    android:textStyle="bold"
+                    android:padding="8dp"/>
+                <TextView
+                    android:text="@string/aout"
+                    android:textStyle="bold"
+                    android:padding="8dp"/>
+                <TextView
+                    android:text="@string/sept"
+                    android:textStyle="bold"
+                    android:padding="8dp"/>
+                <TextView
+                    android:text="@string/oct"
+                    android:textStyle="bold"
+                    android:padding="8dp"/>
+                <TextView
+                    android:text="@string/nov"
+                    android:textStyle="bold"
+                    android:padding="8dp"/>
+                <TextView
+                    android:text="@string/dec"
+                    android:textStyle="bold"
+                    android:padding="8dp"/>
+            </TableRow>
+
+        </TableLayout>
+
     </LinearLayout>
 </LinearLayout>
+</ScrollView>
