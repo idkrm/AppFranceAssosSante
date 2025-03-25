@@ -31,6 +31,7 @@ class GetUserTask(private val context: Context) {
 
                 when (connection.responseCode) {
                     HttpURLConnection.HTTP_OK -> {
+                        showToast("Connexion...")
                         connection.inputStream.bufferedReader().use { reader ->
                             val jsonResponse = JSONObject(reader.readText())
                             User(
@@ -71,10 +72,18 @@ class GetUserTask(private val context: Context) {
         }
     }
 
+    /*
     fun execute(email: String, callback: (User?) -> Unit) {
         kotlinx.coroutines.CoroutineScope(Dispatchers.Main).launch {
             val userData = getUserInBG(email)
             callback(userData)
+        }
+    }
+     */
+    fun execute(email: String) {
+        kotlinx.coroutines.CoroutineScope(Dispatchers.Main).launch {
+            val userData = getUserInBG(email)
+            Log.d(TAG, "Recherche terminée")
         }
     }
 }

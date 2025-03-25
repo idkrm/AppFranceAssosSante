@@ -33,7 +33,7 @@ class ProfilAdminFragment : Fragment() {
         mail.text = userViewModel.mail.toString()
 
         val assos = view.findViewById<TextView>(R.id.assospersonne)
-        assos.text = userViewModel.admin.value?.getAssosName()
+        assos.text = userViewModel.admin.value?.getAssosName().toString()
 
         val btnlangue = view.findViewById<Button>(R.id.langue)
         btnlangue.setOnClickListener{

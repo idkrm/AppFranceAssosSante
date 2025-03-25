@@ -21,7 +21,7 @@ class LesdonsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_les_dons, container, false)
 
         val nomassos = view.findViewById<TextView>(R.id.nomassociation)
-        nomassos.text = userViewModel.admin..toString()
+        nomassos.text = userViewModel.admin.value?.getAssosName().toString()
 
 
 
