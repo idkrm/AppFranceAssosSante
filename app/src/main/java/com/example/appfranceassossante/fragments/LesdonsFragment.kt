@@ -4,13 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.apiService.GetListYearDonRecTask
+import com.example.appfranceassossante.apiService.GetListYearDonTask
+import com.example.appfranceassossante.apiService.GetMonthDonTask
+import com.example.appfranceassossante.apiService.GetTotalYearDonRecTask
+import com.example.appfranceassossante.apiService.GetTotalYearDonTask
 import com.example.appfranceassossante.models.UserViewModel
 import com.github.mikephil.charting.charts.BarChart
 
@@ -19,6 +24,8 @@ class LesdonsFragment : Fragment() {
     private lateinit var userViewModel: UserViewModel
     private lateinit var barChart: BarChart
     private lateinit var tableDon: TableLayout
+    private lateinit var totalannee: Spinner
+    private lateinit var totalrec: Spinner
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,22 +36,47 @@ class LesdonsFragment : Fragment() {
         val nomassos = view.findViewById<TextView>(R.id.nomassociation)
         nomassos.text = userViewModel.admin.value?.getAssosName().toString()
 
-        val totalannee = view.findViewById<Spinner>(R.id.totalannee)
-        val totalrec = view.findViewById<Spinner>(R.id.totalrec)
+        totalannee = view.findViewById(R.id.totalannee)
+        GetListYearDonTask { yearsList ->
+            updateYearSpinner(yearsList)
+        }.execute()
+        val montantannee = view.findViewById<TextView>(R.id.montantannee)
+        GetTotalYearDonTask(totalannee.selectedItem.toString()) { total ->
+            montantannee.text = "$total €"
+        }.execute()
+
+        totalrec = view.findViewById(R.id.totalrec)
+        GetListYearDonRecTask { yearsList ->
+            updateYearSpinner(yearsList)
+        }.execute()
+        val montantrec = view.findViewById<TextView>(R.id.montantanneedonation)
+        GetTotalYearDonRecTask(totalrec.selectedItem.toString()) { total_rec ->
+            montantrec.text = "$total_rec €"
+        }.execute()
 
         barChart = view.findViewById(R.id.graph_bar)
-        tableDon = view.findViewById<TableLayout>(R.id.tabledon)
+        tableDon = view.findViewById(R.id.tabledon)
 
+        /*
         // Simuler les données récupérées depuis la base (remplacez cela par une vraie requête)
         val data = mapOf(
             "2025" to listOf("100€", "120€", "90€"),
             "2024" to listOf("80€", "110€", "75€"),
             "2023" to listOf("95€", "105€", "85€")
         )
+         */
 
-        addTableRows(tableDon, data)
+        loadDonationData()
 
         return view
+    }
+
+    private fun updateYearSpinner(yearsList: List<String>) {
+        if (yearsList.isNotEmpty()) {
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, yearsList)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            totalannee.adapter = adapter
+        }
     }
 
     private fun fragmentRemplace(fragment: Fragment){
@@ -55,27 +87,51 @@ class LesdonsFragment : Fragment() {
         transaction.commit()
     }
 
-    private fun addTableRows(table: TableLayout, data: Map<String, List<String>>){
-        val annee = listOf("2025", "2024", "2023") //a recup via base de donnée
+    private fun addTableRows(table: TableLayout, data: Map<String, Map<String, String>>){
+        table.removeAllViews() // Nettoyer la table avant d'ajouter de nouvelles données
 
-        for (i in annee.indices) {
+        for ((year, values) in data) {
             val row = TableRow(table.context)
 
             // Ajouter l'année
-            val anneeTextView = TextView(table.context)
-            anneeTextView.text = annee[i]
-            anneeTextView.setPadding(8, 8, 8, 8)
-            row.addView(anneeTextView)
+            val annee = TextView(table.context)
+            annee.text = year
+            annee.setPadding(8, 8, 8, 8)
+            row.addView(annee)
 
             // Ajouter les montants pour chaque mois
-            for ((_, values) in data) {
-                val montantTextView = TextView(table.context)
-                montantTextView.text = if (i < values.size) values[i] else "N/A"
-                montantTextView.setPadding(8, 8, 8, 8)
-                row.addView(montantTextView)
+            for (value in values) {
+                val montant = TextView(table.context)
+                montant.text = value.value.toString()
+                montant.setPadding(8, 8, 8, 8)
+                row.addView(montant)
             }
 
             table.addView(row)
         }
+    }
+
+    private fun loadDonationData() {
+        // Récupère les années disponibles
+        GetListYearDonRecTask { yearsList ->
+            if (yearsList.isNotEmpty()) {
+                val donationsData = mutableMapOf<String, MutableMap<String, String>>()
+                var nbYear = yearsList.size
+                for (year in yearsList) {
+                    GetMonthDonTask(year) { monthtotal ->
+
+                        donationsData[year] = monthtotal.mapValues { (_, value) -> "$value €"}.toMutableMap()
+
+                        // Vérifie si toutes les requêtes sont terminées
+                        nbYear--
+                        if (nbYear == 0) {
+                            requireActivity().runOnUiThread {
+                                addTableRows(tableDon, donationsData)
+                            }
+                        }
+                    }.execute()
+                }
+            }
+        }.execute()
     }
 }
