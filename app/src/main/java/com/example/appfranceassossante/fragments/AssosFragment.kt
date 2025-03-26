@@ -1,6 +1,7 @@
 package com.example.appfranceassossante.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,10 @@ import android.widget.SearchView
 import com.example.appfranceassossante.models.Assos
 import com.example.appfranceassossante.AssosAdapter
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.apiService.GetAssosTask
 
 class AssosFragment : Fragment() {
+    private lateinit var assosListe: MutableList<Assos>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -20,13 +23,28 @@ class AssosFragment : Fragment() {
 
         val gridView : GridView = view.findViewById(R.id.grilleAssos)
 
-        val assosListe = listOf(
-            Assos("A.M.I", R.drawable.ami_logo),
-            Assos("France Dépression", R.drawable.francedepression_logo),
-            Assos("AAAVAM",R.drawable.aaavam_logo),
-            Assos("ADDICTIONS ALCOOL VIE LIBRE", R.drawable.addiction_alcool_vie_libre_logo),
-            Assos("ADEPA",R.drawable.adepa_logo)
-        )
+        assosListe = mutableListOf()
+
+        // Pour récuperer les assos de la bd
+        val getAssosTask = GetAssosTask { associations ->
+            // Vérifier si la liste n'est pas vide
+            if (associations.isNotEmpty()) {
+                // Ajouter les associations récupérées à la liste assosListe
+                assosListe.addAll(associations)
+
+                // Afficher les associations dans le logcat
+                associations.forEach { association ->
+                    Log.d("MainActivity", "Association récupérée: ${association.getAssosName()}, ${association.getAcronyme()}")
+                }
+
+                // Mettre à jour l'adaptateur avec la liste d'associations
+                val adapter = AssosAdapter(requireContext(), R.layout.item_asso, assosListe)
+                gridView.adapter = adapter
+            } else {
+                Log.d("MainActivity", "Aucune association trouvée")
+            }
+        }
+        getAssosTask.execute()
 
         val adapter = AssosAdapter(requireContext(), R.layout.item_asso, assosListe)
 

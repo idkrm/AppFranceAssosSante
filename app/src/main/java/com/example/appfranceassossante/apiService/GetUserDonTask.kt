@@ -51,7 +51,7 @@ class GetDonationsTask(private val context: Context) {
                             val don = Don(
                                 montant = donObject.optDouble("montant", 0.0),
                                 association = associationObj?.optString("nom", "") ?: "",
-                                date = donObject.optString("date", ""),
+                                date = Don.parseDate(donObject.optString("date", "")),
                                 emailUtilisateur = donObject.optString("emailUtilisateur", ""),
                                 paiement = donObject.optString("typePaiement", "")
                             )

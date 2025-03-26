@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.appfranceassossante.models.Assos
 
 class AssosAdapter(private val activity: Context,
@@ -24,7 +25,11 @@ class AssosAdapter(private val activity: Context,
         val assosLogo : ImageView = layout.findViewById(R.id.assos_image)
 
         assosName.setText(asso.getAssosName())
-        assosLogo.setImageResource(asso.getAssosLogo())
+        Glide.with(context)
+            .load(asso.getImg()) // Votre URL
+            .placeholder(R.drawable.placeholder_asso) // Image en attente
+            .into(assosLogo)
+        //assosLogo.setImageResource(asso.getImg())
 
         return layout
     }

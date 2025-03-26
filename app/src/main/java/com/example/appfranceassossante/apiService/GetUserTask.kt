@@ -44,7 +44,10 @@ class GetUserTask(private val context: Context) {
                                 admin = jsonResponse.optJSONObject("admin")?.let {
                                     Assos(
                                         nom = it.optString("nom", ""),
-                                        logo = it.optInt("logo", 0)
+                                        img = it.optString("img", ""),
+                                        description = it.optString("description", ""),
+                                        filtre = it.optString("filtre", ""),
+                                        acronyme = it.optString("acronyme", "")
                                     )
                                 }
                             )
