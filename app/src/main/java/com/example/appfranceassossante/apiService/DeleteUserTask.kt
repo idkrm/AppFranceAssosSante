@@ -1,3 +1,5 @@
+package com.example.appfranceassossante.apiService
+
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
