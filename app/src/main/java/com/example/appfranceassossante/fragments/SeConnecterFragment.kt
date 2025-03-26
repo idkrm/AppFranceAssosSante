@@ -1,7 +1,6 @@
 package com.example.appfranceassossante.fragments
 
-import CreateUserTask
-import GetUserTask
+import com.example.appfranceassossante.apiService.GetUserTask
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -54,28 +53,33 @@ class SeConnecterFragment : Fragment() {
     }
 
     private fun LoginClicked() {
-        val mail = mail.text.toString()
-        val motDePasse = mdp.text.toString()
+        val mail = this.mail.text.toString()
+        val motDePasse = this.mdp.text.toString()
 
-        when {
-            mail.isEmpty() || motDePasse.isEmpty() ->
-                showToast(R.string.error_message_champs_vides)
-
-            else -> tryLogin(mail, motDePasse)
+        if (mail.isEmpty() || motDePasse.isEmpty()) {
+            showToast(R.string.error_message_champs_vides)
+            return
         }
+
+        tryLogin(mail, motDePasse)
     }
 
     private fun tryLogin(email: String, motdp: String) {
         lifecycleScope.launch {
             try {
-                val user = getUserTask.getUserInBG(email)
+                val user = try {
+                    getUserTask.getUserInBG(email)
+                } catch (e: Exception) {
+                    Log.e("Login", "Erreur lors de la récupération de l'utilisateur", e)
+                    null
+                }
                 when {
                     user == null -> showToast(R.string.error_message_user_non_existant)
-                    !motdp.equals(user.mdp) -> showToast(R.string.error_message_mdp_incorrect)
+                    motdp != (user.mdp) -> showToast(R.string.error_message_mdp_incorrect)
                     else -> successfulLogin(user)
                 }
             } catch (e: Exception) {
-                Log.e("Login", R.string.error_connexion.toString(), e)
+                Log.e("Login", getString(R.string.error_connexion), e)
                 showToast(R.string.error_message_connexion)
             }
         }
@@ -83,10 +87,12 @@ class SeConnecterFragment : Fragment() {
 
     private fun successfulLogin(user: User) {
         userViewModel.updateUserData(user)
-        val fragment = when (user.admin) {
-            null -> ProfilFragment() // remplace le fragment actuel par le fragment qui suit ("ProfilFragment")
-            else -> ProfilAdminFragment() // remplace le fragment actuel par le fragment qui suit ("ProfilAdminFragment")
-    }
+        val fragment = if (user.admin == null) {
+            ProfilFragment() // remplace le fragment actuel par le fragment qui suit ("ProfilFragment")
+        } else {
+            ProfilAdminFragment() // remplace le fragment actuel par le fragment qui suit ("ProfilAdminFragment")
+        }
+
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)
         transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)

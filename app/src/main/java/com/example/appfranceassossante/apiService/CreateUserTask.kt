@@ -1,3 +1,5 @@
+package com.example.appfranceassossante.apiService
+
 import android.util.Log
 import com.example.appfranceassossante.models.User
 import android.content.ContentValues.TAG
