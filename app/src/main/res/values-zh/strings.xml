@@ -119,4 +119,16 @@
     <string name="error_message_champs_vides">填写所有项目</string>
     <string name="error_connexion">连接错误</string>
     <string name="error_message_connexion">服务器连接错误</string>
+    <string name="jan">一月</string>
+    <string name="fev">二月</string>
+    <string name="mars">三月</string>
+    <string name="avr">四月</string>
+    <string name="mai">五月</string>
+    <string name="juin">六月</string>
+    <string name="juil">七月</string>
+    <string name="aout">八月</string>
+    <string name="sept">九月</string>
+    <string name="oct">十月</string>
+    <string name="nov">十一月</string>
+    <string name="dec">十二月</string>
 </resources>

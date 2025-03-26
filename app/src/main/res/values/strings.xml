@@ -126,4 +126,16 @@
     <string name="error_message_champs_vides">Complete all fields</string>
     <string name="error_connexion">Connection error</string>
     <string name="error_message_connexion">Server connection error</string>
+    <string name="jan">January</string>
+    <string name="fev">February</string>
+    <string name="mars">March</string>
+    <string name="avr">April</string>
+    <string name="mai">May</string>
+    <string name="juin">June</string>
+    <string name="juil">July</string>
+    <string name="aout">August</string>
+    <string name="sept">September</string>
+    <string name="oct">October</string>
+    <string name="nov">November</string>
+    <string name="dec">December</string>
 </resources>

@@ -123,4 +123,16 @@
     <string name="error_message_champs_vides">Complétez tous les champs</string>
     <string name="error_connexion">Erreur de connexion</string>
     <string name="error_message_connexion">Erreur de connexion au serveur</string>
+    <string name="jan">Janvier</string>
+    <string name="fev">Février</string>
+    <string name="mars">Mars</string>
+    <string name="avr">Avril</string>
+    <string name="mai">Mai</string>
+    <string name="juin">Juin</string>
+    <string name="juil">Juillet</string>
+    <string name="aout">Août</string>
+    <string name="sept">Septembre</string>
+    <string name="oct">Octobre</string>
+    <string name="nov">Novembre</string>
+    <string name="dec">Décembre</string>
 </resources>

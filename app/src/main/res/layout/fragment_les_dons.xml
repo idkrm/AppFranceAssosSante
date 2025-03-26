@@ -79,19 +79,10 @@
         android:layout_marginBottom="15dp"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Place pour le diagramme"/>
-
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/graph_bar"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginTop="15dp"
-            app:domainTitle="R.string.annee"
-            app:rangeTitle="R.string.euro"
-            app:lineLabelsPosition="left|bottom"/>
+            android:layout_height="250dp"/>
 
     </LinearLayout>
 
@@ -152,11 +143,6 @@
         android:layout_height="wrap_content"
         android:padding="20dp"
         android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Place pour le tableau"/>
 
         <!-- Tableau des dons -->
         <TableLayout

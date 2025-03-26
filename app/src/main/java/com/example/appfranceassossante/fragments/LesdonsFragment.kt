@@ -18,6 +18,12 @@ import com.example.appfranceassossante.apiService.GetTotalYearDonRecTask
 import com.example.appfranceassossante.apiService.GetTotalYearDonTask
 import com.example.appfranceassossante.models.UserViewModel
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.utils.ColorTemplate
 
 class LesdonsFragment : Fragment() {
 
@@ -66,6 +72,7 @@ class LesdonsFragment : Fragment() {
         )
          */
 
+        remplirGraph()
         loadDonationData()
 
         return view
@@ -85,6 +92,30 @@ class LesdonsFragment : Fragment() {
         transaction.replace(R.id.fragment_container, fragment)
         transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
         transaction.commit()
+    }
+
+    private fun loadDonationData() {
+        // Récupère les années disponibles
+        GetListYearDonRecTask { yearsList ->
+            if (yearsList.isNotEmpty()) {
+                val donationsData = mutableMapOf<String, MutableMap<String, String>>()
+                var nbYear = yearsList.size
+                for (year in yearsList) {
+                    GetMonthDonTask(year) { monthtotal ->
+
+                        donationsData[year] = monthtotal.mapValues { (_, value) -> "$value €"}.toMutableMap()
+
+                        // Vérifie si toutes les requêtes sont terminées
+                        nbYear--
+                        if (nbYear == 0) {
+                            requireActivity().runOnUiThread {
+                                addTableRows(tableDon, donationsData)
+                            }
+                        }
+                    }.execute()
+                }
+            }
+        }.execute()
     }
 
     private fun addTableRows(table: TableLayout, data: Map<String, Map<String, String>>){
@@ -111,27 +142,64 @@ class LesdonsFragment : Fragment() {
         }
     }
 
-    private fun loadDonationData() {
-        // Récupère les années disponibles
-        GetListYearDonRecTask { yearsList ->
+    private fun remplirGraph(){
+        GetListYearDonTask { yearsList ->
             if (yearsList.isNotEmpty()) {
-                val donationsData = mutableMapOf<String, MutableMap<String, String>>()
+                val donationsData = mutableMapOf<String, Int>()
                 var nbYear = yearsList.size
                 for (year in yearsList) {
-                    GetMonthDonTask(year) { monthtotal ->
+                    GetTotalYearDonTask(year) { total ->
 
-                        donationsData[year] = monthtotal.mapValues { (_, value) -> "$value €"}.toMutableMap()
+                        donationsData[year] = total
 
                         // Vérifie si toutes les requêtes sont terminées
                         nbYear--
                         if (nbYear == 0) {
                             requireActivity().runOnUiThread {
-                                addTableRows(tableDon, donationsData)
+                                //addTableRows(tableDon, donationsData)
+                                afficherBarChart(donationsData)
                             }
                         }
                     }.execute()
                 }
             }
         }.execute()
+    }
+
+    private fun afficherBarChart(donationsData: Map<String, Int>) {
+        val barEntries = ArrayList<BarEntry>() //liste contenant les valeurs du graphique
+        val labels = ArrayList<String>() //liste contenant les années pour l'axe X
+
+        var index = 0
+        for ((year, montant) in donationsData.entries.sortedBy { it.key.toInt() }) {
+            barEntries.add(BarEntry(index.toFloat(), montant.toFloat()))
+            labels.add(year)
+            index++
+        }
+
+        val barDataSet = BarDataSet(barEntries, "Dons annuels")
+        barDataSet.colors = ColorTemplate.MATERIAL_COLORS.toList()
+        barDataSet.valueTextColor = R.color.orange_splash
+        barDataSet.valueTextSize = 12f
+
+        val barData = BarData(barDataSet)
+        barChart.data = barData
+        barChart.setFitBars(true)
+
+        // Configurer l'axe X (les années)
+        val xAxis = barChart.xAxis
+        xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.granularity = 1f
+        xAxis.setDrawGridLines(false)
+
+        // Configurer l'axe Y (les montants)
+        barChart.axisLeft.axisMinimum = 0f
+        barChart.axisRight.isEnabled = false
+
+        // Animer le graphique
+        barChart.animateY(1000)
+        barChart.description.isEnabled = false
+        barChart.invalidate() // Mettre à jour l'affichage
     }
 }
