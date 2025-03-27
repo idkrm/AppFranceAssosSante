@@ -37,7 +37,10 @@ class CreateUserTask(private val context: Context) {
                     user.admin?.let {
                         put("admin", JSONObject().apply {
                             put("nom", it.getAssosName())
-                            put("logo", it.getAssosLogo())
+                            put("logo", it.getImg())
+                            put("logo", it.getDescription())
+                            put("logo", it.getFiltre())
+                            put("logo", it.getAcronyme())
                         })
                     }
                 }

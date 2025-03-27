@@ -91,4 +91,10 @@ dependencies {
     // implementation(libs.mongodb.driver.kotlin) // pour utiliser mongodb
 
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    //pour les img
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
+    //mongodb realm
+    implementation(libs.realm.android.library)
+
 }

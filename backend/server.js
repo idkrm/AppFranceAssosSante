@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const Association = require('./models/Assos');
 
 const userRoutes = require('./routes/userRoutes');
 const assosRoutes = require('./routes/assosRoutes');
@@ -30,3 +31,4 @@ const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Serveur en écoute sur le port ${PORT}`);
 });
+

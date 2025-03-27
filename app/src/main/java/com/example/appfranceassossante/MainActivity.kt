@@ -20,6 +20,7 @@ import CreateUserTask
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
+import com.example.appfranceassossante.apiService.GetAssosTask
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -76,18 +77,39 @@ class MainActivity : AppCompatActivity() {
             loadFragment(AccessibiliteFragment())
         }
         // TEST
-        val newUser = User(
-            nom = "doe",
-            prenom = "john",
-            email = "johndoe@example.com",
-            mdp = "password123",
-            civilite = "M",
-            handicap = "Aucun",
-            admin = null,
-        )
+        val email = "johndoe@example.com"
+        val getUserTask = GetUserTask(this)
 
-        val createUserTask = CreateUserTask(this)
-        createUserTask.execute(newUser)
+        getUserTask.execute(email) { userData ->
+            userData?.let {
+                try {
+                    val nom = it.getString("nom")
+                    val prenom = it.getString("prenom")
+
+                    Log.d("UserInfo", "Nom complet: $prenom $nom")
+                    Log.d("UserInfo", "Données complètes: ${it.toString()}")
+
+                } catch (e: Exception) {
+                    Log.e("UserInfo", "Erreur de parsing JSON", e)
+                }
+            } ?: run {
+                Log.d("UserInfo", "Aucune donnée utilisateur trouvée")
+            }
+        }
+//        val getAssosTask = GetAssosTask { associations ->
+//            // Vérifier si la liste n'est pas vide
+//            if (associations.isNotEmpty()) {
+//                // Afficher les associations dans le logcat
+//                associations.forEach { association ->
+//                    Log.d("MainActivity", "Association récupérée: ${association.getAssosName()}, ${association.getAcronyme()}")
+//                }
+//            } else {
+//                Log.d("MainActivity", "Aucune association trouvée")
+//            }
+//        }
+//
+//        // Exécuter la tâche pour récupérer les associations
+//        getAssosTask.execute()
 
         //FIN TEST
     }
