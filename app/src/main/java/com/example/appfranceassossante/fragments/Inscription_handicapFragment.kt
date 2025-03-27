@@ -1,6 +1,6 @@
 package com.example.appfranceassossante.fragments
 
-import CreateUserTask
+import com.example.appfranceassossante.apiService.CreateUserTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

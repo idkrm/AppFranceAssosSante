@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 class SeConnecterFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
-    private lateinit var getUserTask: GetUserTask
+    private val getUserTask = GetUserTask()
 
     private lateinit var mail: EditText
     private lateinit var mdp: EditText
@@ -30,7 +30,6 @@ class SeConnecterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
-        getUserTask = GetUserTask(requireContext())
 
         val view = inflater.inflate(R.layout.fragment_se_connecter, container, false)
 
@@ -67,12 +66,7 @@ class SeConnecterFragment : Fragment() {
     private fun tryLogin(email: String, motdp: String) {
         lifecycleScope.launch {
             try {
-                val user = try {
-                    getUserTask.getUserInBG(email)
-                } catch (e: Exception) {
-                    Log.e("Login", "Erreur lors de la récupération de l'utilisateur", e)
-                    null
-                }
+                val user = getUserTask.getUserInBG(email)
                 when {
                     user == null -> showToast(R.string.error_message_user_non_existant)
                     motdp != (user.mdp) -> showToast(R.string.error_message_mdp_incorrect)

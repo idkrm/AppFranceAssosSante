@@ -4,8 +4,10 @@ import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.appfranceassossante.models.Assos
 import com.example.appfranceassossante.models.User
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -15,15 +17,7 @@ import java.net.HttpURLConnection
 import java.net.SocketTimeoutException
 import java.net.URL
 
-class GetUserTask(private val context: Context) {
-
-    private suspend fun showToast(message: String) {
-        withContext(Dispatchers.Main) {
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-
+class GetUserTask {
     suspend fun getUserInBG(email: String): User? {
         return withContext(Dispatchers.IO) {
             try {
@@ -33,7 +27,6 @@ class GetUserTask(private val context: Context) {
 
                 when (connection.responseCode) {
                     HttpURLConnection.HTTP_OK -> {
-                        showToast("Connexion...")
                         connection.inputStream.bufferedReader().use { reader ->
                             val jsonResponse = JSONObject(reader.readText())
                             User(
@@ -43,20 +36,24 @@ class GetUserTask(private val context: Context) {
                                 mdp = jsonResponse.getString("mdp"),
                                 civilite = jsonResponse.optString("civilite"),
                                 handicap = jsonResponse.optString("handicap"),
-                                admin = jsonResponse.optJSONObject("admin")?.let {
-                                    Assos(
-                                        nom = it.optString("nom", ""),
-                                        img = it.optString("img", ""),
-                                        description = it.optString("description", ""),
-                                        filtre = it.optString("filtre", ""),
-                                        acronyme = it.optString("acronyme", "")
-                                    )
+                                admin = if (jsonResponse.has("admin") && !jsonResponse.isNull("admin")) {
+                                    jsonResponse.optJSONObject("admin")?.let {
+                                        Assos(
+                                            nom = it.optString("nom", ""),
+                                            img = it.optString("img", ""),
+                                            description = it.optString("description", ""),
+                                            filtre = it.optString("filtre", ""),
+                                            acronyme = it.optString("acronyme", "")
+                                        )
+                                    }
+                                } else{
+                                        null
                                 }
                             )
                         }
                     }
                     HttpURLConnection.HTTP_NOT_FOUND -> {
-                        showToast("Utilisateur non trouvé")
+                        Log.e(TAG, "Utilisateur non trouvé")
                         null
                     }
                     else -> {
@@ -78,17 +75,11 @@ class GetUserTask(private val context: Context) {
     }
 
     /*
-    fun execute(email: String, callback: (User?) -> Unit) {
-        kotlinx.coroutines.CoroutineScope(Dispatchers.Main).launch {
-            val userData = getUserInBG(email)
-            callback(userData)
-        }
-    }
-     */
     fun execute(email: String) {
         kotlinx.coroutines.CoroutineScope(Dispatchers.Main).launch {
             val userData = getUserInBG(email)
             Log.d(TAG, "Recherche terminée")
         }
     }
+     */
 }

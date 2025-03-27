@@ -10,4 +10,11 @@ data class User(
     var prenom: String,
     var handicap: String,
     var admin: Assos?,
-)
+){
+    fun getUserNom(): String{
+        return nom
+    }
+    fun getUserPrenom(): String{
+        return prenom
+    }
+}

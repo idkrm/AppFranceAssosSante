@@ -16,7 +16,8 @@ import com.example.appfranceassossante.fragments.SeConnecterFragment
 import com.example.appfranceassossante.models.User
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Locale
-import CreateUserTask
+import com.example.appfranceassossante.apiService.GetUserTask
+import com.example.appfranceassossante.apiService.CreateUserTask
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
@@ -78,22 +79,20 @@ class MainActivity : AppCompatActivity() {
         }
         // TEST
         val email = "johndoe@example.com"
-        val getUserTask = GetUserTask(this)
-
-        getUserTask.execute(email) { userData ->
-            userData?.let {
-                try {
-                    val nom = it.getString("nom")
-                    val prenom = it.getString("prenom")
-
-                    Log.d("UserInfo", "Nom complet: $prenom $nom")
-                    Log.d("UserInfo", "Données complètes: ${it.toString()}")
-
-                } catch (e: Exception) {
-                    Log.e("UserInfo", "Erreur de parsing JSON", e)
+        val getUserTask = GetUserTask()
+        lifecycleScope.launch {
+            try {
+                val user = getUserTask.getUserInBG(email)
+                when {
+                    user == null -> Log.d("UserInfo", "Aucune donnée utilisateur trouvée")
+                    email == (user.email) ->
+                        {Log.d("UserInfo", "Utilisateur trouvée")
+                            Log.d("UserInfo", "Nom Complet: ${user.nom} ${user.prenom}")
+                        }
+                    email != (user.email) -> Log.d("UserInfo", "Utilisateur ne correspond pas a l'email demandé")
                 }
-            } ?: run {
-                Log.d("UserInfo", "Aucune donnée utilisateur trouvée")
+            } catch (e: Exception) {
+                Log.e("Login", getString(R.string.error_connexion), e)
             }
         }
 //        val getAssosTask = GetAssosTask { associations ->
