@@ -37,18 +37,24 @@ class CreateUserTask(private val context: Context) {
                     user.admin?.let {
                         put("admin", JSONObject().apply {
                             put("nom", it.getAssosName())
-                            put("logo", it.getImg())
-                            put("logo", it.getDescription())
-                            put("logo", it.getFiltre())
-                            put("logo", it.getAcronyme())
+                            put("img", it.getImg())
+                            put("description", it.getDescription())
+                            put("filtre", it.getFiltre())
+                            put("acronyme", it.getAcronyme())
                         })
                     }
                 }
+
+                Log.d("CreateUserTask", "JSON envoyé: $jsonBody")
 
                 connection.outputStream.use { outputStream ->
                     outputStream.write(jsonBody.toString().toByteArray())
                     outputStream.flush()
                 }
+
+                Log.d("CreateUserTask", "Données envoyées: ${jsonBody.toString()}")
+
+                val responseMessage = connection.inputStream.bufferedReader().use { it.readText() }
 
                 when (connection.responseCode) {
                     HttpURLConnection.HTTP_CREATED -> {
@@ -56,6 +62,7 @@ class CreateUserTask(private val context: Context) {
                         true
                     }
                     else -> {
+                        Log.e("CreateUserTask", "Erreur serveur: Code ${connection.responseCode}, Message: $responseMessage")
                         showToast("Erreur lors de la création. Code: ${connection.responseCode}")
                         false
                     }

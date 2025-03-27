@@ -27,14 +27,14 @@ class Inscription_confirmer_adrmailFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_inscription_confirmer_adrmail, container, false)
         val confirmerMail = view.findViewById<EditText>(R.id.confirmer_adrmail)
         val btnsuivant = view.findViewById<Button>(R.id.suivant)
-        val mailSaisi = userViewModel.mail
+        val mailSaisi = userViewModel.mail.value ?: ""
 
         btnsuivant.setOnClickListener{
             val mailSansEspace = confirmerMail.text.toString().trim()
 
             if(mailSansEspace.isEmpty())
                 confirmerMail.error = getString(R.string.error_message_confirmer_mail)
-            if(mailSansEspace.equals(mailSaisi))
+            else if(mailSansEspace != mailSaisi)
                 Toast.makeText(context, getString(R.string.error_message_confirmer_mail_saisi), Toast.LENGTH_SHORT).show()
             else{
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()

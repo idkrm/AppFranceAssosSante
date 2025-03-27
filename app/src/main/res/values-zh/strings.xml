@@ -106,7 +106,7 @@
     <string name="error_message_nom">请输入您的姓名</string>
     <string name="error_message_prenom">请输入您的名字</string>
     <string name="error_message_mail">请输入您的电子邮件地址</string>
-    <string name="error_message_mdp">请输入一个密码</string>
+    <string name="error_message_mdp">请输入一个密码 (至少 8 个字符)</string>
     <string name="error_message_confirmer_mail">请重新输入您的电子邮件地址</string>
     <string name="error_message_confirmer_mail_saisi">输入的电子邮件与之前输入的电子邮件不一致</string>
     <string name="error_message_confirmer_mdp">请重新输入您的密码</string>
@@ -131,4 +131,5 @@
     <string name="oct">十月</string>
     <string name="nov">十一月</string>
     <string name="dec">十二月</string>
+    <string name="pashandicap">无</string>
 </resources>

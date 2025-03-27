@@ -27,14 +27,14 @@ class Inscription_confirmer_mdpFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_inscription_confirmer_mdp, container, false)
         val confirmerMdp = view.findViewById<EditText>(R.id.confirmer_mdp)
         val btnsuivant = view.findViewById<Button>(R.id.suivant)
-        val mdpSaisi = userViewModel.mdp
+        val mdpSaisi = userViewModel.mdp.value ?: ""
 
         btnsuivant.setOnClickListener{
             val mdp = confirmerMdp.text.toString()
 
             if(mdp.isEmpty())
                 confirmerMdp.error = getString(R.string.error_message_confirmer_mdp)
-            if(mdp.equals(mdpSaisi))
+            else if(mdp != mdpSaisi)
                 Toast.makeText(context, getString(R.string.error_message_confirmer_mdp_saisi), Toast.LENGTH_SHORT).show()
             else{
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()

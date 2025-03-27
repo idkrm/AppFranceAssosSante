@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
   },
   civilite: {
     type: String,
-    enum: ['M', 'F','Autre'],
+    enum: ['Monsieur', 'Madame', 'Ne souhaite pas répondre', 'Autre'],
     required: true,
   },
   nom: {

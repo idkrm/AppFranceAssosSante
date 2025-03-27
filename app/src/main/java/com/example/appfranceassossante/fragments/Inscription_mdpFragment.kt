@@ -31,7 +31,7 @@ class Inscription_mdpFragment : Fragment() {
         btnsuivant.setOnClickListener{
             val motDePasse = mdp.text.toString()
 
-            if(motDePasse.isEmpty())
+            if(motDePasse.isEmpty() || motDePasse.length < 8)
                 mdp.error = getString(R.string.error_message_mdp)
             else {
                 userViewModel.setMdp(motDePasse) // Enregistre le mot de passe

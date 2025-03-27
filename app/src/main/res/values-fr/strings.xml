@@ -110,7 +110,7 @@
     <string name="error_message_nom">Veuillez entrer votre nom</string>
     <string name="error_message_prenom">Veuillez entrer votre prénom</string>
     <string name="error_message_mail">Veuillez entrer votre mail</string>
-    <string name="error_message_mdp">Veuillez entrer un mot de passe</string>
+    <string name="error_message_mdp">Veuillez entrer un mot de passe (8 caractères min)</string>
     <string name="error_message_confirmer_mail">Veuillez resaisir votre mail</string>
     <string name="error_message_confirmer_mail_saisi">Le mail saisi ne correspond pas à celui saisit précédemment</string>
     <string name="error_message_confirmer_mdp">Veuillez resaisir votre mot de passe</string>
@@ -135,4 +135,5 @@
     <string name="oct">Octobre</string>
     <string name="nov">Novembre</string>
     <string name="dec">Décembre</string>
+    <string name="pashandicap">Aucun</string>
 </resources>

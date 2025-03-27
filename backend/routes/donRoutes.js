@@ -180,7 +180,7 @@ router.get("/dons/rec/total/:year", async (req, res) => {
   }
 });
 
-// Route pour récupérer le nombre de dons récurrents par mois pour une année donnée
+// Route pour récupérer la somme de dons récurrents par mois pour une année donnée
 router.get("/dons/rec/mois/:year", async (req, res) => {
   try {
       const year = parseInt(req.params.year); // Convertir l'année en nombre

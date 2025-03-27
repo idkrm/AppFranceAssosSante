@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.Toast
@@ -14,8 +15,6 @@ import androidx.lifecycle.lifecycleScope
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.models.UserViewModel
 import kotlinx.coroutines.launch
-
-//import com.example.appfranceassossante.mongodb.MongoDBConnection
 
 class Inscription_handicapFragment : Fragment() {
 
@@ -42,6 +41,12 @@ class Inscription_handicapFragment : Fragment() {
     private fun setUpViews(view: View) {
         handicap = view.findViewById(R.id.handicap)
 
+        val handicapOptions = listOf(getString(R.string.pashandicap), getString(R.string.lecture), getString(R.string.protanopie), getString(R.string.deuteranopie), getString(R.string.tritanopie))
+
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, handicapOptions)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        handicap.adapter = adapter
+
         val btnsinscrire = view.findViewById<Button>(R.id.sinscrire)
         btnsinscrire.setOnClickListener {
             signUpClicked()
@@ -54,11 +59,12 @@ class Inscription_handicapFragment : Fragment() {
     }
 
     private fun signUpClicked(){
-        val handic = handicap.selectedItem.toString()
-        when {
-            handic.isEmpty() -> showToast(R.string.error_message_handicap)
-            else -> {userViewModel.setHandicap(handic)
-            saveUserToDatabase()}
+        val handic = handicap.selectedItem?.toString()?.trim()
+        if (handic.isNullOrBlank()) {
+            showToast(R.string.error_message_handicap)
+        } else {
+            userViewModel.setHandicap(handic)
+            saveUserToDatabase()
         }
     }
 
