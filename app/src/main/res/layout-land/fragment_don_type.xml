@@ -11,7 +11,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/marginHorizontal_portrait"
         android:orientation="vertical"
         android:padding="20dp"
         android:background="@drawable/fond_violet_arrondi"
@@ -27,47 +26,73 @@
             android:textColor="@color/black"
             android:layout_marginBottom="15dp"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="50dp"
             android:layout_gravity="center"
             android:background="@drawable/outline"
+            android:orientation="vertical"
             android:gravity="center_horizontal">
             <RadioGroup
                 android:id="@+id/radioTypeDon"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp">
+                android:layout_height="wrap_content">
                 <RadioButton
-                    android:id="@+id/btn_rd_unique"
+                    android:id="@+id/radioUnique"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/don_unique"/>
+                    android:text="@string/don_unique"
+                    android:checked="true"/>
                 <RadioButton
-                    android:id="@+id/btn_rd_recurrent"
+                    android:id="@+id/radioRecurrent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/don_recurrent"/>
+
+            </RadioGroup>
+            <RelativeLayout
+                android:id="@+id/recurrentOptionsLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_below="@id/radioTypeDon">
                 <RadioGroup
                     android:id="@+id/radioTypeRecurrent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp">
+                    >
                     <RadioButton
-                        android:id="@+id/btn_rd_mensuel"
+                        android:id="@+id/radioMensuel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/mensuel"/>
                     <RadioButton
-                        android:id="@+id/btn_rd_annuel"
+                        android:id="@+id/radioAnnuel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/annuel"/>
                 </RadioGroup>
-            </RadioGroup>
-        </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/radioTypeRecurrent">
+                    <TextView
+                        android:id="@+id/textfin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date de fin :"/>
+                    <EditText
+                        android:id="@+id/dateFinEditText"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/textfin"
+                        android:layout_alignBaseline="@id/textfin"
+                        />
 
+                </RelativeLayout>
+            </RelativeLayout>
+
+        </RelativeLayout>
 
     </LinearLayout>
 
