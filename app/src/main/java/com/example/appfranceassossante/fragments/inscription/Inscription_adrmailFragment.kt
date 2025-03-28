@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.apiService.GetUserTask
+import com.example.appfranceassossante.fragments.inscription.Inscription_confirmer_adrmailFragment
 import com.example.appfranceassossante.models.UserViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
