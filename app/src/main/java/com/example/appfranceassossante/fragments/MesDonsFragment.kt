@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appfranceassossante.models.Don
 import com.example.appfranceassossante.DonationAdapter
 import com.example.appfranceassossante.R
-import com.example.appfranceassossante.apiService.GetDonationsTask
+import com.example.appfranceassossante.apiService.GetDonUniqueUserTask
 
 class MesDonsFragment : Fragment() {
 

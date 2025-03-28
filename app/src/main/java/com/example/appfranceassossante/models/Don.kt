@@ -9,7 +9,7 @@ open class Don(
     //val association: String,
     val association: Assos,
     val date: Date,
-    val emailUtilisateur: String,
+    val emailUtilisateur: String?,
     val paiement: String
 ){
     companion object {

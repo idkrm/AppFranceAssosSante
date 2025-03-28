@@ -7,7 +7,7 @@ class DonRecurrent(
     date: Date,
     //association : String,
     association : Assos,
-    emailUtilisateur: String,
+    emailUtilisateur: String?,
     paiement: String,
     val frequence: String,
     val dateFin: Date
