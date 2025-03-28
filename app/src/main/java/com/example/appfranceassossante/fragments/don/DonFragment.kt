@@ -1,4 +1,4 @@
-package com.example.appfranceassossante.fragments
+package com.example.appfranceassossante.fragments.don
 
 import android.os.Bundle
 import android.view.LayoutInflater

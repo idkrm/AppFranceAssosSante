@@ -1,4 +1,4 @@
-package com.example.appfranceassossante.fragments
+package com.example.appfranceassossante.fragments.don
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.fragments.AccueilFragment
 import com.example.appfranceassossante.models.DonViewModel
 
 class DonPaiementFragment : Fragment() {

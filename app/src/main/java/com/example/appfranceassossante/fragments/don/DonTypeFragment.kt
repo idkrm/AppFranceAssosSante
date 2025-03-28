@@ -1,4 +1,4 @@
-package com.example.appfranceassossante.fragments
+package com.example.appfranceassossante.fragments.don
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
@@ -13,6 +13,7 @@ import android.widget.RadioButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.fragments.SeConnecterFragment
 import com.example.appfranceassossante.models.DonViewModel
 import com.example.appfranceassossante.models.UserViewModel
 import java.text.SimpleDateFormat

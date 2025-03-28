@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.fragments.inscription.InscriptionFragment
 import com.example.appfranceassossante.models.User
 import com.example.appfranceassossante.models.UserViewModel
 import kotlinx.coroutines.launch

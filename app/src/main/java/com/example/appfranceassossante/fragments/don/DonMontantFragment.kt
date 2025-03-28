@@ -1,4 +1,4 @@
-package com.example.appfranceassossante.fragments
+package com.example.appfranceassossante.fragments.don
 
 import android.os.Bundle
 import android.text.InputFilter
@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.models.DonViewModel
-import com.example.appfranceassossante.models.UserViewModel
 
 class DonMontantFragment : Fragment() {
     private lateinit var donViewModel: DonViewModel

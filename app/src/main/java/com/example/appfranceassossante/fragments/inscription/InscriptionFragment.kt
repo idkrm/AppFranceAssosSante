@@ -1,19 +1,20 @@
-package com.example.appfranceassossante.fragments
+package com.example.appfranceassossante.fragments.inscription
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.fragments.SeConnecterFragment
 import com.example.appfranceassossante.models.UserViewModel
-//import com.example.appfranceassossante.mongodb.MongoDBConnection
 
-class Inscription_adrmailFragment : Fragment() {
+class InscriptionFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
 
@@ -21,35 +22,35 @@ class Inscription_adrmailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
 
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+        userViewModel.reinitialiserDonnees()
 
-        val view = inflater.inflate(R.layout.fragment_inscription_adrmail, container, false)
-        val mail = view.findViewById<EditText>(R.id.adrmail)
-        val btnsuivant = view.findViewById<Button>(R.id.suivant)
+        val view = inflater.inflate(R.layout.fragment_inscription, container, false)
 
-        btnsuivant.setOnClickListener{
-            val mailSansEspace = mail.text.toString().trim()
+        val civilites = view.findViewById<RadioGroup>(R.id.civilite)
 
-            if(mailSansEspace.isEmpty()){
-                mail.error = getString(R.string.error_message_mail)
-            }
-            //if(mongoDBConnection.isEmailAlreadyUsed(mailSansEspace))
-              //  Toast.makeText(context, getString(R.string.error_message_mail_existant), Toast.LENGTH_SHORT).show()
-            else {
-                userViewModel.setMail(mailSansEspace) // Enregistre le mail
-                val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                // remplace le fragment actuel par le fragment qui suit ("Inscription_confirmer_adrmailFragment")
-                transaction.replace(R.id.fragment_container, Inscription_confirmer_adrmailFragment())
-                transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
-                transaction.commit()
+        var choix = ""
+
+        civilites.setOnCheckedChangeListener { group, checkedId ->
+            if (checkedId != -1) { // Vérifie si un bouton est sélectionné
+                val radioButton = view.findViewById<RadioButton>(checkedId)
+                choix = radioButton.text.toString()
             }
         }
 
-        val btnretour = view.findViewById<Button>(R.id.retour)
-        btnretour.setOnClickListener{
-            requireActivity().supportFragmentManager.popBackStack() // retire le fragment actuel
+        val btnsuivant = view.findViewById<Button>(R.id.suivant)
+        btnsuivant.setOnClickListener{
+            if (civilites.checkedRadioButtonId != -1){
+                userViewModel.setCivilite(choix)
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                // remplace le fragment actuel par le fragment qui suit ("Inscription_nomFragment")
+                transaction.replace(R.id.fragment_container, Inscription_nomFragment())
+                transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
+                transaction.commit()
+            }
+            else
+                Toast.makeText(context,  getString(R.string.error_message_civ), Toast.LENGTH_SHORT).show()
         }
 
         val btnconnection = view.findViewById<Button>(R.id.connnection)
@@ -63,7 +64,7 @@ class Inscription_adrmailFragment : Fragment() {
 
         // Inflate the layout for this fragment
         return view
-
     }
+
 
 }

@@ -1,4 +1,4 @@
-package com.example.appfranceassossante.fragments
+package com.example.appfranceassossante.fragments.inscription
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,10 +9,10 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.fragments.SeConnecterFragment
 import com.example.appfranceassossante.models.UserViewModel
 
-
-class Inscription_nomFragment : Fragment() {
+class Inscription_mdpFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
 
@@ -22,32 +22,23 @@ class Inscription_nomFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
-        // Initialiser le ViewModel
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
 
-        val view = inflater.inflate(R.layout.fragment_inscription_nom, container, false)
+        val view = inflater.inflate(R.layout.fragment_inscription_mdp, container, false)
 
-        val nom = view.findViewById<EditText>(R.id.nom)
-
-        /*
-        // Restaurer le nom si déjà saisi
-        userViewModel.nom.observe(viewLifecycleOwner) {
-            nom.setText(it)
-        }
-         */
+        val mdp = view.findViewById<EditText>(R.id.mdp)
 
         val btnsuivant = view.findViewById<Button>(R.id.suivant)
-        btnsuivant.setOnClickListener {
-            val nomSansEspace = nom.text.toString().trim()
+        btnsuivant.setOnClickListener{
+            val motDePasse = mdp.text.toString()
 
-            if (nomSansEspace.isEmpty())
-                nom.error = getString(R.string.error_message_nom)
+            if(motDePasse.isEmpty() || motDePasse.length < 8)
+                mdp.error = getString(R.string.error_message_mdp)
             else {
-                userViewModel.setNom(nomSansEspace) // Enregistre le nom
-
+                userViewModel.setMdp(motDePasse) // Enregistre le mot de passe
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                // remplace le fragment actuel par le fragment qui suit ("Inscription_prenomFragment")
-                transaction.replace(R.id.fragment_container, Inscription_prenomFragment())
+                // remplace le fragment actuel par le fragment qui suit ("Inscription_confirmer_mdpFragment")
+                transaction.replace(R.id.fragment_container, Inscription_confirmer_mdpFragment())
                 transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
                 transaction.commit()
             }
@@ -66,7 +57,9 @@ class Inscription_nomFragment : Fragment() {
             transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
             transaction.commit()
         }
+
         // Inflate the layout for this fragment
         return view
     }
+
 }

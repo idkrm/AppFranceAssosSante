@@ -1,4 +1,4 @@
-package com.example.appfranceassossante.fragments
+package com.example.appfranceassossante.fragments.inscription
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.fragments.SeConnecterFragment
 import com.example.appfranceassossante.models.UserViewModel
 
-class Inscription_confirmer_adrmailFragment : Fragment() {
+
+class Inscription_nomFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
 
@@ -22,24 +23,32 @@ class Inscription_confirmer_adrmailFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
+        // Initialiser le ViewModel
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
 
-        val view = inflater.inflate(R.layout.fragment_inscription_confirmer_adrmail, container, false)
-        val confirmerMail = view.findViewById<EditText>(R.id.confirmer_adrmail)
+        val view = inflater.inflate(R.layout.fragment_inscription_nom, container, false)
+
+        val nom = view.findViewById<EditText>(R.id.nom)
+
+        /*
+        // Restaurer le nom si déjà saisi
+        userViewModel.nom.observe(viewLifecycleOwner) {
+            nom.setText(it)
+        }
+         */
+
         val btnsuivant = view.findViewById<Button>(R.id.suivant)
-        val mailSaisi = userViewModel.mail.value ?: ""
+        btnsuivant.setOnClickListener {
+            val nomSansEspace = nom.text.toString().trim()
 
-        btnsuivant.setOnClickListener{
-            val mailSansEspace = confirmerMail.text.toString().trim()
+            if (nomSansEspace.isEmpty())
+                nom.error = getString(R.string.error_message_nom)
+            else {
+                userViewModel.setNom(nomSansEspace) // Enregistre le nom
 
-            if(mailSansEspace.isEmpty())
-                confirmerMail.error = getString(R.string.error_message_confirmer_mail)
-            else if(mailSansEspace != mailSaisi)
-                Toast.makeText(context, getString(R.string.error_message_confirmer_mail_saisi), Toast.LENGTH_SHORT).show()
-            else{
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                // remplace le fragment actuel par le fragment qui suit ("Inscription_mdpFragment")
-                transaction.replace(R.id.fragment_container, Inscription_mdpFragment())
+                // remplace le fragment actuel par le fragment qui suit ("Inscription_prenomFragment")
+                transaction.replace(R.id.fragment_container, Inscription_prenomFragment())
                 transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
                 transaction.commit()
             }
@@ -58,9 +67,7 @@ class Inscription_confirmer_adrmailFragment : Fragment() {
             transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
             transaction.commit()
         }
-
         // Inflate the layout for this fragment
         return view
     }
-
 }

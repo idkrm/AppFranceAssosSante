@@ -1,4 +1,4 @@
-package com.example.appfranceassossante.fragments
+package com.example.appfranceassossante.fragments.inscription
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,9 +10,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.fragments.SeConnecterFragment
 import com.example.appfranceassossante.models.UserViewModel
 
-class Inscription_confirmer_mdpFragment : Fragment() {
+class Inscription_confirmer_adrmailFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
 
@@ -24,22 +25,22 @@ class Inscription_confirmer_mdpFragment : Fragment() {
 
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
 
-        val view = inflater.inflate(R.layout.fragment_inscription_confirmer_mdp, container, false)
-        val confirmerMdp = view.findViewById<EditText>(R.id.confirmer_mdp)
+        val view = inflater.inflate(R.layout.fragment_inscription_confirmer_adrmail, container, false)
+        val confirmerMail = view.findViewById<EditText>(R.id.confirmer_adrmail)
         val btnsuivant = view.findViewById<Button>(R.id.suivant)
-        val mdpSaisi = userViewModel.mdp.value ?: ""
+        val mailSaisi = userViewModel.mail.value ?: ""
 
         btnsuivant.setOnClickListener{
-            val mdp = confirmerMdp.text.toString()
+            val mailSansEspace = confirmerMail.text.toString().trim()
 
-            if(mdp.isEmpty())
-                confirmerMdp.error = getString(R.string.error_message_confirmer_mdp)
-            else if(mdp != mdpSaisi)
-                Toast.makeText(context, getString(R.string.error_message_confirmer_mdp_saisi), Toast.LENGTH_SHORT).show()
+            if(mailSansEspace.isEmpty())
+                confirmerMail.error = getString(R.string.error_message_confirmer_mail)
+            else if(mailSansEspace != mailSaisi)
+                Toast.makeText(context, getString(R.string.error_message_confirmer_mail_saisi), Toast.LENGTH_SHORT).show()
             else{
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                // remplace le fragment actuel par le fragment qui suit ("Inscription_handicapFragment")
-                transaction.replace(R.id.fragment_container, Inscription_handicapFragment())
+                // remplace le fragment actuel par le fragment qui suit ("Inscription_mdpFragment")
+                transaction.replace(R.id.fragment_container, Inscription_mdpFragment())
                 transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
                 transaction.commit()
             }

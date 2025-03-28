@@ -75,7 +75,7 @@ class GetUserTask {
     }
 
     /*
-    fun execute(email: String) {
+    fun execute(email: String, param: (Any) -> Int) {
         kotlinx.coroutines.CoroutineScope(Dispatchers.Main).launch {
             val userData = getUserInBG(email)
             Log.d(TAG, "Recherche terminée")
