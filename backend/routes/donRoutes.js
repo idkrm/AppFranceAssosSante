@@ -9,19 +9,21 @@ const router = express.Router();
 // Route pour créer un don unique
 router.post('/donations', async (req, res) => {
   try {
-    const { montant, associationId, utilisateurId, typePaiement } = req.body;
+    const { montant, associationId, utilisateurEmail, typePaiement } = req.body;
 
     // Vérifie si l'utilisateur existe
-    const user = await User.findById(utilisateurId);
-    if (!user) {
-      return res.status(400).json({ message: 'Utilisateur non trouvé' });
+    if(utilisateurEmail != null){
+    const user = await User.findOne({email: utilisateurEmail});
+        if (!user) {
+          return res.status(400).json({ message: 'Utilisateur non trouvé' });
+        }
     }
 
     const donation = new Don({
       montant,
       association: associationId,
       date: new Date(),
-      utilisateurId,
+      utilisateurEmail,
       typePaiement,
     });
 

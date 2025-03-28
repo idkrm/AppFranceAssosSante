@@ -1,8 +1,10 @@
 package com.example.appfranceassossante.fragments.don
 
+import CreateDonUTask
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.apiService.CreateUserTask
 import com.example.appfranceassossante.fragments.SeConnecterFragment
 import com.example.appfranceassossante.models.DonViewModel
 import com.example.appfranceassossante.models.UserViewModel
@@ -33,6 +36,8 @@ class DonTypeFragment : Fragment() {
     private lateinit var donViewModel: DonViewModel
     private lateinit var userViewModel: UserViewModel
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    private lateinit var createDonUTask: CreateDonUTask
+    // il manque create Don rec Task
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -49,6 +54,7 @@ class DonTypeFragment : Fragment() {
         recurrentOptionsLayout = view.findViewById(R.id.recurrentOptionsLayout)
         donViewModel = ViewModelProvider(requireActivity()).get(DonViewModel::class.java)
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+        createDonUTask = CreateDonUTask(requireContext())
 
         setRecurrentOptionsEnabled(false) //desactive les options recurrentes par defaut
 
@@ -72,7 +78,7 @@ class DonTypeFragment : Fragment() {
 
         radioUnique.setOnClickListener { // si on clique ca desactive les options recurrente
             setRecurrentOptionsEnabled(false)
-            donViewModel.setSelectedDate(Date(0)) //reinitialise la date
+            donViewModel.setSelectedDate(null)
         }
 
         dateFinEditText.setOnClickListener { //selectionner la date
@@ -86,6 +92,12 @@ class DonTypeFragment : Fragment() {
                 // Si c'est un don récurrent mais qu'aucune date n'est sélectionnée
                 dateFinEditText.error = "Veuillez entrer une date avant de continuer."}
             else {
+                if(radioRecurrent.isChecked && radioMensuel.isChecked)
+                    donViewModel.setMensuel(true)
+                else
+                    donViewModel.setMensuel(false)
+
+
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 // remplace le fragment actuel par le fragment "DonPaiementFragment"
                 transaction.replace(R.id.fragment_container, DonPaiementFragment())
@@ -115,6 +127,7 @@ class DonTypeFragment : Fragment() {
         // Réinitialise la date si on repasse sur "Unique"
         if (!enabled) {
             dateFinEditText.setText("")
+            donViewModel.setSelectedDate(null)
         }
     }
 
@@ -156,5 +169,24 @@ class DonTypeFragment : Fragment() {
             .show()
     }
 
+    private fun saveDonToDatabase() {
+        val donData = donViewModel.collectDonData()
+
+        lifecycleScope.launch {
+            try {
+                val donCreated = createDonUTask.createDonUInBG(donData)
+                //reinitialisation
+                donViewModel.reinitialiserDonnees()
+                if (donCreated) {
+                    Log.d("DON","Don créer")
+                    userViewModel.reinitialiserDonnees()
+                } else {
+                    Log.d("DON","Erreur lors de la création du don")
+                }
+            } catch (e: Exception) {
+                Log.d("DON","Erreur serveur")
+            }
+        }
+    }
 
 }
