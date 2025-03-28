@@ -18,9 +18,10 @@ import com.example.appfranceassossante.R
 import com.example.appfranceassossante.fragments.AccueilFragment
 import com.example.appfranceassossante.models.DonViewModel
 import com.example.appfranceassossante.models.UserViewModel
+import com.example.appfranceassossante.utilsTextSize.BaseFragment
 import kotlinx.coroutines.launch
 
-class DonPaiementFragment : Fragment() {
+class DonPaiementFragment : BaseFragment() {
     private lateinit var donViewModel: DonViewModel
     private lateinit var radioGroup: RadioGroup
     private lateinit var createDonUTask: CreateDonUTask
