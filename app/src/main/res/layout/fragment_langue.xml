@@ -22,38 +22,81 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/langages"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginBottom="10dp"
             android:layout_gravity="start"/>
 
-        <RadioGroup
-            android:id="@+id/langue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:id="@+id/fr"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:checked="true"
-                android:text="@string/fr"/>
+                android:orientation="horizontal"
+                android:weightSum="100"
+                android:gravity="center">
+                <RadioGroup
+                    android:id="@+id/langue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="55">
 
-            <RadioButton
-                android:id="@+id/en"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="@string/en"/>
+                    <RadioButton
+                        android:id="@+id/fr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:checked="true"
+                        android:text="@string/fr"/>
 
-            <RadioButton
-                android:id="@+id/zh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="@string/cn"/>
-        </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/en"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/en"/>
+
+                    <RadioButton
+                        android:id="@+id/zh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cn"/>
+                </RadioGroup>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="25"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/fr"
+                        android:layout_marginBottom="13dp"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="13dp"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/gb"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" / "
+                            android:textSize="20sp"/>
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/us"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/chine"/>
+                </LinearLayout>
+            </LinearLayout>
     </LinearLayout>
 
     <Button

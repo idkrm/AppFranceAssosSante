@@ -97,7 +97,7 @@
     <string name="donsrec">经常性捐款</string>
     <string name="histo">我的捐款历史</string>
     <string name="mesdonsrec">我的经常性捐款</string>
-    <string name="annuledon">取消捐贈</string>
+    <string name="annuledon">取消经常性捐款</string>
     <string name="caractere_min">至少 8 个字符</string>
     <string name="retaper_mdp">重新输入您的密码</string>
     <string name="retaper_mail">重新输入您的电子邮件</string>

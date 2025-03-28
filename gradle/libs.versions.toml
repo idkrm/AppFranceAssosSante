@@ -21,6 +21,8 @@ mongodbDriverKotlinCoroutine = "5.3.0"
 mongodbDriverSync = "5.3.1"
 realmAndroidLibrary = "10.19.0"
 retrofit = "2.9.0"
+lifecycleCommonJvm = "2.8.7"
+slf4jSimple = "1.7.30"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -51,6 +53,8 @@ mongodb-driver-kotlin-coroutine = { module = "org.mongodb:mongodb-driver-kotlin-
 mongodb-driver-sync = { module = "org.mongodb:mongodb-driver-sync", version.ref = "mongodbDriverSync" }
 realm-android-library = { module = "io.realm:realm-android-library", version.ref = "realmAndroidLibrary" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+androidx-lifecycle-common-jvm = { group = "androidx.lifecycle", name = "lifecycle-common-jvm", version.ref = "lifecycleCommonJvm" }
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4jSimple" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

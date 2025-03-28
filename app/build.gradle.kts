@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.lifecycle.common.jvm)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -85,7 +86,7 @@ dependencies {
     implementation(libs.mongodb.driver.sync)
 
     implementation(libs.mongodb.driver.kotlin.coroutine)
-    implementation("org.slf4j:slf4j-simple:1.7.30")
+    implementation(libs.slf4j.simple)
     //couroutines
     implementation(libs.kotlinx.coroutines.android)
     // implementation(libs.mongodb.driver.kotlin) // pour utiliser mongodb
