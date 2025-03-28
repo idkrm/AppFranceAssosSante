@@ -1,9 +1,7 @@
 
 package com.example.appfranceassossante.fragments
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,16 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.compose.ui.text.capitalize
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.models.UserViewModel
 import java.util.Locale
 import androidx.core.graphics.scale
 import androidx.core.graphics.drawable.toDrawable
+import com.example.appfranceassossante.utilsTextSize.BaseFragment
 
-class ProfilFragment : Fragment() {
+class ProfilFragment : BaseFragment() {
     private lateinit var userViewModel : UserViewModel
     private lateinit var tvCivilite: TextView
     private lateinit var tvNom: TextView

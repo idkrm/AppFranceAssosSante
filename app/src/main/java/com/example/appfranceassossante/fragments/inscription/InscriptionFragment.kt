@@ -8,13 +8,13 @@ import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.appfranceassossante.utilsTextSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.fragments.SeConnecterFragment
 import com.example.appfranceassossante.models.UserViewModel
 
-class InscriptionFragment : Fragment() {
+class InscriptionFragment : BaseFragment() {
 
     private lateinit var userViewModel: UserViewModel
 

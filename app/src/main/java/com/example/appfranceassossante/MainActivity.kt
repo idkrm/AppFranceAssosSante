@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.appfranceassossante.fragments.AccessibiliteFragment
@@ -21,12 +20,12 @@ import com.example.appfranceassossante.apiService.CreateUserTask
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
-import com.example.appfranceassossante.apiService.GetAssosTask
+import com.example.appfranceassossante.utilsTextSize.BaseActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

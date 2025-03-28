@@ -9,16 +9,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.appfranceassossante.utilsTextSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.fragments.inscription.InscriptionFragment
 import com.example.appfranceassossante.models.User
 import com.example.appfranceassossante.models.UserViewModel
 import kotlinx.coroutines.launch
 
-class SeConnecterFragment : Fragment() {
+class SeConnecterFragment : BaseFragment() {
 
     private lateinit var userViewModel: UserViewModel
     private val getUserTask = GetUserTask()

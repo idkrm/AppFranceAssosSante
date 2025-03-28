@@ -9,15 +9,15 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.appfranceassossante.utilsTextSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.fragments.SeConnecterFragment
 import com.example.appfranceassossante.models.UserViewModel
 import kotlinx.coroutines.launch
 
-class Inscription_handicapFragment : Fragment() {
+class Inscription_handicapFragment : BaseFragment() {
 
     private lateinit var userViewModel: UserViewModel
     private lateinit var createUserTask: CreateUserTask

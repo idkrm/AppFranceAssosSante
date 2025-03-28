@@ -10,12 +10,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import androidx.fragment.app.Fragment
+import com.example.appfranceassossante.utilsTextSize.BaseFragment
 import com.example.appfranceassossante.MainActivity
 import com.example.appfranceassossante.R
 import java.util.Locale
 
-class LangueFragment : Fragment() {
+class LangueFragment : BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.fragment.app.Fragment
+import com.example.appfranceassossante.utilsTextSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class AccueilFragment : Fragment() {
+class AccueilFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

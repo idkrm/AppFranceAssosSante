@@ -9,8 +9,8 @@ import android.widget.Spinner
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.appfranceassossante.utilsTextSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.apiService.GetListYearDonRecTask
 import com.example.appfranceassossante.apiService.GetListYearDonTask
@@ -26,7 +26,7 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 
-class LesdonsFragment : Fragment() {
+class LesdonsFragment : BaseFragment() {
 
     private lateinit var userViewModel: UserViewModel
     private lateinit var barChart: BarChart

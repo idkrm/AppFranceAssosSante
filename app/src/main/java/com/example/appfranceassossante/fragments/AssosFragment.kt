@@ -2,7 +2,6 @@ package com.example.appfranceassossante.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +9,11 @@ import android.widget.GridView
 import android.widget.SearchView
 import com.example.appfranceassossante.models.Assos
 import com.example.appfranceassossante.AssosAdapter
+import com.example.appfranceassossante.utilsTextSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.apiService.GetAssosTask
 
-class AssosFragment : Fragment() {
+class AssosFragment : BaseFragment() {
     private lateinit var assosListe: MutableList<Assos>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

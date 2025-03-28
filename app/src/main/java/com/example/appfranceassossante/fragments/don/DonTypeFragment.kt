@@ -12,21 +12,19 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RadioButton
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.appfranceassossante.utilsTextSize.BaseFragment
 import com.example.appfranceassossante.R
-import com.example.appfranceassossante.apiService.CreateUserTask
 import com.example.appfranceassossante.fragments.SeConnecterFragment
 import com.example.appfranceassossante.models.DonViewModel
 import com.example.appfranceassossante.models.UserViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
-class DonTypeFragment : Fragment() {
+class DonTypeFragment : BaseFragment() {
     private lateinit var radioUnique: RadioButton
     private lateinit var radioRecurrent: RadioButton
     private lateinit var radioMensuel: RadioButton

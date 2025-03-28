@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +15,9 @@ import android.widget.Spinner
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
+import com.example.appfranceassossante.utilsTextSize.BaseFragment
 import com.example.appfranceassossante.models.Don
 import com.example.appfranceassossante.DonationAdapter
 import com.example.appfranceassossante.R
@@ -28,7 +26,7 @@ import com.example.appfranceassossante.apiService.GetDonUniqueUserTask
 import com.example.appfranceassossante.models.UserViewModel
 import kotlinx.coroutines.launch
 
-class MesDonsFragment : Fragment() {
+class MesDonsFragment : BaseFragment() {
     //private lateinit var recyclerView: RecyclerView
     private lateinit var userViewModel: UserViewModel
     private lateinit var mail: String

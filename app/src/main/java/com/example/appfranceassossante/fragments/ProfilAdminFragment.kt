@@ -8,10 +8,12 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.appfranceassossante.utilsTextSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.models.UserViewModel
+import java.util.Locale
 
-class ProfilAdminFragment : Fragment() {
+class ProfilAdminFragment : BaseFragment() {
 
     private lateinit var userViewModel: UserViewModel
 
@@ -27,10 +29,11 @@ class ProfilAdminFragment : Fragment() {
         civ.text = userViewModel.civilite.toString()
 
         val nom = view.findViewById<TextView>(R.id.nompersonne)
-        nom.text = userViewModel.nom.toString()
+        nom.text = userViewModel.nom.toString().uppercase()
 
         val prenom = view.findViewById<TextView>(R.id.prenompersonne)
-        prenom.text = userViewModel.prenom.toString()
+        prenom.text = userViewModel.prenom.toString() // mets la première lettre en maj
+            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
 
         val mail = view.findViewById<TextView>(R.id.mailpersonne)
         mail.text = userViewModel.mail.toString()

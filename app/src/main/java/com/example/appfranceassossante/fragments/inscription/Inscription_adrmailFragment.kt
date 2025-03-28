@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.appfranceassossante.utilsTextSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.apiService.GetUserTask
 import com.example.appfranceassossante.fragments.inscription.Inscription_confirmer_adrmailFragment
@@ -19,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class Inscription_adrmailFragment : Fragment() {
+class Inscription_adrmailFragment : BaseFragment() {
 
     private lateinit var userViewModel: UserViewModel
     private val getUserTask = GetUserTask()
