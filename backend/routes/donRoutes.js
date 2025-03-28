@@ -9,7 +9,7 @@ const router = express.Router();
 // Route pour créer un don unique
 router.post('/donations', async (req, res) => {
   try {
-    const { montant, associationId, utilisateurEmail, typePaiement } = req.body;
+    const { montant, association, utilisateurEmail, typePaiement, date } = req.body;
 
     // Vérifie si l'utilisateur existe
     if(utilisateurEmail != null){
@@ -19,10 +19,15 @@ router.post('/donations', async (req, res) => {
         }
     }
 
+    const associationData = await Assos.findOne({ nom: association.getAssosName() });
+    if (!associationData) {
+          return res.status(400).json({ message: "Association non trouvée" });
+        }
+
     const donation = new Don({
       montant,
-      association: associationId,
-      date: new Date(),
+      associationId: associationData._id,
+      date,
       utilisateurEmail,
       typePaiement,
     });
@@ -38,10 +43,10 @@ router.post('/donations', async (req, res) => {
 // Route pour créer un don récurrent
 router.post('/recurring-donations', async (req, res) => {
   try {
-    const { montant, associationId, utilisateurId, typePaiement, frequence, dateFin } = req.body;
+    const { montant, associationId, utilisateurEmail, typePaiement, frequence, dateFin } = req.body;
 
     // Vérifie si l'utilisateur existe
-    const user = await User.findById(utilisateurId);
+    const user = await User.findOne({email : utilisateurEmail});
 
     if (!user) {
       return res.status(400).json({ message: 'Utilisateur non trouvé' });
