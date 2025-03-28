@@ -6,7 +6,8 @@ import java.util.Locale
 
 open class Don(
     val montant: Double,
-    val association: String,
+    //val association: String,
+    val association: Assos,
     val date: Date,
     val emailUtilisateur: String,
     val paiement: String

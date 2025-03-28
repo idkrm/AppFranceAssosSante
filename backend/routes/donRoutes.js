@@ -229,4 +229,42 @@ router.get("/dons/rec/mois/:year", async (req, res) => {
   }
 });
 
+// Route pour récupérer les dons par le mail de l'utilisateur
+router.get("/dons/:email", async (req, res) => {
+  try {
+      const mail = req.params.email;
+
+      // Trouver toutes les associations ayant ce filtre
+      const donsMail = await Donation.find({ emailUtilisateur: mail });
+
+      if (donsMail.length === 0) {
+        return res.status(404).json({ message: "Aucune association trouvée" });
+      }
+
+    res.status(200).json(donsMail);
+  } catch (error) {
+    console.error("Erreur serveur:", error);
+    res.status(500).json({ message: "Erreur interne du serveur" });
+}
+});
+
+// Route pour récupérer les dons récurrents par le mail de l'utilisateur
+router.get("/donsrec/:email", async (req, res) => {
+  try {
+      const mail = req.params.email;
+
+      // Trouver toutes les associations ayant ce filtre
+      const donsRecMail = await RecurringDonation.find({ emailUtilisateur: mail });
+
+      if (donsRecMail.length === 0) {
+        return res.status(404).json({ message: "Aucune association trouvée" });
+      }
+
+    res.status(200).json(donsRecMail);
+  } catch (error) {
+    console.error("Erreur serveur:", error);
+    res.status(500).json({ message: "Erreur interne du serveur" });
+}
+});
+
 module.exports = router;

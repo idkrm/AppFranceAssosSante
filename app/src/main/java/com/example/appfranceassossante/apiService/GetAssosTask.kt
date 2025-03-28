@@ -18,7 +18,7 @@ class GetAssosTask(private val onResult: (List<Assos>) -> Unit) {
     suspend fun getAssosInBackground(): List<Assos> {
         return withContext(Dispatchers.IO) {
             try {
-                val url = URL("http://10.0.2.2:5000/associations")
+                val url = URL("http://10.0.2.2:5000/associations/assos")
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "GET"
                 connection.setRequestProperty("Content-Type", "application/json")
