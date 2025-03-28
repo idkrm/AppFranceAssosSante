@@ -38,6 +38,8 @@ class DonPaiementFragment : Fragment() {
 
             // Stocker le type de paiement dans le DonViewModel
             donViewModel.setPaymentType(selectedPaymentType)
+            //creation du don
+
             //recupere l'assos a laquelle on a fait un don
             val associationName = donViewModel.getAssociationName()
             Toast.makeText(requireContext(), "Vous avez fait un don !", Toast.LENGTH_LONG).show()

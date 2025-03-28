@@ -82,6 +82,7 @@ class SeConnecterFragment : Fragment() {
 
     private fun successfulLogin(user: User) {
         userViewModel.updateUserData(user)
+        userViewModel.setUserLoggedIn(true)
         val fragment = if (user.admin == null) {
             ProfilFragment() // remplace le fragment actuel par le fragment qui suit ("ProfilFragment")
         } else {

@@ -48,6 +48,7 @@ class ProfilAdminFragment : Fragment() {
         val btndeco = view.findViewById<Button>(R.id.btn_deco)
         btndeco.setOnClickListener{
             userViewModel.reinitialiserDonnees()
+            userViewModel.setUserLoggedIn(false)
             fragmentRemplace(SeConnecterFragment()) // remplace le fragment actuel par le fragment qui suit ("SeConnecterFragment")
         }
 

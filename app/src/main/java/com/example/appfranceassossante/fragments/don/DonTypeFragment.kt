@@ -12,10 +12,12 @@ import android.widget.LinearLayout
 import android.widget.RadioButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.fragments.SeConnecterFragment
 import com.example.appfranceassossante.models.DonViewModel
 import com.example.appfranceassossante.models.UserViewModel
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -59,8 +61,8 @@ class DonTypeFragment : Fragment() {
 
         radioRecurrent.setOnClickListener { // si on clique sur recurrent on active ses opt
             // Vérifier si l'utilisateur est connecté
-            if (true) {//userViewModel.isUserLoggedIn()
-                // Si l'utilisateur est connecté, activer les options récurrentes
+            if (userViewModel.isUserLoggedIn()) {
+                //activer les options récurrentes
                 setRecurrentOptionsEnabled(true)
             } else {
                 // Si l'utilisateur n'est pas connecté, afficher un message avec une boîte de dialogue
@@ -153,4 +155,6 @@ class DonTypeFragment : Fragment() {
             .setNegativeButton("Annuler", null) // Annuler la boîte de dialogue
             .show()
     }
+
+
 }

@@ -27,6 +27,9 @@ class UserViewModel : ViewModel() {
     private val _admin = MutableLiveData<Assos?>()
     val admin : LiveData<Assos?> get() = _admin
 
+    private val _isLoggedIn = MutableLiveData<Boolean>(false) // false indique non connecté
+    val isLoggedIn: LiveData<Boolean> get() = _isLoggedIn
+
     fun setCivilite(value: String) {
         _civilite.value = value
     }
@@ -85,6 +88,14 @@ class UserViewModel : ViewModel() {
         setMdp(user.mdp)
         setHandicap(user.handicap)
         setAdmin(user.admin)
+    }
+
+    fun isUserLoggedIn(): Boolean {
+        return _isLoggedIn.value ?: false
+    }
+
+    fun setUserLoggedIn(loggedIn: Boolean) {
+        _isLoggedIn.value = loggedIn
     }
 
     /*
