@@ -1,6 +1,10 @@
 
 package com.example.appfranceassossante.fragments
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.models.UserViewModel
 import java.util.Locale
+import androidx.core.graphics.scale
+import androidx.core.graphics.drawable.toDrawable
 
 class ProfilFragment : Fragment() {
     private lateinit var tvCivilite: TextView
@@ -32,8 +38,11 @@ class ProfilFragment : Fragment() {
         tvMail = view.findViewById(R.id.mailpersonne)
 
         showUserInfo() // remplis les text view des infos du user
-
+        val flagDrawable = langueFlag() // met le bon drapeau
+        flagDrawable.setBounds(0, 0, 50, 50)
         val btnlangue = view.findViewById<Button>(R.id.langue)
+        btnlangue.setCompoundDrawablesWithIntrinsicBounds(flagDrawable, null, null, null)
+
         btnlangue.setOnClickListener{
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             // remplace le fragment actuel par le fragment qui suit ("LangueFragment")
@@ -71,5 +80,23 @@ class ProfilFragment : Fragment() {
                                                         else it.toString() }
         }
         tvMail.text = mail
+    }
+
+    private fun langueFlag() : Drawable{
+        //changer le drapeau en fonction de la langue
+        val currentLanguage = Locale.getDefault().language
+        val flagDrawable = when (currentLanguage) {
+            "fr" -> resizeDrawable(R.drawable.fr,50,20)
+            "en" -> resizeDrawable(R.drawable.gb,50,20)
+            "zh" -> resizeDrawable(R.drawable.chine,50,20)
+            else -> resizeDrawable(R.drawable.fr,50,20)
+        }
+        return flagDrawable
+    }
+
+    fun resizeDrawable(drawableId: Int, newWidth: Int, newHeight: Int): Drawable {
+        val bitmap = BitmapFactory.decodeResource(resources, drawableId)
+        val resizedBitmap = bitmap.scale(newWidth, newHeight, false)
+        return resizedBitmap.toDrawable(resources)
     }
 }

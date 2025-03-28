@@ -141,7 +141,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/changelangue"
-            android:background="@drawable/fond_violet_arrondi"/>
+            android:background="@drawable/fond_violet_arrondi"
+            android:drawableRight="@drawable/fr"/>
     </LinearLayout>
 
     <TextView
