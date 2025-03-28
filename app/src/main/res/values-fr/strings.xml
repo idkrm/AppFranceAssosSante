@@ -99,9 +99,9 @@
     <string name="deuxpts">" : "</string>
     <string name="total">Total des dons</string>
     <string name="donsrec">Dons récurrents</string>
-    <string name="histo">Hisorique de mes dons</string>
+    <string name="histo">Historique de mes dons</string>
     <string name="mesdonsrec">Mes dons récurrents</string>
-    <string name="annuledon">Annuler un don</string>
+    <string name="annuledon">Annuler un don \n récurrent</string>
     <string name="caractere_min">8 caractères minimum</string>
     <string name="retaper_mdp">Retaper votre mot de passe</string>
     <string name="retaper_mail">Retaper votre mail</string>

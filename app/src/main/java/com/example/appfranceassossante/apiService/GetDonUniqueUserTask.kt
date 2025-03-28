@@ -13,7 +13,7 @@ import java.net.SocketTimeoutException
 import java.net.URL
 
 class GetDonUniqueUserTask {
-    suspend fun getDonUniqueUserInBG(mail: String): List<Don> {
+     suspend fun getDonUniqueUserInBG(mail: String): List<Don> {
         return withContext(Dispatchers.IO) {
             try {
                 val url = URL("http://10.0.2.2:5000/donation/dons/$mail")

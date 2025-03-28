@@ -104,7 +104,7 @@
     <!-- mes dons-->
     <string name="histo">History of my donations</string>
     <string name="mesdonsrec">My recurring donations</string>
-    <string name="annuledon">Cancel a donation</string>
+    <string name="annuledon">Cancel a recurring \n donation</string>
     <string name="caractere_min">8 characters minimum</string>
     <string name="retaper_mdp">Retype your password</string>
     <string name="retaper_mail">Retype your email</string>
