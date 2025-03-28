@@ -58,10 +58,10 @@
     <string name="en">English</string>
     <string name="cn">Mandarin</string>
     <string name="info">My information</string>
-    <string name="civilite">Civility : </string>
-    <string name="nom">Name : </string>
-    <string name="mail2">Email address : </string>
-    <string name="prenom">First name :</string>
+    <string name="civilite">Civility</string>
+    <string name="nom">Name</string>
+    <string name="mail2">Email address</string>
+    <string name="prenom">First name</string>
     <string name="mesdon">My donations</string>
     <string name="mesdonhisto">See my donation history</string>
     <string name="paramapp">App settings</string>

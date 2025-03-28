@@ -6,15 +6,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import androidx.compose.ui.text.capitalize
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.models.UserViewModel
+import java.util.Locale
 
 class ProfilFragment : Fragment() {
+    private lateinit var tvCivilite: TextView
+    private lateinit var tvNom: TextView
+    private lateinit var tvPrenom: TextView
+    private lateinit var tvMail: TextView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_profil, container, false)
+
+        tvCivilite = view.findViewById(R.id.civilitepersonne)
+        tvNom = view.findViewById(R.id.nompersonne)
+        tvPrenom = view.findViewById(R.id.prenompersonne)
+        tvMail = view.findViewById(R.id.mailpersonne)
+
+        showUserInfo() // remplis les text view des infos du user
 
         val btnlangue = view.findViewById<Button>(R.id.langue)
         btnlangue.setOnClickListener{
@@ -34,5 +51,25 @@ class ProfilFragment : Fragment() {
             transaction.commit()
         }
         return view
+    }
+
+    private fun showUserInfo(){
+        val userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        val civilite = userViewModel.civilite.value
+        val nom = userViewModel.nom.value
+        val prenom = userViewModel.prenom.value
+        val mail = userViewModel.mail.value
+
+        tvCivilite.text = civilite
+
+        if (nom != null) {
+            tvNom.text = nom.uppercase() // mets le nom en CAPS
+        }
+
+        if (prenom != null) { // capitalize la premiere lettre
+            tvPrenom.text = prenom.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT)
+                                                        else it.toString() }
+        }
+        tvMail.text = mail
     }
 }
