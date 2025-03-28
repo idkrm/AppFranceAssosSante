@@ -17,6 +17,7 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -49,8 +50,8 @@ class MesDonsFragment : Fragment() {
         donationAdapter = DonationAdapter(donations)
 //        recyclerView.adapter = donationAdapter
 //
-//        val sharedPreferences = requireContext().getSharedPreferences("user_data", Context.MODE_PRIVATE)
-//        val email = sharedPreferences.getString("user_email", null)
+        val sharedPreferences = requireContext().getSharedPreferences("user_data", Context.MODE_PRIVATE)
+        val email = sharedPreferences.getString("user_email", null)
 //
 //        if (email != null) {
 //            GetDonationsTask(requireContext()).execute(email) { donations ->
@@ -99,8 +100,8 @@ class MesDonsFragment : Fragment() {
         }
         tableMesDons.addView(rowHeader)
 
-        val user = UserViewModel()
-        val mail = user.mail // recup le mail du user
+        val userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        val mail = userViewModel.mail.value // recup le mail du user
 
         val getDonUnique = GetDonUniqueUserTask()
         donations = getDonUnique.getDonUniqueUserInBG(mail.toString()).toMutableList() // recup la liste de ses dons uniques
@@ -127,8 +128,8 @@ class MesDonsFragment : Fragment() {
         }
         tableMesDonsRec.addView(rowHeader)
 
-        val user = UserViewModel()
-        val mail = user.mail
+        val userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        val mail = userViewModel.mail.value
 
         val getDonUniqueRec = GetDonRecUserTask()
         donationsRec = getDonUniqueRec.getDonRecUserInBG(mail.toString()).toMutableList()
