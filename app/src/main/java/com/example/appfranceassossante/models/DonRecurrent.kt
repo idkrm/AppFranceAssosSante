@@ -5,7 +5,6 @@ import java.util.Date
 class DonRecurrent(
     montant: Double,
     date: Date,
-    //association : String,
     association : Assos,
     emailUtilisateur: String?,
     paiement: String,

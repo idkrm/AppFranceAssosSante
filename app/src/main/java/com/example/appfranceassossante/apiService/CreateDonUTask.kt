@@ -3,6 +3,7 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.example.appfranceassossante.models.Assos
+import com.example.appfranceassossante.models.Don
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class CreateDonUTask(private val context: Context) {
 
-    suspend fun createDonUInBG(user: User, assos: Assos): Boolean {
+    suspend fun createDonUInBG(don : Don): Boolean {
         return withContext(Dispatchers.IO) {
             try {
                 val url = URL("http://10.0.2.2:5000/donations/donations")
@@ -23,8 +24,13 @@ class CreateDonUTask(private val context: Context) {
                 connection.setRequestProperty("Content-Type", "application/json")
                 connection.doOutput = true
 
+                // Créer le corps de la requête (JSON)
                 val jsonBody = JSONObject().apply {
-                    put("userEmail", user.email)
+                    put("montant", don.montant)
+                    put("date", don.date)
+                    put("utilisateurEmail", don.emailUtilisateur)
+                    put("association", don.association)
+                    put("typePaiement", don.paiement)
                 }
 
                 val outputStream: OutputStream = connection.outputStream
@@ -34,7 +40,7 @@ class CreateDonUTask(private val context: Context) {
                 val responseCode = connection.responseCode
                 if (responseCode == HttpURLConnection.HTTP_CREATED) {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Utilisateur créé avec succès", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Don créé avec succès", Toast.LENGTH_SHORT).show()
                     }
                     true
                 } else {
@@ -44,7 +50,7 @@ class CreateDonUTask(private val context: Context) {
                     false
                 }
             } catch (e: Exception) {
-                Log.e("CreateUserTask", "Erreur réseau", e)
+                Log.e("CreateDonUTask", "Erreur réseau", e)
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, "Erreur de connexion: ${e.message}", Toast.LENGTH_SHORT).show()
                 }

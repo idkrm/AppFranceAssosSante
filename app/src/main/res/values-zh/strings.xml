@@ -59,10 +59,10 @@
     <string name="en">英语</string>
     <string name="cn">普通话</string>
     <string name="info">我的信息</string>
-    <string name="civilite">"礼貌 : "</string>
-    <string name="nom">"姓名 : "</string>
-    <string name="mail2">"电子邮件 : "</string>
-    <string name="prenom">"名字 : "</string>
+    <string name="civilite">礼貌 </string>
+    <string name="nom">姓名</string>
+    <string name="mail2">电子邮件</string>
+    <string name="prenom">名字</string>
     <string name="mesdon">我的捐款</string>
     <string name="mesdonhisto">查看我的捐赠历史</string>
     <string name="paramapp">应用程序设置</string>
