@@ -1,6 +1,9 @@
 package com.example.appfranceassossante.fragments.don
 
+import CreateDonRTask
+import CreateDonUTask
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +13,19 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.fragments.AccueilFragment
 import com.example.appfranceassossante.models.DonViewModel
+import com.example.appfranceassossante.models.UserViewModel
+import kotlinx.coroutines.launch
 
 class DonPaiementFragment : Fragment() {
     private lateinit var donViewModel: DonViewModel
     private lateinit var radioGroup: RadioGroup
+    private lateinit var createDonUTask: CreateDonUTask
+    private lateinit var userViewModel: UserViewModel
+    private lateinit var createDonRTask: CreateDonRTask
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,6 +34,9 @@ class DonPaiementFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_don_paiement, container, false)
         donViewModel = ViewModelProvider(requireActivity()).get(DonViewModel::class.java)
         radioGroup = view.findViewById(R.id.radioTypeDon)
+        userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+        createDonUTask = CreateDonUTask(requireContext())
+        createDonRTask = CreateDonRTask(requireContext())
 
         val payer = view.findViewById<Button>(R.id.payer)
         val retour = view.findViewById<Button>(R.id.retour)
@@ -42,6 +54,7 @@ class DonPaiementFragment : Fragment() {
 
             //recupere l'assos a laquelle on a fait un don
             val associationName = donViewModel.getAssociationName()
+            saveDonToDatabase()
             Toast.makeText(requireContext(), "Vous avez fait un don !", Toast.LENGTH_LONG).show()
 
             // Créer et afficher un AlertDialog avec un bouton pour retourner à l'AccueilFragment
@@ -67,5 +80,30 @@ class DonPaiementFragment : Fragment() {
             transaction.commit()
         }
         return view;
+    }
+    private fun saveDonToDatabase() {
+
+
+        lifecycleScope.launch {
+            try {
+                val donCreated : Boolean
+                if(donViewModel.isUnique()){
+                    val donData = donViewModel.collectDonUData()
+                    donCreated = createDonUTask.createDonUInBG(donData)}
+                else{
+                    val donData = donViewModel.collectDonRData()
+                    donCreated = createDonRTask.createDonRInBG(donData)}
+                //reinitialisation
+                donViewModel.reinitialiserDonnees()
+                if (donCreated) {
+                    Log.d("DON","Don créer")
+                    userViewModel.reinitialiserDonnees()
+                } else {
+                    Log.d("DON","Erreur lors de la création du don")
+                }
+            } catch (e: Exception) {
+                Log.d("DON","Erreur serveur")
+            }
+        }
     }
 }

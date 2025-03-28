@@ -36,8 +36,7 @@ class DonTypeFragment : Fragment() {
     private lateinit var donViewModel: DonViewModel
     private lateinit var userViewModel: UserViewModel
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-    private lateinit var createDonUTask: CreateDonUTask
-    // il manque create Don rec Task
+
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -54,7 +53,7 @@ class DonTypeFragment : Fragment() {
         recurrentOptionsLayout = view.findViewById(R.id.recurrentOptionsLayout)
         donViewModel = ViewModelProvider(requireActivity()).get(DonViewModel::class.java)
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
-        createDonUTask = CreateDonUTask(requireContext())
+
 
         setRecurrentOptionsEnabled(false) //desactive les options recurrentes par defaut
 
@@ -169,24 +168,6 @@ class DonTypeFragment : Fragment() {
             .show()
     }
 
-    private fun saveDonToDatabase() {
-        val donData = donViewModel.collectDonData()
 
-        lifecycleScope.launch {
-            try {
-                val donCreated = createDonUTask.createDonUInBG(donData)
-                //reinitialisation
-                donViewModel.reinitialiserDonnees()
-                if (donCreated) {
-                    Log.d("DON","Don créer")
-                    userViewModel.reinitialiserDonnees()
-                } else {
-                    Log.d("DON","Erreur lors de la création du don")
-                }
-            } catch (e: Exception) {
-                Log.d("DON","Erreur serveur")
-            }
-        }
-    }
 
 }

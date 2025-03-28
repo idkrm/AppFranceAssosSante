@@ -86,7 +86,7 @@ class DonViewModel : ViewModel() {
     }
 
 
-    fun collectDonData(): Don {
+    fun collectDonUData(): Don {
         val montantDon = _montant.value ?: 10
         val associationName = _associationName.value ?:"Association des Malades Invalides et handicapés"
         val dateDon = Date()
@@ -100,18 +100,31 @@ class DonViewModel : ViewModel() {
                 ?: throw IllegalStateException("Impossible de récupérer l'association")
         }
 
-        return if (isUnique()) {
-            Don(montantDon.toDouble(), association, dateDon, utilisateurEmail, typePaiement)
-        } else {
-            val dateFin = _selectedDate.value ?: Date()
-            val type : String
-            if(isMensuel())
-                type = "Mensuel"
-            else
-                type = "Annuel"
-            DonRecurrent(montantDon.toDouble(), dateDon, association, utilisateurEmailRec, typePaiement, type,dateFin)
+        return Don(montantDon.toDouble(), association, dateDon, utilisateurEmail, typePaiement)
 
+    }
+
+    fun collectDonRData(): DonRecurrent{
+        val montantDon = _montant.value ?: 10
+        val associationName = _associationName.value ?:"Association des Malades Invalides et handicapés"
+        val dateDon = Date()
+        val utilisateurEmailRec = getUtilisateurEmailRec()
+        val typePaiement = paymentType ?: "Inconnu"
+
+        // Récupération de l'association
+        val association: Assos = runBlocking {
+            GetAssosByNameTask().getAssosByNameInBG(associationName)
+                ?: throw IllegalStateException("Impossible de récupérer l'association")
         }
+
+        val dateFin = _selectedDate.value ?: Date()
+        val type : String
+        if(isMensuel())
+            type = "Mensuel"
+        else
+            type = "Annuel"
+        return DonRecurrent(montantDon.toDouble(), dateDon, association, utilisateurEmailRec, typePaiement, type,dateFin)
+
     }
 
     fun reinitialiserDonnees() {

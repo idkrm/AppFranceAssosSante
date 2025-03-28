@@ -9,7 +9,7 @@ const router = express.Router();
 // Route pour créer un don unique
 router.post('/donations', async (req, res) => {
   try {
-    const { montant, association, utilisateurEmail, typePaiement, date } = req.body;
+    const { montant, associationNom, utilisateurEmail, typePaiement, date } = req.body;
 
     // Vérifie si l'utilisateur existe
     if(utilisateurEmail != null){
@@ -19,7 +19,7 @@ router.post('/donations', async (req, res) => {
         }
     }
 
-    const associationData = await Assos.findOne({ nom: association.getAssosName() });
+    const associationData = await Assos.findOne({ nom: associationNom });
     if (!associationData) {
           return res.status(400).json({ message: "Association non trouvée" });
         }
@@ -43,7 +43,7 @@ router.post('/donations', async (req, res) => {
 // Route pour créer un don récurrent
 router.post('/recurring-donations', async (req, res) => {
   try {
-    const { montant, associationId, utilisateurEmail, typePaiement, frequence, dateFin } = req.body;
+    const { montant, associationNom, utilisateurEmail, typePaiement, frequence, dateFin } = req.body;
 
     // Vérifie si l'utilisateur existe
     const user = await User.findOne({email : utilisateurEmail});
@@ -51,18 +51,22 @@ router.post('/recurring-donations', async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: 'Utilisateur non trouvé' });
     }
+    const associationData = await Assos.findOne({ nom: associationNom });
+        if (!associationData) {
+              return res.status(400).json({ message: "Association non trouvée" });
+        }
 
     // Vérifie si un don récurrent de ce type existe déjà pour cette association et cet utilisateur
-    const existingDonation = await checkRecurringDonation(utilisateurId, associationId, frequence);
+    const existingDonation = await checkRecurringDonation(utilisateurId, associationData._id, frequence);
     if (existingDonation) {
       return res.status(400).json({ message: 'Un don récurrent existe déjà pour cette association et cette fréquence.' });
     }
 
     const recurringDonation = new DonRec({
       montant,
-      association: associationId,
+      association: associationData._id,
       date: new Date(),
-      utilisateur: utilisateurId,
+      utilisateurEmail,
       typePaiement,
       frequence,
       dateFin,

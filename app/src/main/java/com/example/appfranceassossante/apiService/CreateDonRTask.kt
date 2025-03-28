@@ -30,7 +30,7 @@ class CreateDonRTask(private val context: Context) {
                     put("montant", don.montant)
                     put("date", don.date)
                     put("utilisateurEmail", don.emailUtilisateur)
-                    put("association", don.association)
+                    put("association", don.association.getAssosName())
                     put("typePaiement", don.paiement)
                     put("dateFin",don.dateFin)
                     put("frequence",don.frequence)
