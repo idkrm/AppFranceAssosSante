@@ -10,6 +10,7 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.apiService.GetListYearDonRecTask
 import com.example.appfranceassossante.apiService.GetListYearDonTask
@@ -39,12 +40,14 @@ class LesdonsFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_les_dons, container, false)
 
+        userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+
         val nomassos = view.findViewById<TextView>(R.id.nomassociation)
         nomassos.text = userViewModel.admin.value?.getAssosName().toString()
 
         totalannee = view.findViewById(R.id.totalannee)
         GetListYearDonTask { yearsList ->
-            updateYearSpinner(yearsList)
+            updateYearSpinner(totalannee, yearsList)
         }.execute()
         val montantannee = view.findViewById<TextView>(R.id.montantannee)
         GetTotalYearDonTask(totalannee.selectedItem.toString()) { total ->
@@ -53,7 +56,7 @@ class LesdonsFragment : Fragment() {
 
         totalrec = view.findViewById(R.id.totalrec)
         GetListYearDonRecTask { yearsList ->
-            updateYearSpinner(yearsList)
+            updateYearSpinner(totalrec, yearsList)
         }.execute()
         val montantrec = view.findViewById<TextView>(R.id.montantanneedonation)
         GetTotalYearDonRecTask(totalrec.selectedItem.toString()) { total_rec ->
@@ -78,20 +81,12 @@ class LesdonsFragment : Fragment() {
         return view
     }
 
-    private fun updateYearSpinner(yearsList: List<String>) {
+    private fun updateYearSpinner(spinner: Spinner, yearsList: List<String>) {
         if (yearsList.isNotEmpty()) {
             val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, yearsList)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            totalannee.adapter = adapter
+            spinner.adapter = adapter
         }
-    }
-
-    private fun fragmentRemplace(fragment: Fragment){
-        val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        // remplace le fragment actuel par le fragment qui suit ("fragment")
-        transaction.replace(R.id.fragment_container, fragment)
-        transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
-        transaction.commit()
     }
 
     private fun loadDonationData() {
@@ -120,6 +115,21 @@ class LesdonsFragment : Fragment() {
 
     private fun addTableRows(table: TableLayout, data: Map<String, Map<String, String>>){
         table.removeAllViews() // Nettoyer la table avant d'ajouter de nouvelles données
+
+        // header
+        val rowHeader = TableRow(table.context)
+        val header = listOf("Année-Mois", getString(R.string.jan), getString(R.string.fev), getString(R.string.mars), getString(R.string.avr),
+            getString(R.string.mai), getString(R.string.juin), getString(R.string.juil), getString(R.string.aout), getString(R.string.sept),
+            getString(R.string.oct), getString(R.string.nov), getString(R.string.dec))
+
+        for(h in header){
+            val elem = TextView(table.context)
+            elem.text = h
+            elem.setPadding(8, 8, 8, 8)
+            rowHeader.addView(elem)
+        }
+
+        table.addView(rowHeader)
 
         for ((year, values) in data) {
             val row = TableRow(table.context)

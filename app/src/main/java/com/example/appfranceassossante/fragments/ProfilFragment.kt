@@ -21,6 +21,7 @@ import androidx.core.graphics.scale
 import androidx.core.graphics.drawable.toDrawable
 
 class ProfilFragment : Fragment() {
+    private lateinit var userViewModel : UserViewModel
     private lateinit var tvCivilite: TextView
     private lateinit var tvNom: TextView
     private lateinit var tvPrenom: TextView
@@ -31,6 +32,8 @@ class ProfilFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_profil, container, false)
+
+        userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
 
         tvCivilite = view.findViewById(R.id.civilitepersonne)
         tvNom = view.findViewById(R.id.nompersonne)
@@ -63,7 +66,6 @@ class ProfilFragment : Fragment() {
     }
 
     private fun showUserInfo(){
-        val userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
         val civilite = userViewModel.civilite.value
         val nom = userViewModel.nom.value
         val prenom = userViewModel.prenom.value

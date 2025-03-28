@@ -111,7 +111,7 @@ router.get('/user/:email', async (req, res) => {
     const userEmail = req.params.email;  // L'email passé dans les paramètres de l'URL
 
     // Recherche de l'utilisateur par email
-    const user = await User.findOne({ email: userEmail });
+    const user = await User.findOne({ email: userEmail }).populate("admin");;
 
     if (!user) {
       return res.status(404).json({ message: 'Utilisateur non trouvé' });

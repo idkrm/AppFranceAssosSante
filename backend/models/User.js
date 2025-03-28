@@ -25,11 +25,11 @@ const userSchema = new mongoose.Schema({
   },
   handicap: {
     type: String,
-    default: null, // Champs optionnel
+    required: true,
   },
   admin: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Assos',
+    ref: 'Association',
     default: null, // Champs optionnel
   },
 });

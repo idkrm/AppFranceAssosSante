@@ -28,23 +28,27 @@ class GetDonUniqueUserTask {
 
                                 for (i in 0 until jsonResponse.length()) {
                                     try{
-                                    val jsonObject = jsonResponse.getJSONObject(i)
-                                    val don = Don(
-                                        emailUtilisateur = jsonObject.getString("emailUtilisateur"),
-                                        montant = jsonObject.getDouble("montant"),
-                                        date = Don.parseDate(jsonObject.getString("date")),
-                                        paiement = jsonObject.getString("paiement"),
-                                        association = jsonObject.optJSONObject("association").let {
-                                            Assos(
-                                                nom = it.optString("nom", ""),
-                                                img = it.optString("img", ""),
-                                                description = it.optString("description", ""),
-                                                filtre = it.optString("filtre", ""),
-                                                acronyme = it.optString("acronyme", "")
-                                            )
+                                        val jsonObject = jsonResponse.getJSONObject(i)
+                                        val associationJson = jsonObject.optJSONObject("association")
+                                        if (associationJson == null) {
+                                            throw JSONException("L'association est manquante")
                                         }
 
-                                    )
+                                        val association = Assos(
+                                            nom = associationJson.optString("nom", ""),
+                                            img = associationJson.optString("img", ""),
+                                            description = associationJson.optString("description", ""),
+                                            filtre = associationJson.optString("filtre", ""),
+                                            acronyme = associationJson.optString("acronyme", "")
+                                        )
+
+                                        val don = Don(
+                                            emailUtilisateur = jsonObject.getString("emailUtilisateur"),
+                                            montant = jsonObject.getDouble("montant"),
+                                            date = Don.parseDate(jsonObject.getString("date")),
+                                            paiement = jsonObject.getString("typePaiement"),
+                                            association = association
+                                        )
                                         Log.i("GetDonUniqueUserTask", "Nombre de dons récupérés: ${donsList.size}")
                                         donsList.add(don)
                                     } catch (e: JSONException) {

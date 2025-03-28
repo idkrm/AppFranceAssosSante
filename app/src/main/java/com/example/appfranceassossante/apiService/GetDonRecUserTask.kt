@@ -29,6 +29,19 @@ class GetDonRecUserTask {
                             for (i in 0 until jsonResponse.length()) {
                                 try{
                                     val jsonObject = jsonResponse.getJSONObject(i)
+                                    val associationJson = jsonObject.optJSONObject("association")
+
+                                    if (associationJson == null) {
+                                        throw JSONException("L'association est manquante")
+                                    }
+
+                                    val association = Assos(
+                                        nom = associationJson.optString("nom", ""),
+                                        img = associationJson.optString("img", ""),
+                                        description = associationJson.optString("description", ""),
+                                        filtre = associationJson.optString("filtre", ""),
+                                        acronyme = associationJson.optString("acronyme", "")
+                                    )
                                     val donRec = DonRecurrent(
                                         emailUtilisateur = jsonObject.getString("emailUtilisateur"),
                                         montant = jsonObject.getDouble("montant"),
@@ -36,15 +49,7 @@ class GetDonRecUserTask {
                                         paiement = jsonObject.getString("paiement"),
                                         frequence = jsonObject.getString("frequence"),
                                         dateFin = Don.parseDate(jsonObject.getString("dateFin")),
-                                        association = jsonObject.optJSONObject("association").let {
-                                            Assos(
-                                                nom = it.optString("nom", ""),
-                                                img = it.optString("img", ""),
-                                                description = it.optString("description", ""),
-                                                filtre = it.optString("filtre", ""),
-                                                acronyme = it.optString("acronyme", "")
-                                            )
-                                        }
+                                        association = association
 
                                     )
                                     Log.i("GetDonRecUserTask", "Nombre de dons récurrents récupérés: ${donsRecList.size}")

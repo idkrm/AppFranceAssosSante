@@ -7,7 +7,7 @@ const recurringDonationSchema = new mongoose.Schema({
   },
   association: {
     type: mongoose.Schema.Types.ObjectId, // Référence à l'association
-    ref: 'Assos',
+    ref: 'Association',
     required: true,
   },
   date: {

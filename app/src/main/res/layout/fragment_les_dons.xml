@@ -152,61 +152,6 @@
             android:stretchColumns="12"
             android:layout_marginTop="10dp">
 
-            <TableRow>
-                <TextView
-                    android:text="Année\Mois"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
-                <TextView
-                    android:text="@string/jan"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
-                <TextView
-                    android:text="@string/fev"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
-                <TextView
-                    android:text="@string/mars"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
-                <TextView
-                    android:text="@string/avr"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
-                <TextView
-                    android:text="@string/mai"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
-                <TextView
-                    android:text="@string/juin"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
-                <TextView
-                    android:text="@string/juil"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
-                <TextView
-                    android:text="@string/aout"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
-                <TextView
-                    android:text="@string/sept"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
-                <TextView
-                    android:text="@string/oct"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
-                <TextView
-                    android:text="@string/nov"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
-                <TextView
-                    android:text="@string/dec"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
-            </TableRow>
-
         </TableLayout>
 
     </LinearLayout>

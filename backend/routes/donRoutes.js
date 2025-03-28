@@ -237,7 +237,7 @@ router.get("/dons/:email", async (req, res) => {
       const mail = req.params.email;
 
       // Trouver toutes les associations ayant ce filtre
-      const donsMail = await Donation.find({ emailUtilisateur: mail });
+      const donsMail = await Donation.find({ emailUtilisateur: mail }).populate("association");;
 
       if (donsMail.length === 0) {
         return res.status(404).json({ message: "Aucune association trouvée" });
@@ -256,7 +256,7 @@ router.get("/donsrec/:email", async (req, res) => {
       const mail = req.params.email;
 
       // Trouver toutes les associations ayant ce filtre
-      const donsRecMail = await RecurringDonation.find({ emailUtilisateur: mail });
+      const donsRecMail = await RecurringDonation.find({ emailUtilisateur: mail }).populate("association");;
 
       if (donsRecMail.length === 0) {
         return res.status(404).json({ message: "Aucune association trouvée" });

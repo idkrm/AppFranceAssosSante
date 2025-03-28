@@ -12,10 +12,20 @@ open class Don(
     val paiement: String
 ){
     companion object {
-        private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE)
-
         fun parseDate(dateString: String): Date {
-            return dateFormat.parse(dateString) ?: Date()
+            val formats = listOf(
+                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.FRANCE),
+                SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE)
+            )
+
+            for (format in formats) {
+                try {
+                    return format.parse(dateString) ?: Date()
+                } catch (e: Exception) {
+                    continue
+                }
+            }
+            return Date()
         }
     }
 }

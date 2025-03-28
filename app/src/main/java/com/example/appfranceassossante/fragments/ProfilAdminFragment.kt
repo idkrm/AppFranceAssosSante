@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.models.UserViewModel
 
@@ -19,6 +20,8 @@ class ProfilAdminFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_profil_admin, container, false)
+
+        userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
 
         val civ = view.findViewById<TextView>(R.id.civilitepersonne)
         civ.text = userViewModel.civilite.toString()

@@ -19,7 +19,6 @@ import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appfranceassossante.models.Don
 import com.example.appfranceassossante.DonationAdapter
@@ -30,13 +29,15 @@ import com.example.appfranceassossante.models.UserViewModel
 import kotlinx.coroutines.launch
 
 class MesDonsFragment : Fragment() {
-    private lateinit var recyclerView: RecyclerView
+    //private lateinit var recyclerView: RecyclerView
+    private lateinit var userViewModel: UserViewModel
+    private lateinit var mail: String
     private lateinit var donationAdapter: DonationAdapter
     private lateinit var tableMesDons: TableLayout
     private lateinit var tableMesDonsRec: TableLayout
     private var donations = mutableListOf<Don>()
     private var donationsRec = mutableListOf<Don>()
-    private lateinit var viewLifecycleOwner: LifecycleOwner
+    //private lateinit var viewLifecycleOwner: LifecycleOwner
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +45,9 @@ class MesDonsFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_mes_dons, container, false)
 
+        userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+        mail = userViewModel.mail.value.toString() // recup le mail du user
+        Log.d("MesDonsFragment", "Mail utilisateur récupéré: $mail")
 
         //dons
 //        recyclerView.layoutManager = LinearLayoutManager(context)
@@ -77,6 +81,7 @@ class MesDonsFragment : Fragment() {
     }
 
     private fun loadDonationsData(view: View) {
+        Log.d("MesDonsFragment", "Chargement des données des dons")
         // lifecyclescope pour gérer coroutines (jsp c quoi)
         lifecycleScope.launch {
             try {
@@ -100,16 +105,14 @@ class MesDonsFragment : Fragment() {
         }
         tableMesDons.addView(rowHeader)
 
-        val userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
-        val mail = userViewModel.mail.value // recup le mail du user
-
         val getDonUnique = GetDonUniqueUserTask()
-        donations = getDonUnique.getDonUniqueUserInBG(mail.toString()).toMutableList() // recup la liste de ses dons uniques
+        donations = getDonUnique.getDonUniqueUserInBG(mail).toMutableList() // recup la liste de ses dons uniques
+        Log.d("MesDonsFragment", "Nombre de dons uniques récupérés: ${donations.size}")
 
         // pour chaque don de la liste, crée une ligne et rentre les infos
         donations.forEach { don ->
             val row = TableRow(context).apply {
-                addView(createDonTextView(don.association.toString()))
+                addView(createDonTextView(don.association.getAssosName()))
                 addView(createDonTextView(don.date.toString()))
                 addView(createDonTextView(don.montant.toString()))
                 addView(createDonTextView(don.paiement))
@@ -128,11 +131,9 @@ class MesDonsFragment : Fragment() {
         }
         tableMesDonsRec.addView(rowHeader)
 
-        val userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
-        val mail = userViewModel.mail.value
-
         val getDonUniqueRec = GetDonRecUserTask()
-        donationsRec = getDonUniqueRec.getDonRecUserInBG(mail.toString()).toMutableList()
+        donationsRec = getDonUniqueRec.getDonRecUserInBG(mail).toMutableList()
+        Log.d("MesDonsFragment", "Nombre de dons récurrents récupérés: ${donationsRec.size}")
 
         donationsRec.forEach { don ->
             val row = TableRow(context).apply {
@@ -147,6 +148,7 @@ class MesDonsFragment : Fragment() {
 
     // pour créer la ligne du header
     private fun createHeaderTextView(text: String): TextView {
+        Log.d("MesDonsFragment", "Création TextViewHeader avec: $text")
         return TextView(context).apply {
             this.text = text
             setTypeface(typeface, Typeface.BOLD)
@@ -156,6 +158,7 @@ class MesDonsFragment : Fragment() {
 
     // créer les lignes de don
     private fun createDonTextView(text: String): TextView {
+        Log.d("MesDonsFragment", "Création TextView avec: $text")
         return TextView(context).apply {
             this.text = text
             setPadding(12,5,12,5)
