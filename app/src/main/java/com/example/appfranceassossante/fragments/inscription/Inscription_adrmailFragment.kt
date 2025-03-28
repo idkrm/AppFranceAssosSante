@@ -1,21 +1,27 @@
-package com.example.appfranceassossante.fragments.inscription
+package com.example.appfranceassossante.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.appfranceassossante.R
-import com.example.appfranceassossante.fragments.SeConnecterFragment
+import com.example.appfranceassossante.apiService.GetUserTask
 import com.example.appfranceassossante.models.UserViewModel
-//import com.example.appfranceassossante.mongodb.MongoDBConnection
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class Inscription_adrmailFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
+    private val getUserTask = GetUserTask()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,19 +38,30 @@ class Inscription_adrmailFragment : Fragment() {
         btnsuivant.setOnClickListener{
             val mailSansEspace = mail.text.toString().trim()
 
+            lifecycleScope.launch {
+                try {
+                    val user = getUserTask.getUserInBG(mailSansEspace)
+                    when {
+                        mailSansEspace.isEmpty() -> mail.error = getString(R.string.error_message_mail)
+                        user != null -> showToast(getString(R.string.error_message_mail_existant))
+                        else -> successfulLogin(mailSansEspace)
+                    }
+                } catch (e: Exception) {
+                    Log.e("Login", getString(R.string.error_connexion), e)
+                    showToast(getString(R.string.error_message_connexion))
+                }
+            }
+
+            /*
             if(mailSansEspace.isEmpty()){
                 mail.error = getString(R.string.error_message_mail)
             }
             //if(mongoDBConnection.isEmailAlreadyUsed(mailSansEspace))
               //  Toast.makeText(context, getString(R.string.error_message_mail_existant), Toast.LENGTH_SHORT).show()
             else {
-                userViewModel.setMail(mailSansEspace) // Enregistre le mail
-                val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                // remplace le fragment actuel par le fragment qui suit ("Inscription_confirmer_adrmailFragment")
-                transaction.replace(R.id.fragment_container, Inscription_confirmer_adrmailFragment())
-                transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
-                transaction.commit()
+                successfulLogin(mailSansEspace)
             }
+            */
         }
 
         val btnretour = view.findViewById<Button>(R.id.retour)
@@ -54,11 +71,7 @@ class Inscription_adrmailFragment : Fragment() {
 
         val btnconnection = view.findViewById<Button>(R.id.connnection)
         btnconnection.setOnClickListener{
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            // remplace le fragment actuel par le fragment qui suit ("SeConnecterFragment")
-            transaction.replace(R.id.fragment_container, SeConnecterFragment())
-            transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
-            transaction.commit()
+            fragmentNext(SeConnecterFragment()) // remplace le fragment actuel par le fragment qui suit ("SeConnecterFragment")
         }
 
         // Inflate the layout for this fragment
@@ -66,4 +79,21 @@ class Inscription_adrmailFragment : Fragment() {
 
     }
 
+    private fun successfulLogin(mail: String){
+        userViewModel.setMail(mail) // Enregistre le mail
+        fragmentNext(Inscription_confirmer_adrmailFragment()) // remplace le fragment actuel par le fragment qui suit ("Inscription_confirmer_adrmailFragment")
+    }
+
+    private fun fragmentNext(frag: Fragment){
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, frag)
+        transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
+        transaction.commit()
+    }
+
+    private suspend fun showToast(message: String) {
+        withContext(Dispatchers.Main) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
+    }
 }
