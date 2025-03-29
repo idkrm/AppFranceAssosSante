@@ -24,7 +24,7 @@
     <string name="choisir_un_montant">Choisir un montant</string>
     <string name="type_don">Type de don</string>
     <string name="don_unique">Don unique</string>
-    <string name="don_recurrent">Don réccurent</string>
+    <string name="don_recurrent">Don récurrent</string>
     <string name="mensuel">Mensuel</string>
     <string name="annuel">Annuel</string>
     <string name="carte_bancaire">Carte bancaire  - </string>
@@ -49,6 +49,7 @@
     <string name="lecture">Lecture à voix haute</string>
     <string name="stop">Stop</string>
     <string name="taille">Taille du texte</string>
+    <string name="malvoyant">Malvoyant</string>
     <string name="daltonisme">Daltonisme</string>
     <string name="deuteranopie">Deutéranopie (vert)</string>
     <string name="protanopie">Protanopie (rouge)</string>
