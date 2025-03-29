@@ -50,6 +50,7 @@
     <string name="stop">停止</string>
     <string name="taille">文字大小</string>
     <string name="daltonisme">色盲模式</string>
+    <string name="malvoyant">视力障碍</string>
     <string name="deuteranopie">绿色盲（去绿）</string>
     <string name="protanopie">红色盲（去红）</string>
     <string name="tritanopie">蓝色盲（去蓝）</string>

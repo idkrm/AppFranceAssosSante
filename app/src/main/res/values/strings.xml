@@ -49,6 +49,7 @@
     <string name="stop">Stop</string>
     <string name="taille">Font size</string>
     <string name="daltonisme">Daltonism</string>
+    <string name="malvoyant">visually imparaired</string>
     <string name="deuteranopie">Deuteranopia (green)</string>
     <string name="protanopie">Protanopia (red)</string>
     <string name="tritanopie">Tritanopia (blue)</string>

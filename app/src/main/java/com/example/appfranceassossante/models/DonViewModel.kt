@@ -27,6 +27,8 @@ class DonViewModel : ViewModel() {
         _montant.value = value
     }
 
+
+
     private val _selectedDate = MutableLiveData<Date?>()
     val selectedDate: LiveData<Date?> = _selectedDate
 
@@ -91,18 +93,9 @@ class DonViewModel : ViewModel() {
         val associationName = _associationName.value ?:"Association des Malades Invalides et handicapés"
         val dateDon = Date()
         val utilisateurEmail = _utilisateurEmail.value
-        val utilisateurEmailRec = getUtilisateurEmailRec()
         val typePaiement = paymentType ?: "Inconnu"
 
-        /*
-        // Récupération de l'association
-        val association: Assos = runBlocking {
-            GetAssosByNameTask().getAssosByNameInBG(associationName)
-                ?: throw IllegalStateException("Impossible de récupérer l'association")
-        }
-         */
-
-        return Don(montantDon.toDouble(), association, dateDon, utilisateurEmail, typePaiement)
+        return Don(montantDon.toDouble(), associationName, dateDon, utilisateurEmail, typePaiement)
 
     }
 
@@ -113,28 +106,23 @@ class DonViewModel : ViewModel() {
         val utilisateurEmailRec = getUtilisateurEmailRec()
         val typePaiement = paymentType ?: "Inconnu"
 
-        // Récupération de l'association
-        val association: Assos = runBlocking {
-            GetAssosByNameTask().getAssosByNameInBG(associationName)
-                ?: throw IllegalStateException("Impossible de récupérer l'association")
-        }
-
         val dateFin = _selectedDate.value ?: Date()
         val type : String
         if(isMensuel())
             type = "Mensuel"
         else
             type = "Annuel"
-        return DonRecurrent(montantDon.toDouble(), dateDon, association, utilisateurEmailRec, typePaiement, type,dateFin)
+        return DonRecurrent(montantDon.toDouble(), dateDon, associationName, utilisateurEmailRec, typePaiement, type,dateFin)
 
-        }
     }
-
     fun reinitialiserDonnees() {
-        _montant.value = null
-        _selectedDate.value = null
-        _associationName.value = null
-        _utilisateurEmail.value = null
-        _utilisateurEmailRec.value = null
+        _montant.value = 10  // Remettre une valeur par défaut au lieu de null
+        _selectedDate.value = null  // OK car nullable
+        _associationName.value = "Association inconnue"  // Éviter null
+        _utilisateurEmail.value = null  // OK car nullable
+        _utilisateurEmailRec.value = "Email inconnu"  // Éviter null
     }
+
+
+
 }

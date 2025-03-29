@@ -21,7 +21,6 @@ router.post('/donations', async (req, res) => {
     }
 
     const associationData = await Assos.findOne({ nom: associationNom });
-    const associationData = await Association.findOne({ nom: association.nom });
     if (!associationData) {
           return res.status(400).json({ message: "Association non trouvée" });
         }
@@ -113,7 +112,6 @@ router.get("/dons/annee/:assosId", async (req, res) => {
       ]);
 
       // 3. Transformation en tableau simple d'années
-      const result = years.map(item => item.year);
 
       const result = years.map(y => y._id.toString()); // Convertir en liste de strings
       res.json(result);
