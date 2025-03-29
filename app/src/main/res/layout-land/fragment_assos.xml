@@ -17,7 +17,7 @@
             android:id="@+id/search_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="87"
+            android:layout_weight="93"
             android:background="@drawable/rect_recherche"
             android:focusable="false"
             android:iconifiedByDefault="false"
@@ -27,7 +27,7 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_weight="13"
+            android:layout_weight="7"
             android:background="@drawable/filter" />
 
     </LinearLayout>

@@ -52,6 +52,15 @@
             android:layout_marginTop="55dp"
             android:textColor="@color/black"
             android:background="@drawable/btn_faire_don" />
+
+        <Button
+            android:id="@+id/btnSpeech"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lecture"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
     </LinearLayout>
 
     <LinearLayout
@@ -84,9 +93,17 @@
             android:textColor="@color/black"
             android:layout_gravity="center"
             android:layout_marginTop="55dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="10dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:background="@drawable/btn_decouvrir_assos"/>
+        <Button
+            android:id="@+id/btnSpeech2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lecture"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginBottom="30dp"/>
     </LinearLayout>
 </LinearLayout>
