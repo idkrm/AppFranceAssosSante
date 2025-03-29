@@ -42,7 +42,7 @@ class Inscription_handicapFragment : BaseFragment() {
     private fun setUpViews(view: View) {
         handicap = view.findViewById(R.id.handicap)
 
-        val handicapOptions = listOf(getString(R.string.pashandicap), getString(R.string.lecture), getString(R.string.protanopie), getString(R.string.deuteranopie), getString(R.string.tritanopie))
+        val handicapOptions = listOf(getString(R.string.pashandicap), getString(R.string.lecture),getString(R.string.malvoyant), getString(R.string.protanopie), getString(R.string.deuteranopie), getString(R.string.tritanopie))
 
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, handicapOptions)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -61,6 +61,7 @@ class Inscription_handicapFragment : BaseFragment() {
 
     private fun signUpClicked(){
         val handic = handicap.selectedItem?.toString()?.trim()
+        //ICI
         if (handic.isNullOrBlank()) {
             showToast(R.string.error_message_handicap)
         } else {

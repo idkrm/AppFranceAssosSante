@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.utilsAccessibilite.textToSpeech.AccessibilityPreferences
 import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.models.UserViewModel
 import com.example.appfranceassossante.utilsAccessibilite.textToSpeech.SharedViewModel
 import com.example.appfranceassossante.utilsAccessibilite.textSize.TextSizeManager
 
@@ -23,6 +24,12 @@ class AccessibiliteFragment : BaseFragment() {
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var daltonismCheckbox: CheckBox
     private lateinit var daltonismRadioGroup: RadioGroup
+    private lateinit var userViewModel: UserViewModel
+    private lateinit var protanopie: RadioButton
+    private lateinit var tritanopie: RadioButton
+    private lateinit var deuteranopie: RadioButton
+    private lateinit var checkboxSpeech: CheckBox
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_accessibilite, container, false)
@@ -31,7 +38,10 @@ class AccessibiliteFragment : BaseFragment() {
         spinner = view.findViewById(R.id.spinner_taille)
         daltonismCheckbox = view.findViewById(R.id.checkbox_daltonisme)
         daltonismRadioGroup = view.findViewById(R.id.group_daltonisme)
-        val checkboxSpeech = view.findViewById<CheckBox>(R.id.checkbox_lecture)
+        protanopie = view.findViewById(R.id.radio_protanopie)
+        deuteranopie = view.findViewById(R.id.radio_deuteranopie)
+        tritanopie = view.findViewById(R.id.radio_tritanopie)
+        checkboxSpeech = view.findViewById(R.id.checkbox_lecture)
 
         // restaures les états des checkbox / radio btn
         restoreSavedStates()
@@ -70,6 +80,31 @@ class AccessibiliteFragment : BaseFragment() {
         checkboxSpeech.setOnCheckedChangeListener { _, isChecked ->
             sharedViewModel.enableSpeech(isChecked)
             AccessibilityPreferences.saveSpeechEnabled(requireContext(), isChecked)
+        }
+
+        // Observer les changements en temps réel du userviewmodel.handicap et ca va
+        // activier les setOnCheckedChangeListener normalement
+        userViewModel.handicap.observe(viewLifecycleOwner) { handicap ->
+            setupSpinner()
+            if(userViewModel.isUserLoggedIn()){
+                if (handicap.equals(R.string.lecture))
+                    checkboxSpeech.isChecked = true
+                else if(handicap.equals(R.string.deuteranopie)){
+                    daltonismCheckbox.isChecked = true
+                    deuteranopie.isChecked = true
+                }
+                else if(handicap.equals(R.string.protanopie)){
+                    daltonismCheckbox.isChecked = true
+                    protanopie.isChecked = true
+                }
+                else if(handicap.equals(R.string.tritanopie)){
+                    daltonismCheckbox.isChecked = true
+                    tritanopie.isChecked = true
+                }
+                else if(handicap.equals(R.string.malvoyant)){
+                    spinner.setSelection(3, false)
+                }
+            }
         }
 
         return view
@@ -156,4 +191,6 @@ class AccessibiliteFragment : BaseFragment() {
         val isSpeechEnabled = AccessibilityPreferences.getSpeechEnabled(requireContext())
         sharedViewModel.enableSpeech(isSpeechEnabled)
     }
+
+
 }
