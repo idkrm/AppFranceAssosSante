@@ -85,10 +85,10 @@ class ProfilFragment : BaseFragment() {
         //changer le drapeau en fonction de la langue
         val currentLanguage = Locale.getDefault().language
         val flagDrawable = when (currentLanguage) {
-            "fr" -> resizeDrawable(R.drawable.fr,150,60)
-            "en" -> resizeDrawable(R.drawable.gb,150,60)
-            "zh" -> resizeDrawable(R.drawable.chine,150,60)
-            else -> resizeDrawable(R.drawable.fr,150,60)
+            "fr" -> resizeDrawable(R.drawable.fr,100,60)
+            "en" -> resizeDrawable(R.drawable.gb,100,60)
+            "zh" -> resizeDrawable(R.drawable.chine,100,60)
+            else -> resizeDrawable(R.drawable.fr,100,60)
         }
         return flagDrawable
     }

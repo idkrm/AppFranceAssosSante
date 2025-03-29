@@ -1,57 +1,116 @@
 package com.example.appfranceassossante.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Spinner
+import androidx.lifecycle.ViewModelProvider
+import com.example.appfranceassossante.AccessibilityPreferences
 import com.example.appfranceassossante.utilsTextSize.BaseFragment
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.SharedViewModel
 import com.example.appfranceassossante.utilsTextSize.TextSizeManager
 
 
 class AccessibiliteFragment : BaseFragment() {
     private lateinit var spinner: Spinner
+    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var daltonismCheckbox: CheckBox
+    private lateinit var daltonismRadioGroup: RadioGroup
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        //spinner changement de taille du texte
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_accessibilite, container, false)
-        spinner = view.findViewById<Spinner>(R.id.spinner_taille)
-        val taille = arrayOf(18, 20, 22, 24)
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, taille)
 
+        // initialise les vues
+        spinner = view.findViewById(R.id.spinner_taille)
+        daltonismCheckbox = view.findViewById(R.id.checkbox_daltonisme)
+        daltonismRadioGroup = view.findViewById(R.id.group_daltonisme)
+        val checkboxSpeech = view.findViewById<CheckBox>(R.id.checkbox_lecture)
+
+        // restaures les états des checkbox / radio btn
+        restoreSavedStates()
+
+        // configure le spinner de la taille du texte
         setupSpinner()
-        restoreSpinnerSelection()
 
-        //btn daltonisme
-        val radioBtn = view.findViewById<RadioGroup>(R.id.group_daltonisme)
-        val dalto = view.findViewById<CheckBox>(R.id.checkbox_daltonisme)
+        // checkbox daltonisme
+        daltonismCheckbox.setOnCheckedChangeListener { _, checked ->
+            AccessibilityPreferences.saveDaltonismEnabled(requireContext(), checked)
+            updateRadioButtonsState(checked)
 
-        dalto.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { checkBox, checked ->
-            for (i in 0 until radioBtn.childCount) {
-                (radioBtn.getChildAt(i) as RadioButton).isEnabled = checked //"checked" c'est le statut de la checkbox, si true radiobutton actives, si false radiobutton desactives
-                if(!checked){
-                    (radioBtn.getChildAt(i) as RadioButton).isChecked = false //si la checkbox de daltonisme n'est pas cochee, les radiobuttons ne le sont pas non plus
-                }
+            if (!checked) {
+                AccessibilityPreferences.saveDaltonismType(requireContext(), null.toString())
             }
-        })
-
-        //set default to false
-        for (i in 0 until radioBtn.childCount) {
-            (radioBtn.getChildAt(i) as RadioButton).isEnabled = false
         }
 
-        // Inflate the layout for this fragment
+        // radio btn daltonisme
+        daltonismRadioGroup.setOnCheckedChangeListener { _, checkedId ->
+            val type = when (checkedId) {
+                R.id.radio_protanopie -> "protanopie"
+                R.id.radio_deuteranopie -> "deuteranopie"
+                R.id.radio_tritanopie -> "tritanopie"
+                else -> null
+            }
+            type?.let { AccessibilityPreferences.saveDaltonismType(requireContext(), it) }
+        }
+
+        // checkbox text to speech
+        checkboxSpeech.setOnCheckedChangeListener(null)
+
+        val isTtsEnabled = AccessibilityPreferences.getSpeechEnabled(requireContext())
+
+        checkboxSpeech.isChecked = isTtsEnabled
+
+        checkboxSpeech.setOnCheckedChangeListener { _, isChecked ->
+            sharedViewModel.enableSpeech(isChecked)
+            AccessibilityPreferences.saveSpeechEnabled(requireContext(), isChecked)
+        }
+
         return view
+    }
+
+    private fun restoreSavedStates() {
+        // restaure état de la checkbox du text to speech
+        val isSpeechEnabled = AccessibilityPreferences.getSpeechEnabled(requireContext())
+        view?.findViewById<CheckBox>(R.id.checkbox_lecture)?.isChecked = isSpeechEnabled
+
+        // restaure état checkbox daltonisme
+        val isDaltonismEnabled = AccessibilityPreferences.getDaltonismEnabled(requireContext())
+        daltonismCheckbox.isChecked = isDaltonismEnabled
+        updateRadioButtonsState(isDaltonismEnabled)
+
+        // restaure radio btn daltonisme
+        val daltonismType = AccessibilityPreferences.getDaltonismType(requireContext())
+        daltonismType?.let {
+            val radioId = when (it) {
+                "protanopie" -> R.id.radio_protanopie
+                "deuteranopie" -> R.id.radio_deuteranopie
+                "tritanopie" -> R.id.radio_tritanopie
+                else -> -1
+            }
+            if (radioId != -1) {
+                daltonismRadioGroup.check(radioId)
+            }
+        }
+
+        // restaure taille du texte
+        val savedSize = AccessibilityPreferences.getTextSize(requireContext())
+        TextSizeManager.sizeOffset = savedSize
+    }
+
+    private fun updateRadioButtonsState(enabled: Boolean) {
+        for (i in 0 until daltonismRadioGroup.childCount) {
+            (daltonismRadioGroup.getChildAt(i) as RadioButton).isEnabled = enabled
+        }
     }
 
     private fun setupSpinner() {
@@ -73,23 +132,31 @@ class AccessibiliteFragment : BaseFragment() {
                             else -> 0f
                         }
                         TextSizeManager.sizeOffset = offset
+                        AccessibilityPreferences.saveTextSize(requireContext(), offset)
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>) {}
                 }
+
+                // restaure selection du spinner
+                val currentOffset = TextSizeManager.sizeOffset
+                val position = when (currentOffset) {
+                    0f -> 0
+                    2f -> 1
+                    4f -> 2
+                    6f -> 3
+                    else -> 0
+                }
+                spinner.setSelection(position, false)
             }
         }
     }
 
-    private fun restoreSpinnerSelection() {
-        val currentOffset = TextSizeManager.sizeOffset
-        val position = when (currentOffset) {
-            0f -> 0
-            2f -> 1
-            4f -> 2
-            6f -> 3
-            else -> 0
-        }
-        spinner.setSelection(position, false)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+
+        val isSpeechEnabled = AccessibilityPreferences.getSpeechEnabled(requireContext())
+        sharedViewModel.enableSpeech(isSpeechEnabled)
     }
 }

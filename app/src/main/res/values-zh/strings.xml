@@ -47,6 +47,7 @@
 
     <!-- accessibilite -->
     <string name="lecture">语音朗读</string>
+    <string name="stop">停止</string>
     <string name="taille">文字大小</string>
     <string name="daltonisme">色盲模式</string>
     <string name="deuteranopie">绿色盲（去绿）</string>

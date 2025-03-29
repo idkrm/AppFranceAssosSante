@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:layout_marginBottom="15dp"
+        android:textSize="20sp"
         android:text="@string/info"/>
 
     <LinearLayout
@@ -107,6 +108,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:layout_marginBottom="15dp"
+        android:textSize="20sp"
         android:text="@string/mesdon"/>
 
     <LinearLayout
@@ -128,6 +130,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:layout_marginBottom="15dp"
+        android:textSize="20sp"
         android:text="@string/paramapp"/>
 
     <LinearLayout
@@ -150,6 +153,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:layout_marginBottom="15dp"
+        android:textSize="20sp"
         android:text="@string/plusinfo"/>
 
     <LinearLayout
@@ -199,7 +203,7 @@
             android:layout_height="match_parent"
             android:text="@string/suppression"
             android:textColor="@color/rouge2"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:background="@drawable/btn_se_deconnecter"/>
     </LinearLayout>
 </LinearLayout>

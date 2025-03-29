@@ -9,7 +9,7 @@
 
     <!-- accueil -->
     <string name="accueil_part1">📢 Support associations! 💙</string>
-    <string name="accueil_part2">Your donation is essential to defending patients\' rights and improving our healthcare system. Thanks to you, we can inform, support and make everyone\'s voice heard on public health issues.</string>
+    <string name="accueil_part2">Your donation is essential to defending patients\' rights and improving our healthcare system</string>
     <string name="accueil_part3">🙏 Each contribution matters!</string>
     <string name="accueil_part4">Together, let\'s take action for a fairer healthcare system accessible to all.</string>
     <string name="accueil_part5">Don\'t know which association to donate to? 🤔</string>
@@ -45,7 +45,8 @@
     <string name="pas_encore_inscrit">Not registered yet?</string>
 
     <!-- accessibilite -->
-    <string name="lecture">Read aloud</string>
+    <string name="lecture">Text to Speech</string>
+    <string name="stop">Stop</string>
     <string name="taille">Font size</string>
     <string name="daltonisme">Daltonism</string>
     <string name="deuteranopie">Deuteranopia (green)</string>

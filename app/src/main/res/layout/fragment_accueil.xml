@@ -15,6 +15,7 @@
         android:background="@color/fond_bleu">
 
         <TextView
+            android:id="@+id/tvAccueilSupport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/accueil_part1"
@@ -22,12 +23,14 @@
             android:textColor="@color/black"
             android:layout_marginBottom="10dp"/>
         <TextView
+            android:id="@+id/tvAccueilSupport2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/accueil_part2"
             android:textColor="@color/black"
             android:layout_marginBottom="20dp"/>
         <TextView
+            android:id="@+id/tvAccueilSupport3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/accueil_part3"
@@ -35,6 +38,7 @@
             android:textColor="@color/black"
             android:layout_marginBottom="10dp"/>
         <TextView
+            android:id="@+id/tvAccueilSupport4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/accueil_part4"
@@ -51,6 +55,16 @@
             android:layout_marginTop="55dp"
             android:textColor="@color/black"
             android:background="@drawable/btn_faire_don" />
+
+        <!-- BOUTON TEXT TO SPEECH INVISIBLE C NORMAL -->
+        <Button
+            android:id="@+id/btnSpeech"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lecture"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
     </LinearLayout>
 
     <LinearLayout
@@ -63,6 +77,7 @@
         android:layout_marginEnd="20dp">
 
         <TextView
+            android:id="@+id/tvAccueilAssos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/accueil_part5"
@@ -70,6 +85,7 @@
             android:layout_marginBottom="10dp"
             android:textColor="@color/black"/>
         <TextView
+            android:id="@+id/tvAccueilAssos2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/accueil_part6"
@@ -83,9 +99,19 @@
             android:textColor="@color/black"
             android:layout_gravity="center"
             android:layout_marginTop="55dp"
-            android:layout_marginBottom="50dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/btn_decouvrir_assos"/>
+
+        <!-- BOUTON TEXT TO SPEECH INVISIBLE C NORMAL -->
+        <Button
+            android:id="@+id/btnSpeech2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lecture"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginBottom="30dp"/>
     </LinearLayout>
 </LinearLayout>

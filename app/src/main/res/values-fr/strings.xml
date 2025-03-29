@@ -47,6 +47,7 @@
 
     <!-- accessibilite -->
     <string name="lecture">Lecture à voix haute</string>
+    <string name="stop">Stop</string>
     <string name="taille">Taille du texte</string>
     <string name="daltonisme">Daltonisme</string>
     <string name="deuteranopie">Deutéranopie (vert)</string>
