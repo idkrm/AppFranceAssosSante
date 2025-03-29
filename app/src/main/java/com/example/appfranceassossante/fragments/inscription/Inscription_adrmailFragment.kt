@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.example.appfranceassossante.utilsTextSize.BaseFragment
+import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.apiService.GetUserTask
 import com.example.appfranceassossante.fragments.inscription.Inscription_confirmer_adrmailFragment

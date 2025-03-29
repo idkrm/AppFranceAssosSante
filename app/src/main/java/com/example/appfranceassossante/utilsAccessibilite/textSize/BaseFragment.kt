@@ -1,17 +1,20 @@
-package com.example.appfranceassossante.utilsTextSize
+package com.example.appfranceassossante.utilsAccessibilite.textSize
 
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 
-abstract class BaseActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        window.decorView.post {
-            registerAllTextViews(window.decorView.findViewById(android.R.id.content))
+abstract class BaseFragment : Fragment() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Attend que la vue soit complètement chargée
+        view.post {
+            registerAllTextViews(view)
         }
     }
 
@@ -19,7 +22,7 @@ abstract class BaseActivity : AppCompatActivity() {
         when (view) {
             is TextView -> TextSizeManager.registerTextView(view)
             is ViewGroup -> {
-                if (view !is AdapterView<*>) {
+                if (view !is RecyclerView && view !is AdapterView<*>) {
                     for (i in 0 until view.childCount) {
                         registerAllTextViews(view.getChildAt(i))
                     }

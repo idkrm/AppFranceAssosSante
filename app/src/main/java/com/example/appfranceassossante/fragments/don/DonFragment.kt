@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import com.example.appfranceassossante.utilsTextSize.BaseFragment
+import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 

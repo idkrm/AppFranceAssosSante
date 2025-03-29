@@ -20,7 +20,7 @@ import com.example.appfranceassossante.apiService.CreateUserTask
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
-import com.example.appfranceassossante.utilsTextSize.BaseActivity
+import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

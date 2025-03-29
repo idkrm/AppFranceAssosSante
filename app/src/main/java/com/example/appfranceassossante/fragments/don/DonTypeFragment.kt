@@ -1,10 +1,8 @@
 package com.example.appfranceassossante.fragments.don
 
-import CreateDonUTask
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +11,11 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import com.example.appfranceassossante.utilsTextSize.BaseFragment
+import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.fragments.SeConnecterFragment
 import com.example.appfranceassossante.models.DonViewModel
 import com.example.appfranceassossante.models.UserViewModel
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale

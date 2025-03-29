@@ -11,14 +11,13 @@ import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.fragments.AccueilFragment
 import com.example.appfranceassossante.models.DonViewModel
 import com.example.appfranceassossante.models.UserViewModel
-import com.example.appfranceassossante.utilsTextSize.BaseFragment
+import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import kotlinx.coroutines.launch
 
 class DonPaiementFragment : BaseFragment() {

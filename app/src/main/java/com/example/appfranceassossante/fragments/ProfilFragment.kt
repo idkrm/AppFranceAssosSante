@@ -15,7 +15,7 @@ import com.example.appfranceassossante.models.UserViewModel
 import java.util.Locale
 import androidx.core.graphics.scale
 import androidx.core.graphics.drawable.toDrawable
-import com.example.appfranceassossante.utilsTextSize.BaseFragment
+import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 
 class ProfilFragment : BaseFragment() {
     private lateinit var userViewModel : UserViewModel

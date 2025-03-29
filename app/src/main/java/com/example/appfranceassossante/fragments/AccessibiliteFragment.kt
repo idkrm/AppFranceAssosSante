@@ -1,24 +1,21 @@
 package com.example.appfranceassossante.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.CheckBox
-import android.widget.CompoundButton
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Spinner
 import androidx.lifecycle.ViewModelProvider
-import com.example.appfranceassossante.AccessibilityPreferences
-import com.example.appfranceassossante.utilsTextSize.BaseFragment
+import com.example.appfranceassossante.utilsAccessibilite.textToSpeech.AccessibilityPreferences
+import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.R
-import com.example.appfranceassossante.SharedViewModel
-import com.example.appfranceassossante.utilsTextSize.TextSizeManager
+import com.example.appfranceassossante.utilsAccessibilite.textToSpeech.SharedViewModel
+import com.example.appfranceassossante.utilsAccessibilite.textSize.TextSizeManager
 
 
 class AccessibiliteFragment : BaseFragment() {

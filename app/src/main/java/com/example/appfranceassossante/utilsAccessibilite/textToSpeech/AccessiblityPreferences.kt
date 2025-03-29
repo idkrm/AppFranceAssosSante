@@ -1,11 +1,9 @@
-package com.example.appfranceassossante
+package com.example.appfranceassossante.utilsAccessibilite.textToSpeech
 
 import android.content.Context
-import android.util.Log
 
 object AccessibilityPreferences {
     private const val PREFS_NAME = "accessibility_prefs"
-    private const val KEY_SPEECH_ENABLED = "speech_enabled"
     private const val KEY_DALTONISM_ENABLED = "daltonism_enabled"
     private const val KEY_DALTONISM_TYPE = "daltonism_type"
     private const val KEY_TEXT_SIZE = "text_size"

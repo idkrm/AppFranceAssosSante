@@ -17,7 +17,7 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.example.appfranceassossante.utilsTextSize.BaseFragment
+import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.models.Don
 import com.example.appfranceassossante.DonationAdapter
 import com.example.appfranceassossante.R

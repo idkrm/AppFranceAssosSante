@@ -12,7 +12,7 @@ import androidx.core.graphics.drawable.toDrawable
 import androidx.core.graphics.scale
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.appfranceassossante.utilsTextSize.BaseFragment
+import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.models.UserViewModel
 import java.util.Locale

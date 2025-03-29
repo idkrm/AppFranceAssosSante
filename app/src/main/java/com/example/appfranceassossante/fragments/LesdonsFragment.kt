@@ -12,14 +12,12 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import com.example.appfranceassossante.utilsTextSize.BaseFragment
+import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.apiService.GetAssosIDTask
-import com.example.appfranceassossante.apiService.GetDonByAssos
 import com.example.appfranceassossante.apiService.GetListYearDonRecTask
 import com.example.appfranceassossante.apiService.GetListYearDonTask
 import com.example.appfranceassossante.apiService.GetMonthDonTask
-import com.example.appfranceassossante.apiService.GetTotalYearDonRecTask
 import com.example.appfranceassossante.apiService.GetTotalYearDonTask
 import com.example.appfranceassossante.models.UserViewModel
 import com.github.mikephil.charting.charts.BarChart
@@ -29,7 +27,6 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
-import java.net.URLEncoder
 
 class LesdonsFragment : BaseFragment() {
 

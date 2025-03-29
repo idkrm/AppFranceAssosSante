@@ -1,11 +1,9 @@
 package com.example.appfranceassossante.fragments
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +11,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
-import com.example.appfranceassossante.SharedViewModel
-import com.example.appfranceassossante.utilsTextSize.BaseFragment
+import com.example.appfranceassossante.utilsAccessibilite.textToSpeech.SharedViewModel
+import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Locale
 

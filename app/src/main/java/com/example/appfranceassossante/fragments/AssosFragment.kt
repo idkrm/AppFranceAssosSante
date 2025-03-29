@@ -9,7 +9,7 @@ import android.widget.GridView
 import android.widget.SearchView
 import com.example.appfranceassossante.models.Assos
 import com.example.appfranceassossante.AssosAdapter
-import com.example.appfranceassossante.utilsTextSize.BaseFragment
+import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.apiService.GetAssosTask
 

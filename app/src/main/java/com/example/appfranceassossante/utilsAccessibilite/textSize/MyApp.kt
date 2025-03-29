@@ -1,4 +1,4 @@
-package com.example.appfranceassossante.utilsTextSize
+package com.example.appfranceassossante.utilsAccessibilite.textSize
 
 import android.app.Application
 
