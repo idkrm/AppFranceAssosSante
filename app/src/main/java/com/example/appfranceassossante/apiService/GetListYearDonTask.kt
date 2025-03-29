@@ -14,11 +14,11 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 
-class GetListYearDonTask(private val onResult: (List<String>) -> Unit) {
+class GetListYearDonTask(private val assosID: String, private val onResult: (List<String>) -> Unit) {
     suspend fun getListYearDonInBG(): List<String> {
         return withContext(Dispatchers.IO) {
             try {
-                val url = URL("http://10.0.2.2:5000/donations/dons/annee")
+                val url = URL("http://10.0.2.2:5000/donations/dons/annee/$assosID")
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "GET"
                 connection.setRequestProperty("Content-Type", "application/json")

@@ -9,10 +9,10 @@ import java.net.URL
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-class GetTotalYearDonRecTask(private val year: String, private val onResult: (Int) -> Unit) {
+class GetTotalYearDonRecTask(private val year: String,private val assosID: String, private val onResult: (Int) -> Unit) {
     suspend fun getTotalYearDonRecInBG(): Int {
         return try {
-            val url = URL("http://10.0.2.2:5000/donations/dons/rec/total/$year")
+            val url = URL("http://10.0.2.2:5000/donations/dons/rec/total/$assosID/$year")
             val connection = url.openConnection() as HttpURLConnection
             connection.requestMethod = "GET"
             connection.setRequestProperty("Content-Type", "application/json")

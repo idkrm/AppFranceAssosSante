@@ -110,7 +110,7 @@ class MesDonsFragment : BaseFragment() {
         // pour chaque don de la liste, crée une ligne et rentre les infos
         donations.forEach { don ->
             val row = TableRow(context).apply {
-                addView(createDonTextView(don.association.getAssosName()))
+                addView(createDonTextView(don.association))
                 addView(createDonTextView(don.date.toString()))
                 addView(createDonTextView(don.montant.toString()))
                 addView(createDonTextView(don.paiement))
@@ -135,7 +135,7 @@ class MesDonsFragment : BaseFragment() {
 
         donationsRec.forEach { don ->
             val row = TableRow(context).apply {
-                addView(createDonTextView(don.association.toString()))
+                addView(createDonTextView(don.association))
                 addView(createDonTextView(don.date.toString()))
                 addView(createDonTextView(don.montant.toString()))
                 addView(createDonTextView(don.paiement))

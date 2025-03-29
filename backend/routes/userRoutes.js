@@ -114,6 +114,7 @@ router.get('/user/:email', async (req, res) => {
     const user = await User.findOne({ email: userEmail }).populate("admin");;
 
     if (!user) {
+      console.log(`Utilisateur avec l'email ${userEmail} non trouvé`);
       return res.status(404).json({ message: 'Utilisateur non trouvé' });
     }
 

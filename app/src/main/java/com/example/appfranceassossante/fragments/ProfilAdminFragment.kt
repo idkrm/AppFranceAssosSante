@@ -1,11 +1,15 @@
 package com.example.appfranceassossante.fragments
 
+import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.graphics.drawable.toDrawable
+import androidx.core.graphics.scale
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.utilsTextSize.BaseFragment
@@ -16,6 +20,11 @@ import java.util.Locale
 class ProfilAdminFragment : BaseFragment() {
 
     private lateinit var userViewModel: UserViewModel
+    private lateinit var civ: TextView
+    private lateinit var nom: TextView
+    private lateinit var prenom: TextView
+    private lateinit var mail: TextView
+    private lateinit var assos: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,21 +34,25 @@ class ProfilAdminFragment : BaseFragment() {
 
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
 
-        val civ = view.findViewById<TextView>(R.id.civilitepersonne)
-        civ.text = userViewModel.civilite.toString()
+        civ = view.findViewById(R.id.civilitepersonne)
+        civ.text = userViewModel.civilite.value.toString()
 
-        val nom = view.findViewById<TextView>(R.id.nompersonne)
-        nom.text = userViewModel.nom.toString().uppercase()
+        nom = view.findViewById(R.id.nompersonne)
+        nom.text = userViewModel.nom.value.toString().uppercase()
 
-        val prenom = view.findViewById<TextView>(R.id.prenompersonne)
-        prenom.text = userViewModel.prenom.toString() // mets la première lettre en maj
-            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
 
-        val mail = view.findViewById<TextView>(R.id.mailpersonne)
-        mail.text = userViewModel.mail.toString()
+        prenom = view.findViewById(R.id.prenompersonne)
+        prenom.text = userViewModel.prenom.value.toString().replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT)
+        else it.toString() }
 
-        val assos = view.findViewById<TextView>(R.id.assospersonne)
+        mail = view.findViewById(R.id.mailpersonne)
+        mail.text = userViewModel.mail.value.toString()
+
+        assos = view.findViewById(R.id.assospersonne)
         assos.text = userViewModel.admin.value?.getAssosName().toString()
+
+        val flagDrawable = langueFlag() // met le bon drapeau
+        flagDrawable.setBounds(0, 0, 50, 50)
 
         val btnlangue = view.findViewById<Button>(R.id.langue)
         btnlangue.setOnClickListener{
@@ -58,6 +71,7 @@ class ProfilAdminFragment : BaseFragment() {
             fragmentRemplace(SeConnecterFragment()) // remplace le fragment actuel par le fragment qui suit ("SeConnecterFragment")
         }
 
+        /*
         val btnlegacy = view.findViewById<Button>(R.id.legacy)
         btnlegacy.setOnClickListener{
 
@@ -72,6 +86,7 @@ class ProfilAdminFragment : BaseFragment() {
         btncondition.setOnClickListener{
 
         }
+         */
 
         return view
     }
@@ -82,6 +97,24 @@ class ProfilAdminFragment : BaseFragment() {
         transaction.replace(R.id.fragment_container, fragment)
         transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
         transaction.commit()
+    }
+
+    private fun langueFlag() : Drawable {
+        //changer le drapeau en fonction de la langue
+        val currentLanguage = Locale.getDefault().language
+        val flagDrawable = when (currentLanguage) {
+            "fr" -> resizeDrawable(R.drawable.fr,150,60)
+            "en" -> resizeDrawable(R.drawable.gb,150,60)
+            "zh" -> resizeDrawable(R.drawable.chine,150,60)
+            else -> resizeDrawable(R.drawable.fr,150,60)
+        }
+        return flagDrawable
+    }
+
+    fun resizeDrawable(drawableId: Int, newWidth: Int, newHeight: Int): Drawable {
+        val bitmap = BitmapFactory.decodeResource(resources, drawableId)
+        val resizedBitmap = bitmap.scale(newWidth, newHeight, false)
+        return resizedBitmap.toDrawable(resources)
     }
 
 }

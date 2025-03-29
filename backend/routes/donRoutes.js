@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const Donation = require('../models/Don');
 const RecurringDonation = require('../models/DonRec');
 const User = require('../models/User');
@@ -20,15 +21,16 @@ router.post('/donations', async (req, res) => {
     }
 
     const associationData = await Assos.findOne({ nom: associationNom });
+    const associationData = await Association.findOne({ nom: association.nom });
     if (!associationData) {
           return res.status(400).json({ message: "Association non trouvée" });
         }
 
     const donation = new Don({
       montant,
-      associationId: associationData._id,
-      date,
-      utilisateurEmail,
+      association: associationData,
+      date: new Date(date),
+      emailUtilisateur: utilisateurEmail,
       typePaiement,
     });
 
@@ -81,16 +83,37 @@ router.post('/recurring-donations', async (req, res) => {
 });
 
 // Route pour récupérer la liste des années avec des dons
-router.get("/dons/annee", async (req, res) => {
+router.get("/dons/annee/:assosId", async (req, res) => {
   try {
+    const associationId = req.params.assosId;
+    if (!mongoose.Types.ObjectId.isValid(associationId)) {
+      return res.status(400).json({ error: "ID d'association invalide" });
+    }
+
       const years = await Donation.aggregate([
-          {
-              $group: {
-                  _id: { $year: "$date" } // Extraire l'année de chaque don
-              }
-          },
-          { $sort: { "_id": -1 } } // Trier par année décroissante
+        {
+          $match: {
+            association: new mongoose.Types.ObjectId(associationId) // Filtre les dons par association
+          }
+        },
+        {
+          $group: {
+            _id: { $year: "$date" } // Extrait l'année de chaque date de don
+          }
+        },
+        {
+          $sort: { "_id": -1 } // Trie par année décroissante
+        },
+        {
+          $project: {
+            year: "$_id", // Renomme _id en year
+            _id: 0        // Supprime le champ _id
+          }
+        }
       ]);
+
+      // 3. Transformation en tableau simple d'années
+      const result = years.map(item => item.year);
 
       const result = years.map(y => y._id.toString()); // Convertir en liste de strings
       res.json(result);
@@ -101,10 +124,19 @@ router.get("/dons/annee", async (req, res) => {
 });
 
 // Route pour récupérer la liste des années avec des dons
-router.get("/dons_rec/annee", async (req, res) => {
+router.get("/dons_rec/annee/:assosId", async (req, res) => {
   try {
+    const associationId = req.params.assosId;
+    if (!mongoose.Types.ObjectId.isValid(associationId)) {
+      return res.status(400).json({ error: "ID d'association invalide" });
+    }
       const years = await RecurringDonation.aggregate([
           {
+              $match: {
+                association: new mongoose.Types.ObjectId(associationId), // Filtre par association
+              }
+            },
+            {
               $group: {
                   _id: { $year: "$date" } // Extraire l'année de chaque don
               }
@@ -120,20 +152,55 @@ router.get("/dons_rec/annee", async (req, res) => {
   }
 });
 
+// Route pour récupérer les dons d'une association
+router.get("/dons/:assosID", async (req, res) => {
+  try {
+    const assos = req.params.assos;
+
+    // Vérifier si l'ID est valide
+    if (!mongoose.Types.ObjectId.isValid(assosID)) {
+      return res.status(400).json({ error: "ID d'association invalide" });
+    }
+
+    // Filtrer les dons qui appartiennent à l'association
+    const donsList = await Donation.find({association: assosID})
+
+    /*
+    if (donsList.length === 0) {
+      return res.status(404).json({ message: "Aucune don trouvé pour cette association" });
+    }
+    */
+
+    res.status(200).json(donsList);
+  } catch (error) {
+      console.error("Erreur lors de la récupération des dons de l'association:", error);
+      res.status(500).json({ error: "Erreur serveur" });
+  }
+});
+
 // Route pour récupérer le total des dons d'une année spécifique
-router.get("/dons/total/:year", async (req, res) => {
+router.get("/dons/total/:assosId/:year", async (req, res) => {
   try {
       const year = parseInt(req.params.year);
       if (isNaN(year)) return res.status(400).json({ error: "Année invalide" });
       
+      const associationId = req.params.assosId;
+      if (!mongoose.Types.ObjectId.isValid(associationId)) {
+        return res.status(400).json({ error: "ID d'association invalide" });
+      }
+
       // Filtrer les dons qui appartiennent à l'année donnée
       const dons = await Donation.aggregate([
           {
               $match: {
-                  date: {
-                      $gte: new Date(`${year}-01-01T00:00:00.000Z`), //Début de l'année
-                      $lt: new Date(`${year}-12-31T23:59:59.999Z`) //Fin de l'année
-                  }
+                  association: new mongoose.Types.ObjectId(associationId), // Filtre par association
+                  //date: {
+                  //    $gte: new Date(Date.UTC(year, 0, 1, 0, 0, 0)), // 1er Janvier UTC
+                  //    $lt: new Date(Date.UTC(year + 1, 0, 1, 0, 0, 0)) // 1er Janvier année suivante
+                  //}
+                  $expr: {
+                    $eq: [{ $year: "$date" }, year]
+                }
               }
           },
           {
@@ -144,11 +211,7 @@ router.get("/dons/total/:year", async (req, res) => {
           }
       ]);
 
-      if (dons.length > 0) {
-          res.json({ total: dons[0].total });
-      } else {
-          res.json({ total: 0 });
-      }
+      res.json({total: result[0]?.total || 0.0});
   } catch (error) {
       console.error("Erreur lors de la récupération du total des dons:", error);
       res.status(500).json({ error: "Erreur serveur" });
@@ -157,18 +220,24 @@ router.get("/dons/total/:year", async (req, res) => {
 
 
 // Route pour récupérer le total des dons récurrents d'une année spécifique
-router.get("/dons/rec/total/:year", async (req, res) => {
+router.get("/dons/rec/total/:assosId/:year", async (req, res) => {
   try {
       const year = parseInt(req.params.year);
       if (isNaN(year)) return res.status(400).json({ error: "Année invalide" });
       
+      const associationId = req.params.assosId;
+      if (!mongoose.Types.ObjectId.isValid(associationId)) {
+        return res.status(400).json({ error: "ID d'association invalide" });
+      }
+
       // Filtrer les dons qui appartiennent à l'année donnée
       const dons = await RecurringDonation.aggregate([
           {
-              $match: {
+                $match: {
+                  association: new mongoose.Types.ObjectId(associationId), // Filtre par association
                   date: {
-                      $gte: new Date(`${year}-01-01T00:00:00.000Z`), //Début de l'année
-                      $lt: new Date(`${year}-12-31T23:59:59.999Z`) //Fin de l'année
+                    $gte: new Date(Date.UTC(year, 0, 1, 0, 0, 0)), // 1er Janvier UTC
+                    $lt: new Date(Date.UTC(year + 1, 0, 1, 0, 0, 0)) // 1er Janvier année suivantee
                   }
               }
           },
@@ -191,19 +260,25 @@ router.get("/dons/rec/total/:year", async (req, res) => {
   }
 });
 
-// Route pour récupérer la somme de dons récurrents par mois pour une année donnée
-router.get("/dons/rec/mois/:year", async (req, res) => {
+
+// Route pour récupérer la somme de dons récurrents par mois pour une année donnée pour une association
+router.get("/dons/rec/mois/:associationId/:year", async (req, res) => {
   try {
       const year = parseInt(req.params.year); // Convertir l'année en nombre
       if (isNaN(year)) return res.status(400).json({ error: "Année invalide" });
-      
+
+      const assosId = req.params.associationId;
+      if (!mongoose.Types.ObjectId.isValid(assosId)) {
+        return res.status(400).json({ error: "ID d'association invalide" });
+      }
       // Agrégation MongoDB pour compter les dons par mois
       const donsParMois = await RecurringDonation.aggregate([
           {
               $match: {
+                  association: new mongoose.Types.ObjectId(assosId), // Filtre par association
                   date: {
-                      $gte: new Date(`${year}-01-01T00:00:00.000Z`),
-                      $lt: new Date(`${year}-12-31T23:59:59.999Z`)
+                    $gte: new Date(Date.UTC(year, 0, 1, 0, 0, 0)), // 1er Janvier UTC
+                    $lt: new Date(Date.UTC(year + 1, 0, 1, 0, 0, 0)) // 1er Janvier année suivante
                   }
               }
           },

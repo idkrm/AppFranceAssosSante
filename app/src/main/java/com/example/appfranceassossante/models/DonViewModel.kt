@@ -94,11 +94,13 @@ class DonViewModel : ViewModel() {
         val utilisateurEmailRec = getUtilisateurEmailRec()
         val typePaiement = paymentType ?: "Inconnu"
 
+        /*
         // Récupération de l'association
         val association: Assos = runBlocking {
             GetAssosByNameTask().getAssosByNameInBG(associationName)
                 ?: throw IllegalStateException("Impossible de récupérer l'association")
         }
+         */
 
         return Don(montantDon.toDouble(), association, dateDon, utilisateurEmail, typePaiement)
 
@@ -125,6 +127,7 @@ class DonViewModel : ViewModel() {
             type = "Annuel"
         return DonRecurrent(montantDon.toDouble(), dateDon, association, utilisateurEmailRec, typePaiement, type,dateFin)
 
+        }
     }
 
     fun reinitialiserDonnees() {

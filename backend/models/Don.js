@@ -15,7 +15,8 @@ const donationSchema = new mongoose.Schema({
     required: true,
   },
   emailUtilisateur: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId, // Référence à l'utilisateur
+    ref: 'User',
   },
   typePaiement: {
     type: String,

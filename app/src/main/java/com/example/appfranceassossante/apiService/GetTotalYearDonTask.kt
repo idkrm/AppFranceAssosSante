@@ -1,5 +1,6 @@
 package com.example.appfranceassossante.apiService
 
+import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -9,10 +10,10 @@ import java.net.URL
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-class GetTotalYearDonTask(private val year: String, private val onResult: (Int) -> Unit) {
-    suspend fun getTotalYearDonInBG(): Int {
+class GetTotalYearDonTask(private val year: String, private val assosID: String, private val onResult: (Double) -> Unit) {
+    suspend fun getTotalYearDonInBG(): Double {
         return try {
-            val url = URL("http://10.0.2.2:5000/donations/dons/total/$year")
+            val url = URL("http://10.0.2.2:5000/donations/dons/total/$assosID/$year")
             val connection = url.openConnection() as HttpURLConnection
             connection.requestMethod = "GET"
             connection.setRequestProperty("Content-Type", "application/json")
@@ -23,10 +24,11 @@ class GetTotalYearDonTask(private val year: String, private val onResult: (Int) 
             reader.close()
 
             val jsonObject = JSONObject(response)
-            jsonObject.getInt("total")
+            Log.d("GetTotalYearDonTask", "Réponse serveur pour $year: $response")
+            jsonObject.getDouble("total")
         } catch (e: Exception) {
             e.printStackTrace()
-            0
+            0.0
         }
     }
 

@@ -35,13 +35,10 @@ class GetDonRecUserTask {
                                         throw JSONException("L'association est manquante")
                                     }
 
-                                    val association = Assos(
-                                        nom = associationJson.optString("nom", ""),
-                                        img = associationJson.optString("img", ""),
-                                        description = associationJson.optString("description", ""),
-                                        filtre = associationJson.optString("filtre", ""),
-                                        acronyme = associationJson.optString("acronyme", "")
-                                    )
+                                    // On récupère le nom de l'association depuis l'objet JSON
+                                    val associationName = associationJson.optString("nom", "Association inconnue")
+
+
                                     val donRec = DonRecurrent(
                                         emailUtilisateur = jsonObject.getString("emailUtilisateur"),
                                         montant = jsonObject.getDouble("montant"),
@@ -49,7 +46,7 @@ class GetDonRecUserTask {
                                         paiement = jsonObject.getString("paiement"),
                                         frequence = jsonObject.getString("frequence"),
                                         dateFin = Don.parseDate(jsonObject.getString("dateFin")),
-                                        association = association
+                                        association = associationName,
 
                                     )
                                     Log.i("GetDonRecUserTask", "Nombre de dons récurrents récupérés: ${donsRecList.size}")

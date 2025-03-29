@@ -15,7 +15,8 @@ const recurringDonationSchema = new mongoose.Schema({
     required: true,
   },
   utilisateurEmail: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId, // Référence à l'utilisateur'
+      ref: 'User',
       required: true,
     },
   typePaiement: {

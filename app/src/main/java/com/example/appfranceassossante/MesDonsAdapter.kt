@@ -35,7 +35,7 @@ class DonationAdapter(private var donations: List<Don>) : RecyclerView.Adapter<D
         private val paiementTextView: TextView = itemView.findViewById(R.id.tvPaiement)
 
         fun bind(donation: Don) {
-            associationTextView.text = donation.association.getAssosName()
+            associationTextView.text = donation.association
             dateTextView.text = donation.date.toString()
             montantTextView.text = "${donation.montant}€"
             paiementTextView.text = donation.paiement

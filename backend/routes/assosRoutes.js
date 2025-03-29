@@ -14,6 +14,42 @@ router.get('/assos', async (req, res) => {
   }
 });
 
+// Récupérer l'ID d'une association par son nom
+router.get("/association/id/:nom", async (req, res) => {
+  try {
+    const nom = req.params.nom;
+    let nomDecode;
+    try {
+      nomDecode = decodeURIComponent(req.params.nom.replace(/\+/g, ' '));
+    } catch (e) {
+      console.error("Erreur de décodage du nom:", e);
+      return res.status(400).json({ error: "Nom d'association mal formaté" });
+    }
+    // 2. Nettoyage supplémentaire (supprimer les espaces multiples/traînants)
+    const nomNettoye = nomDecode.trim().replace(/\s+/g, ' ');
+
+    // 3. Création de la regex en échappant les caractères spéciaux
+    //const motifRegex = nomNettoye.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    //const regex = new RegExp(`^${motifRegex}$`, "i");
+
+    //const association = await Association.findOne({ nom: regex });
+    const association = await Association.findOne({ nom: nomNettoye });
+
+    if (!association) {
+      //console.log(`Association avec le nom ${regex} non trouvé`);
+      console.log(`Association avec le nom ${nomNettoye} non trouvé`);
+      return res.status(404).json({ error: "Association non trouvée" });
+    }
+
+    //console.log(`Association avec le nom ${regex} a pour id: ${association._id}`);
+    console.log(`Association avec le nom ${nomNettoye} a pour id: ${association._id}`);
+    res.status(200).json({id: association._id });
+  } catch (error) {
+    console.error("Erreur lors de la récupération de l'ID de l'association:", error);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+});
+
 // Récupérer une association par son ID
 router.get('/assos/:id', async (req, res) => {
   try {

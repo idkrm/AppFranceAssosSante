@@ -1,9 +1,11 @@
 package com.example.appfranceassossante.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TableLayout
@@ -12,6 +14,8 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.utilsTextSize.BaseFragment
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.apiService.GetAssosIDTask
+import com.example.appfranceassossante.apiService.GetDonByAssos
 import com.example.appfranceassossante.apiService.GetListYearDonRecTask
 import com.example.appfranceassossante.apiService.GetListYearDonTask
 import com.example.appfranceassossante.apiService.GetMonthDonTask
@@ -25,6 +29,7 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import java.net.URLEncoder
 
 class LesdonsFragment : BaseFragment() {
 
@@ -33,6 +38,7 @@ class LesdonsFragment : BaseFragment() {
     private lateinit var tableDon: TableLayout
     private lateinit var totalannee: Spinner
     private lateinit var totalrec: Spinner
+    private var asId: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,41 +49,85 @@ class LesdonsFragment : BaseFragment() {
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
 
         val nomassos = view.findViewById<TextView>(R.id.nomassociation)
-        nomassos.text = userViewModel.admin.value?.getAssosName().toString()
+        val nomAsso = userViewModel.admin.value?.getAssosName().toString()
+        Log.d("Les dons fragment", "Le nom de l'assos: $nomAsso")
 
-        totalannee = view.findViewById(R.id.totalannee)
-        GetListYearDonTask { yearsList ->
-            updateYearSpinner(totalannee, yearsList)
+        nomassos.text = nomAsso
+
+        GetAssosIDTask(nomAsso) { id ->
+            Log.d("Les dons fragment", "Recherche l'id")
+            if (id != null) {
+                asId = id // L'ID récupéré est déjà une chaîne de caractères (String)
+                Log.d("Les dons fragment", "L'asID: $asId")
+
+                totalannee = view.findViewById(R.id.totalannee)
+                GetListYearDonTask(asId!!) { yearsList ->
+                    updateYearSpinner(totalannee, yearsList)
+                }.execute()
+
+                val montantannee = view.findViewById<TextView>(R.id.montantannee)
+                val annee = view.findViewById<TextView>(R.id.annee)
+
+                totalannee.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parentView: AdapterView<*>,
+                        selectedItemView: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        // Lorsque l'utilisateur sélectionne une année dans le spinner 'totalannee'
+                        val selectedYear = totalannee.selectedItem.toString()
+                        annee.text = selectedYear
+                        // Exécuter la requête pour obtenir le total des dons de l'année sélectionnée
+                        GetTotalYearDonTask(selectedYear, asId!!) { total ->
+                            montantannee.text = "$total €"
+                        }.execute()
+                    }
+
+                    override fun onNothingSelected(parentView: AdapterView<*>) {
+                        // Aucune action nécessaire ici
+                    }
+                }
+
+                totalrec = view.findViewById(R.id.totalrec)
+                GetListYearDonRecTask(asId!!) { yearsList ->
+                    updateYearSpinner(totalrec, yearsList)
+                }.execute()
+                val montantrec = view.findViewById<TextView>(R.id.montantanneedonation)
+                val anneedonation = view.findViewById<TextView>(R.id.anneedonation)
+
+                totalrec.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parentView: AdapterView<*>,
+                        selectedItemView: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        // Lorsque l'utilisateur sélectionne une année dans le spinner 'totalannee'
+                        val selectedYear = totalrec.selectedItem.toString()
+                        anneedonation.text = selectedYear
+                        // Exécuter la requête pour obtenir le total des dons de l'année sélectionnée
+                        GetTotalYearDonTask(selectedYear, asId!!) { total ->
+                            montantrec.text = "$total €"
+                        }.execute()
+                    }
+
+                    override fun onNothingSelected(parentView: AdapterView<*>) {
+                        // Aucune action nécessaire ici
+                    }
+                }
+
+                barChart = view.findViewById(R.id.graph_bar)
+                tableDon = view.findViewById(R.id.tabledon)
+
+                remplirGraph()
+                loadDonationData()
+            } else {
+                // Gérer le cas où l'ID est null (association non trouvée)
+                println("Association non trouvée")
+            }
         }.execute()
-        val montantannee = view.findViewById<TextView>(R.id.montantannee)
-        GetTotalYearDonTask(totalannee.selectedItem.toString()) { total ->
-            montantannee.text = "$total €"
-        }.execute()
-
-        totalrec = view.findViewById(R.id.totalrec)
-        GetListYearDonRecTask { yearsList ->
-            updateYearSpinner(totalrec, yearsList)
-        }.execute()
-        val montantrec = view.findViewById<TextView>(R.id.montantanneedonation)
-        GetTotalYearDonRecTask(totalrec.selectedItem.toString()) { total_rec ->
-            montantrec.text = "$total_rec €"
-        }.execute()
-
-        barChart = view.findViewById(R.id.graph_bar)
-        tableDon = view.findViewById(R.id.tabledon)
-
-        /*
-        // Simuler les données récupérées depuis la base (remplacez cela par une vraie requête)
-        val data = mapOf(
-            "2025" to listOf("100€", "120€", "90€"),
-            "2024" to listOf("80€", "110€", "75€"),
-            "2023" to listOf("95€", "105€", "85€")
-        )
-         */
-
-        remplirGraph()
-        loadDonationData()
-
+        nomassos.text = "123"
         return view
     }
 
@@ -91,12 +141,12 @@ class LesdonsFragment : BaseFragment() {
 
     private fun loadDonationData() {
         // Récupère les années disponibles
-        GetListYearDonRecTask { yearsList ->
+        GetListYearDonRecTask(asId!!) { yearsList ->
             if (yearsList.isNotEmpty()) {
                 val donationsData = mutableMapOf<String, MutableMap<String, String>>()
                 var nbYear = yearsList.size
                 for (year in yearsList) {
-                    GetMonthDonTask(year) { monthtotal ->
+                    GetMonthDonTask(year, asId!!) { monthtotal ->
 
                         donationsData[year] = monthtotal.mapValues { (_, value) -> "$value €"}.toMutableMap()
 
@@ -153,12 +203,12 @@ class LesdonsFragment : BaseFragment() {
     }
 
     private fun remplirGraph(){
-        GetListYearDonTask { yearsList ->
+        GetListYearDonTask(asId!!) { yearsList ->
             if (yearsList.isNotEmpty()) {
-                val donationsData = mutableMapOf<String, Int>()
+                val donationsData = mutableMapOf<String, Double>()
                 var nbYear = yearsList.size
                 for (year in yearsList) {
-                    GetTotalYearDonTask(year) { total ->
+                    GetTotalYearDonTask(year, asId!!) { total ->
 
                         donationsData[year] = total
 
@@ -176,7 +226,7 @@ class LesdonsFragment : BaseFragment() {
         }.execute()
     }
 
-    private fun afficherBarChart(donationsData: Map<String, Int>) {
+    private fun afficherBarChart(donationsData: Map<String, Double>) {
         val barEntries = ArrayList<BarEntry>() //liste contenant les valeurs du graphique
         val labels = ArrayList<String>() //liste contenant les années pour l'axe X
 

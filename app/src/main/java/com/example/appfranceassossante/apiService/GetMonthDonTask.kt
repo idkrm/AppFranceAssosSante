@@ -9,11 +9,11 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 
-class GetMonthDonTask (private val year: String, private val onResult: (Map<String, Int>) -> Unit){
+class GetMonthDonTask (private val year: String, private val assosID: String, private val onResult: (Map<String, Int>) -> Unit){
 
         suspend fun getMonthDonInBG(): Map<String, Int> {
             return try {
-                val url = URL("http://10.0.2.2:5000/donations/dons/rec/mois/$year")
+                val url = URL("http://10.0.2.2:5000/donations/dons/rec/mois/$assosID/$year")
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "GET"
                 connection.setRequestProperty("Content-Type", "application/json")

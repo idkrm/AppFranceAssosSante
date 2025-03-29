@@ -34,20 +34,16 @@ class GetDonUniqueUserTask {
                                             throw JSONException("L'association est manquante")
                                         }
 
-                                        val association = Assos(
-                                            nom = associationJson.optString("nom", ""),
-                                            img = associationJson.optString("img", ""),
-                                            description = associationJson.optString("description", ""),
-                                            filtre = associationJson.optString("filtre", ""),
-                                            acronyme = associationJson.optString("acronyme", "")
-                                        )
+                                        // On récupère le nom de l'association depuis l'objet JSON
+                                        val associationName = associationJson.optString("nom", "Association inconnue")
+
 
                                         val don = Don(
                                             emailUtilisateur = jsonObject.getString("emailUtilisateur"),
                                             montant = jsonObject.getDouble("montant"),
                                             date = Don.parseDate(jsonObject.getString("date")),
                                             paiement = jsonObject.getString("typePaiement"),
-                                            association = association
+                                            association = associationName,
                                         )
                                         Log.i("GetDonUniqueUserTask", "Nombre de dons récupérés: ${donsList.size}")
                                         donsList.add(don)
