@@ -3,26 +3,39 @@ package com.example.appfranceassossante
 import android.widget.ArrayAdapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import android.widget.Filter
-import com.example.appfranceassossante.fragments.AssosFragment
+import com.example.appfranceassossante.fragments.AssosInfoFragment
 import com.example.appfranceassossante.models.Assos
 
 class AssosAdapter(private val activity: Context,
                    private val itemResource: Int,
                    private var assos: MutableList<Assos>
 ) : ArrayAdapter<Assos>(activity, itemResource, assos), Filterable {
-
     // Copie de la liste mutable, cela permet de référence pour les filtres
     private var listeOriginal : List<Assos> = assos.toList()
 
-    public override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+    override fun getCount(): Int {
+        return assos.size
+    }
+
+    override fun getItem(position: Int): Assos {
+        return assos[position]
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
         val layout = convertView ?: LayoutInflater.from(activity).inflate(itemResource, parent, false) // ?: est l'opérateur Elvis comme un if
         val asso = assos[position]
@@ -37,6 +50,21 @@ class AssosAdapter(private val activity: Context,
             .placeholder(R.drawable.placeholder_asso) // Image en attente
             .into(assosLogo)
         //assosLogo.setImageResource(asso.getImg())
+
+        // recup le nom de l'assos pour fragment_assos_info
+        layout.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("nom_assos", asso.getAssosName())
+
+            val fragment = AssosInfoFragment()
+            fragment.arguments = bundle
+
+            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+            fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
 
         return layout
     }

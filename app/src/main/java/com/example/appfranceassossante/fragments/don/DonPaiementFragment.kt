@@ -18,6 +18,7 @@ import com.example.appfranceassossante.fragments.AccueilFragment
 import com.example.appfranceassossante.models.DonViewModel
 import com.example.appfranceassossante.models.UserViewModel
 import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
 class DonPaiementFragment : BaseFragment() {
@@ -72,6 +73,10 @@ class DonPaiementFragment : BaseFragment() {
                     transaction.replace(R.id.fragment_container, AccueilFragment())
                     transaction.addToBackStack(null)
                     transaction.commit()
+
+                    // selectionne l'item accueil dans le menu
+                    val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)
+                    bottomNav?.selectedItemId = R.id.navigation_accueil
                 }
                 .create()
 

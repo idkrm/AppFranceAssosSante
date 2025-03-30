@@ -30,7 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:background="@drawable/outline">
+            android:background="@drawable/outline"
+            android:gravity="center">
             <RadioGroup
                 android:id="@+id/radioTypeDon"
                 android:layout_width="wrap_content"
@@ -55,14 +56,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/googlepay"
                     android:gravity="center"/>
-
-                <RadioButton
-                    android:id="@+id/btn_rd_Apay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/apple_pay"
-                    android:gravity="center"/>
-
 
             </RadioGroup>
             <RelativeLayout
@@ -91,13 +84,6 @@
                     android:layout_height="30dp"
                     android:src="@drawable/gpay"
                     android:layout_below="@id/imgPaypal"/>
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/apay"
-                    android:layout_marginStart="10dp"
-                    android:layout_below="@id/imgGpay"
-                    android:layout_alignStart="@id/imgGpay"/>
             </RelativeLayout>
         </RelativeLayout>
 
