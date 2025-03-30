@@ -143,4 +143,8 @@
     <string name="pashandicap">None</string>
     <string name="assospersPortrait">Organization</string>
     <string name="assosPortrait">Organization</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="more">More</string>
+    <string name="back">Back</string>
 </resources>
