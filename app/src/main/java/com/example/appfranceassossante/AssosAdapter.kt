@@ -6,6 +6,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -13,8 +14,8 @@ import com.example.appfranceassossante.models.Assos
 
 class AssosAdapter(private val activity: Context,
                    private val itemResource: Int,
-                   private val assos : List<Assos>
-) : ArrayAdapter<Assos?>(activity, itemResource, assos) {
+                   private var assos : MutableList<Assos>
+) : ArrayAdapter<Assos>(activity, itemResource, assos ), Filterable {
 
     public override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
