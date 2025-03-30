@@ -26,7 +26,7 @@
             android:textColor="@color/black"
             android:layout_marginBottom="15dp"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -36,78 +36,70 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center">
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="@string/carte_bancaire"/>
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/cb"
-                        android:layout_marginStart="10dp"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginBottom="10dp">
-                    <RadioButton
-                        android:id="@+id/btn_rd_paypal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/paypal" />
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/paypal" />
-                </LinearLayout>
 
-                <LinearLayout
+                <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginBottom="10dp">
-                    <RadioButton
-                        android:id="@+id/btn_rd_Gpay"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/googlepay"
-                        android:gravity="center"/>
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/gpay"
-                        android:layout_marginStart="10dp"/>
-                </LinearLayout>
+                    android:text="@string/carte_bancaire"/>
 
-                <LinearLayout
+                <RadioButton
+                    android:id="@+id/btn_rd_paypal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginBottom="10dp">
-                    <RadioButton
-                        android:id="@+id/btn_rd_Apay"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/apple_pay"
-                        android:gravity="center"/>
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/apay"
-                        android:layout_marginStart="10dp"/>
-                </LinearLayout>
+                    android:text="@string/paypal" />
+
+
+                <RadioButton
+                    android:id="@+id/btn_rd_Gpay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/googlepay"
+                    android:gravity="center"/>
+
+                <RadioButton
+                    android:id="@+id/btn_rd_Apay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/apple_pay"
+                    android:gravity="center"/>
 
 
             </RadioGroup>
-        </LinearLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/radioTypeDon"
+                android:layout_alignTop="@id/radioTypeDon"
+                android:layout_alignBottom="@id/radioTypeDon"
+                android:paddingTop="15dp">
+                <ImageView
+                    android:id="@+id/imgCB"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/cb"
+                    />
+                <ImageView
+                    android:id="@+id/imgPaypal"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/paypal"
+                    android:layout_below="@id/imgCB"
+                    />
+                <ImageView
+                    android:id="@+id/imgGpay"
+                    android:layout_width="65dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/gpay"
+                    android:layout_below="@id/imgPaypal"/>
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/apay"
+                    android:layout_marginStart="10dp"
+                    android:layout_below="@id/imgGpay"
+                    android:layout_alignStart="@id/imgGpay"/>
+            </RelativeLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 

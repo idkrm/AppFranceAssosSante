@@ -44,8 +44,14 @@ class DonPaiementFragment : BaseFragment() {
         payer.setOnClickListener {
             val selectedRadioButtonId = radioGroup.checkedRadioButtonId
 
+            if (selectedRadioButtonId == -1) {
+                Toast.makeText(requireContext(), "Veuillez sélectionner un mode de paiement.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener // Arrête l'exécution ici
+            }/////
+
             // Récupérer le RadioButton sélectionné
             val selectedRadioButton = view.findViewById<RadioButton>(selectedRadioButtonId)
+
             val selectedPaymentType = selectedRadioButton.text.toString()
 
             // Stocker le type de paiement dans le DonViewModel
