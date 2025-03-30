@@ -30,4 +30,6 @@
     <color name="rouge2">#FF0000</color>
     <color name="fond_bleu">#E7F5F6</color>"
     <color name="ecriture_bleu">#322C81</color>
+
+    <color name="backgroundColor">#FFFFFFFF</color>
 </resources>

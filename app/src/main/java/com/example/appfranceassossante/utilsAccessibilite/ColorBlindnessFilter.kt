@@ -9,24 +9,24 @@ import android.view.Window
 object ColorBlindnessFilter {
     private var currentFilter: ColorMatrixColorFilter? = null
 
-    private val protanopiaMatrix = floatArrayOf(
-        1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-        0.183f, 0.817f, 0.0f, 0.0f, 0.0f,
-        -0.106f, 0.229f, 0.877f, 0.0f, 0.0f,
+    private val protanopiaCorrectionMatrix = floatArrayOf(
+        0.817f, 0.183f, 0.0f, 0.0f, 0.0f,
+        0.333f, 0.667f, 0.0f, 0.0f, 0.0f,
+        0.0f, 0.125f, 0.875f, 0.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 1.0f, 0.0f
     )
 
-    private val deuteranopiaMatrix = floatArrayOf(
-        0.290f, 0.710f, 0.0f, 0.0f, 0.0f,
-        0.170f, 0.830f, 0.0f, 0.0f, 0.0f,
-        -0.007f, 0.177f, 0.823f, 0.0f, 0.0f,
+    private val deuteranopiaCorrectionMatrix = floatArrayOf(
+        0.8f, 0.2f, 0.0f, 0.0f, 0.0f,
+        0.258f, 0.742f, 0.0f, 0.0f, 0.0f,
+        0.0f, 0.142f, 0.858f, 0.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 1.0f, 0.0f
     )
 
-    private val tritanopiaMatrix = floatArrayOf(
+    private val tritanopiaCorrectionMatrix = floatArrayOf(
         1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-        -0.395f, 0.801f, 0.594f, 0.0f, 0.0f,
+        0.0f, -0.395f, 1.395f, 0.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 1.0f, 0.0f
     )
 
@@ -50,9 +50,9 @@ object ColorBlindnessFilter {
 
     private fun getMatrixForMode(mode: String): FloatArray {
         return when (mode) {
-            "protanopie" -> protanopiaMatrix
-            "deuteranopie" -> deuteranopiaMatrix
-            "tritanopie" -> tritanopiaMatrix
+            "protanopie" -> protanopiaCorrectionMatrix
+            "deuteranopie" -> deuteranopiaCorrectionMatrix
+            "tritanopie" -> tritanopiaCorrectionMatrix
             else -> floatArrayOf(
                 1f, 0f, 0f, 0f, 0f,
                 0f, 1f, 0f, 0f, 0f,

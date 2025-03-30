@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:padding="25dp"
         android:gravity="center"
+        android:layout_gravity="center"
         android:background="@drawable/fond_bleu_arrondi"
         android:orientation="vertical">
 
