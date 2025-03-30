@@ -52,7 +52,7 @@
             android:id="@+id/adrmail"
             android:background="@drawable/edit_text"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:hint="Ex: lucie.yan@gmail.com"
             android:padding="10dp">

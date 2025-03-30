@@ -78,8 +78,8 @@ class DonFragment : BaseFragment() {
         selectedAssociation?.let {
             // Si l'association est trouvée, sélectionne cette association dans le spinner
             val position = assosList.indexOf(it)
-            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, nomsAssos)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_selectable_list_item, nomsAssos)
+            adapter.setDropDownViewResource(android.R.layout.simple_selectable_list_item)
             spinnerAssos.adapter = adapter
 
             spinnerAssos.setSelection(position)
@@ -87,8 +87,8 @@ class DonFragment : BaseFragment() {
 
         // Sinon, on sélectionne par défaut le premier élément du spinner
         if (nomsAssos.isNotEmpty() && selectedAssociation == null) {
-            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, nomsAssos)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_selectable_list_item, nomsAssos)
+            adapter.setDropDownViewResource(android.R.layout.simple_selectable_list_item)
             spinnerAssos.adapter = adapter
             spinnerAssos.setSelection(0) // Sélectionne par défaut le premier élément
         }
