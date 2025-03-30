@@ -25,12 +25,17 @@
             android:layout_marginBottom="15dp"/>
 
         <!-- spinner choix assos -->
-        <Spinner
-            android:id="@+id/spinner_assos"
-            android:layout_width="300dp"
-            android:layout_height="65dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/edit_text"/>
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Spinner
+                android:id="@+id/spinner_assos"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/spinner_style"/>
+
+        </ScrollView>
 
         <TextView
             android:layout_width="wrap_content"
