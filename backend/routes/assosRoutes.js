@@ -67,7 +67,7 @@ router.get('/assos/:id', async (req, res) => {
 });
 
 // Récupérer une association par son nom
-router.get('/assos/:nom', async (req, res) => {
+router.get('/assos/nom/:nom', async (req, res) => {
   try {
     const assosName = req.params.nom;  // Le nom passé dans les paramètres de l'URL
 
