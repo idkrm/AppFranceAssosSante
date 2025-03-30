@@ -15,9 +15,14 @@ import com.example.appfranceassossante.models.UserViewModel
 import java.util.Locale
 import androidx.core.graphics.scale
 import androidx.core.graphics.drawable.toDrawable
+import com.example.appfranceassossante.utilsAccessibilite.AccessibilityPreferences
+import com.example.appfranceassossante.utilsAccessibilite.ColorBlindnessFilter
+import com.example.appfranceassossante.utilsAccessibilite.SharedViewModel
 import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
+import com.example.appfranceassossante.utilsAccessibilite.textSize.TextSizeManager
 
 class ProfilFragment : BaseFragment() {
+    private lateinit var sharedViewModel: SharedViewModel
     private lateinit var userViewModel : UserViewModel
     private lateinit var tvCivilite: TextView
     private lateinit var tvNom: TextView
@@ -66,7 +71,20 @@ class ProfilFragment : BaseFragment() {
         btnDeco.setOnClickListener{
             userViewModel.reinitialiserDonnees()
             userViewModel.setUserLoggedIn(false)
-            
+
+            // enleve toutes les options d'accessibilité
+            AccessibilityPreferences.saveSpeechEnabled(requireContext(), false)
+            sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+            sharedViewModel.enableSpeech(false)
+
+            AccessibilityPreferences.saveDaltonismEnabled(requireContext(), false)
+            AccessibilityPreferences.saveDaltonismType(requireContext(), "")
+            ColorBlindnessFilter.applyFilter(requireActivity().window, "")
+
+            AccessibilityPreferences.saveTextSize(requireContext(), 0f)
+            TextSizeManager.sizeOffset = 0f
+            // FIN
+
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, SeConnecterFragment())
             transaction.commit()

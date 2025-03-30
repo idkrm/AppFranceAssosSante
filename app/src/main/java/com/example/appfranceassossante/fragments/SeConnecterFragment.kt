@@ -16,12 +16,17 @@ import com.example.appfranceassossante.R
 import com.example.appfranceassossante.fragments.inscription.InscriptionFragment
 import com.example.appfranceassossante.models.User
 import com.example.appfranceassossante.models.UserViewModel
+import com.example.appfranceassossante.utilsAccessibilite.AccessibilityPreferences
+import com.example.appfranceassossante.utilsAccessibilite.ColorBlindnessFilter
+import com.example.appfranceassossante.utilsAccessibilite.SharedViewModel
+import com.example.appfranceassossante.utilsAccessibilite.textSize.TextSizeManager
 import kotlinx.coroutines.launch
 
 class SeConnecterFragment : BaseFragment() {
 
     private lateinit var userViewModel: UserViewModel
     private val getUserTask = GetUserTask()
+    private lateinit var sharedViewModel: SharedViewModel
 
     private lateinit var mail: EditText
     private lateinit var mdp: EditText
@@ -83,6 +88,36 @@ class SeConnecterFragment : BaseFragment() {
     private fun successfulLogin(user: User) {
         userViewModel.setUserLoggedIn(true)
         userViewModel.updateUserData(user)
+        userViewModel.handicap.observe(viewLifecycleOwner) { handicap ->
+            if (!handicap.isNullOrBlank()) {
+                when (handicap) {
+                    getString(R.string.lecture) -> {
+                        AccessibilityPreferences.saveSpeechEnabled(requireContext(), true)
+                        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+                        sharedViewModel.enableSpeech(true)
+                    }
+                    getString(R.string.malvoyant) -> {
+                        AccessibilityPreferences.saveTextSize(requireContext(), 6f)
+                        TextSizeManager.sizeOffset = 6f
+                    }
+                    getString(R.string.protanopie) -> {
+                        AccessibilityPreferences.saveDaltonismEnabled(requireContext(), true)
+                        AccessibilityPreferences.saveDaltonismType(requireContext(), "protanopie")
+                        ColorBlindnessFilter.applyFilter(requireActivity().window, "protanopie")
+                    }
+                    getString(R.string.deuteranopie) -> {
+                        AccessibilityPreferences.saveDaltonismEnabled(requireContext(), true)
+                        AccessibilityPreferences.saveDaltonismType(requireContext(), "deuteranopie")
+                        ColorBlindnessFilter.applyFilter(requireActivity().window, "deuteranopie")
+                    }
+                    getString(R.string.tritanopie) -> {
+                        AccessibilityPreferences.saveDaltonismEnabled(requireContext(), true)
+                        AccessibilityPreferences.saveDaltonismType(requireContext(), "tritanopie")
+                        ColorBlindnessFilter.applyFilter(requireActivity().window, "tritanopie")
+                    }
+                }
+            }
+        }
         val fragment = if (user.admin == null) {
             ProfilFragment() // remplace le fragment actuel par le fragment qui suit ("ProfilFragment")
         } else {

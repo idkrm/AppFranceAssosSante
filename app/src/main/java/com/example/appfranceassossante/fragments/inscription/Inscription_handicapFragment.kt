@@ -74,7 +74,6 @@ class Inscription_handicapFragment : BaseFragment() {
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         // remplace le fragment actuel par le fragment qui suit ("SeConnecterFragment")
         transaction.replace(R.id.fragment_container, SeConnecterFragment())
-        transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
         transaction.commit()
     }
 
@@ -107,7 +106,6 @@ class Inscription_handicapFragment : BaseFragment() {
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         // remplace le fragment actuel par le fragment qui suit ("SeConnecterFragment")
         transaction.replace(R.id.fragment_container, SeConnecterFragment())
-        transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
         transaction.commit()
     }
 
