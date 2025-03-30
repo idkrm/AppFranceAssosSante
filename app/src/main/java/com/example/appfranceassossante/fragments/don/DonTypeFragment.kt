@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RadioButton
+import android.widget.RelativeLayout
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.R
@@ -26,7 +27,7 @@ class DonTypeFragment : BaseFragment() {
     private lateinit var radioMensuel: RadioButton
     private lateinit var radioAnnuel: RadioButton
     private lateinit var dateFinEditText: EditText
-    private lateinit var recurrentOptionsLayout: LinearLayout
+    private lateinit var recurrentOptionsLayout: RelativeLayout
     private lateinit var donViewModel: DonViewModel
     private lateinit var userViewModel: UserViewModel
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -115,7 +116,7 @@ class DonTypeFragment : BaseFragment() {
         dateFinEditText.isEnabled = enabled
 
         // Affiche ou cache les options de récurrence
-        recurrentOptionsLayout.visibility = if (enabled) View.VISIBLE else View.GONE
+        recurrentOptionsLayout.visibility = View.VISIBLE //if (enabled) View.VISIBLE else View.GONE
 
         // Réinitialise la date si on repasse sur "Unique"
         if (!enabled) {

@@ -1,5 +1,6 @@
 package com.example.appfranceassossante.fragments.don
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputType
@@ -16,6 +17,7 @@ import com.example.appfranceassossante.models.DonViewModel
 class DonMontantFragment : BaseFragment() {
     private lateinit var donViewModel: DonViewModel
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,8 +25,8 @@ class DonMontantFragment : BaseFragment() {
         val view = inflater.inflate(R.layout.fragment_don_montant, container, false)
 
         val montantEditText = view.findViewById<EditText>(R.id.montant_rentrer)
-        val buttonMinus = view.findViewById<Button>(R.id.buttonMinus)
-        val buttonPlus = view.findViewById<Button>(R.id.buttonPlus)
+        val buttonMinus = view.findViewById<Button>(R.id.btn_moins)
+        val buttonPlus = view.findViewById<Button>(R.id.btn_plus)
         donViewModel = ViewModelProvider(requireActivity()).get(DonViewModel::class.java)
 
         montantEditText.setText("10") // 10euros par defaut
