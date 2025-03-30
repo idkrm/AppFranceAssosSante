@@ -14,8 +14,11 @@ import com.example.appfranceassossante.models.Assos
 
 class AssosAdapter(private val activity: Context,
                    private val itemResource: Int,
-                   private var assos: List<Assos>
-) : ArrayAdapter<Assos>(activity, itemResource, assos ), Filterable {
+                   private var assos: MutableList<Assos>
+) : ArrayAdapter<Assos>(activity, itemResource, assos), Filterable {
+
+    // Copie de la liste mutable, cela permet de référence pour les filtres
+    private var listeOriginal : List<Assos> = assos.toList()
 
     public override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
@@ -36,4 +39,37 @@ class AssosAdapter(private val activity: Context,
         return layout
     }
 
+    // Function de l'implémentation Filterable
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val filteredList = mutableListOf<Assos>()
+                val query = constraint?.toString()?.lowercase()?.trim() ?: ""
+
+                if (query.isEmpty()) {
+                    filteredList.addAll(listeOriginal)
+                } else {
+                    listeOriginal.forEach { asso ->
+                        if (asso.getAssosName().lowercase().contains(query)
+                            || asso.getAcronyme().lowercase().contains(query)) {
+                            filteredList.add(asso)
+                        }
+                    }
+                }
+
+                return FilterResults().apply {
+                    values = filteredList
+                    count = filteredList.size
+                }
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                if (results?.values is List<*>) {
+                    clear()
+                    addAll(results.values as List<Assos>)
+                    notifyDataSetChanged()
+                }
+            }
+        }
+    }
 }
