@@ -15,7 +15,7 @@ class GetAssosByNameTask {
     suspend fun getAssosByNameInBG(nom: String): Assos? {
         return withContext(Dispatchers.IO) {
             try {
-                val url = URL("http://10.0.2.2:5000/associations/assos/$nom")
+                val url = URL("http://10.0.2.2:5000/associations/assos/nom/$nom")
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "GET"
 
