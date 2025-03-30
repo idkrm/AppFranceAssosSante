@@ -21,7 +21,7 @@ class AssosAdapter(private val activity: Context,
                    private var assos: MutableList<Assos>
 ) : ArrayAdapter<Assos>(activity, itemResource, assos), Filterable {
     // Copie de la liste mutable, cela permet de référence pour les filtres
-    private var listeOriginal : List<Assos> = assos.toList()
+    private var listeOriginale : List<Assos> = assos.toList()
 
     override fun getCount(): Int {
         return assos.size
@@ -77,9 +77,9 @@ class AssosAdapter(private val activity: Context,
                 val query = constraint?.toString()?.lowercase()?.trim() ?: ""
 
                 if (query.isEmpty()) {
-                    filteredList.addAll(listeOriginal)
+                    filteredList.addAll(listeOriginale)
                 } else {
-                    listeOriginal.forEach { asso ->
+                    listeOriginale.forEach { asso ->
                         if (asso.getAssosName().lowercase().contains(query)
                             || asso.getAcronyme().lowercase().contains(query)) {
                             filteredList.add(asso)
@@ -101,5 +101,13 @@ class AssosAdapter(private val activity: Context,
                 }
             }
         }
+    }
+
+    // permet de changer la liste originelle si mise à jour MongoDB
+    fun updateData(newList: List<Assos>) {
+        listeOriginale = newList.toList()
+        clear()
+        addAll(newList)
+        notifyDataSetChanged()
     }
 }
