@@ -87,7 +87,7 @@
     <string name="inscription_prenom">名字 *</string>
     <string name="inscription_adrmail">电子邮件 *</string>
     <string name="inscription_mdp">密码 *</string>
-    <string name="inscription_handicap">残疾 *</string>
+    <string name="inscription_handicap">无障碍环境 *</string>
     <string name="inscription_confirmer_adrmail">确认电邮地址 *</string>
     <string name="inscription_confirmer_mdp">确认密码 *</string>
     <string name="nom_asso">协会名称</string>

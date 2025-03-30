@@ -88,7 +88,7 @@
     <string name="inscription_prenom">First name *</string>
     <string name="inscription_adrmail">Email address *</string>
     <string name="inscription_mdp">Password *</string>
-    <string name="inscription_handicap">Handicap *</string>
+    <string name="inscription_handicap">Accessibility *</string>
     <string name="inscription_confirmer_adrmail">Confirm the email address *</string>
     <string name="inscription_confirmer_mdp">Confirm the password *</string>
 
