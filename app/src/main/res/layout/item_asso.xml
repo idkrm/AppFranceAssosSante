@@ -7,13 +7,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="3dp">
+        android:padding="2dp">
 
         <ImageView
             android:id="@+id/assos_image"
-            android:layout_width="155dp"
-            android:layout_height="130dp"
-            android:scaleType="centerCrop" />
+            android:layout_width="109dp"
+            android:layout_height="109dp"
+            android:scaleType="centerInside"
+            android:padding="3dp"
+            android:background="@drawable/outline"
+            android:adjustViewBounds="true"/>
 
         <TextView
             android:layout_width="wrap_content"
