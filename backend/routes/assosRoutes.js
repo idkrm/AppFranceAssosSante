@@ -85,23 +85,28 @@ router.get('/assos/:nom', async (req, res) => {
   }
 });
 
-// Route pour récupérer les associations par filtre
-router.get("/assos/:filtre", async (req, res) => {
-  try {
-      const filter = req.params.filtre;
 
-      // Trouver toutes les associations ayant ce filtre
-      const assosFiltre = await Association.find({ filtre: filter });
-      /*
-      if (assosFiltre.length === 0) {
-        return res.status(404).json({ message: "Aucune association trouvée" });
-      }
-      */
+// Route pour récupérer les associations par filtre
+router.get("/assos/filtre/:filtre", async (req, res) => {
+  try {
+    let filtres = req.params.filtre;
+
+    if (!filtres) {
+      return res.status(400).json({ message: "Aucun filtre fourni" });
+    }
+
+    filtres = filtres.split(",");
+    console.log(`Filtre reçu dans la requête: "${filtres}"`);
+
+    // Trouver toutes les associations ayant ce filtre
+    const assosFiltre = await Association.find({ filtre: { $in: filtres } });
+
+    // console.log(`Associations trouvées:`, assosFiltre);
 
     res.status(200).json(assosFiltre);
-  } catch (error) {
-    console.error("Erreur serveur:", error);
-    res.status(500).json({ message: "Erreur interne du serveur" });
+} catch (error) {
+  console.error("Erreur serveur:", error);
+  res.status(500).json({ message: "Erreur interne du serveur" });
 }
 });
 

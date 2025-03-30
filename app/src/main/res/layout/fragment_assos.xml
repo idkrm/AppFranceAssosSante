@@ -25,6 +25,7 @@
             android:queryHint="Rechercher..."/>
 
         <Button
+            android:id="@+id/assosFiltre"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="13"
@@ -33,6 +34,7 @@
     </LinearLayout>
 
     <GridView
+        android:layout_marginTop="10dp"
         android:id="@+id/grilleAssos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
