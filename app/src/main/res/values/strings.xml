@@ -93,7 +93,7 @@
     <string name="inscription_confirmer_mdp">Confirm the password *</string>
 
     <!-- profil admin -->
-    <string name="assospers">Organization :</string>
+    <string name="assospers">Organization</string>
     <string name="donhisto">See donations made to the association</string>
 
     <!-- les dons-->
@@ -141,4 +141,6 @@
     <string name="nov">November</string>
     <string name="dec">December</string>
     <string name="pashandicap">None</string>
+    <string name="assospersPortrait">Organization</string>
+    <string name="assosPortrait">Organization</string>
 </resources>

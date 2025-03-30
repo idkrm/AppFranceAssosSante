@@ -91,7 +91,7 @@
     <string name="inscription_confirmer_adrmail">确认电邮地址 *</string>
     <string name="inscription_confirmer_mdp">确认密码 *</string>
     <string name="nom_asso">协会名称</string>
-    <string name="assospers">协会 :</string>
+    <string name="assospers">协会</string>
     <string name="donhisto">查看对协会的捐款</string>
     <string name="totalrecu">本年收到的总额</string>
     <string name="deuxpts">" : "</string>

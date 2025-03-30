@@ -19,16 +19,23 @@ import com.example.appfranceassossante.apiService.GetUserTask
 import com.example.appfranceassossante.apiService.CreateUserTask
 import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.appfranceassossante.fragments.ProfilAdminFragment
+import com.example.appfranceassossante.fragments.ProfilFragment
+import com.example.appfranceassossante.models.UserViewModel
 import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainActivity : BaseActivity() {
+    private lateinit var userViewModel : UserViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
         loadFragment(AccueilFragment()) // par defaut c'est le fragment de l'accueil
@@ -43,7 +50,7 @@ class MainActivity : BaseActivity() {
                 R.id.navigation_accueil -> AccueilFragment()
                 R.id.navigation_assoc -> AssosFragment()
                 R.id.navigation_don -> DonFragment()
-                R.id.navigation_profil -> SeConnecterFragment()
+                R.id.navigation_profil -> getProfileFragment()
                 else -> AccueilFragment()
             }
 
@@ -111,6 +118,13 @@ class MainActivity : BaseActivity() {
 
         //FIN TEST
     }
+
+    private fun getProfileFragment(): Fragment = when {
+        !userViewModel.isUserLoggedIn() -> SeConnecterFragment()
+        userViewModel.admin.value == null -> ProfilFragment()
+        else -> ProfilAdminFragment()
+    }
+
     // Fonction pour appeler la tâche de création d'utilisateur
     private fun createUser(user: User) {
         // Lancer la coroutine dans le scope global

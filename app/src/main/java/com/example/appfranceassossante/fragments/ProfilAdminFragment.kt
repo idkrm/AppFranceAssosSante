@@ -35,21 +35,21 @@ class ProfilAdminFragment : BaseFragment() {
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
 
         civ = view.findViewById(R.id.civilitepersonne)
-        civ.text = userViewModel.civilite.value.toString()
+        civ.text = userViewModel.civilite.value.toString() ?: ""
 
         nom = view.findViewById(R.id.nompersonne)
-        nom.text = userViewModel.nom.value.toString().uppercase()
+        nom.text = userViewModel.nom.value.toString().uppercase() ?: ""
 
 
         prenom = view.findViewById(R.id.prenompersonne)
         prenom.text = userViewModel.prenom.value.toString().replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT)
-        else it.toString() }
+        else it.toString() } ?: ""
 
         mail = view.findViewById(R.id.mailpersonne)
-        mail.text = userViewModel.mail.value.toString()
+        mail.text = userViewModel.mail.value.toString() ?: ""
 
         assos = view.findViewById(R.id.assospersonne)
-        assos.text = userViewModel.admin.value?.getAssosName().toString()
+        assos.text = userViewModel.admin.value?.getAssosName().toString() ?: "Aucune association"
 
         val flagDrawable = langueFlag() // met le bon drapeau
         flagDrawable.setBounds(0, 0, 50, 50)

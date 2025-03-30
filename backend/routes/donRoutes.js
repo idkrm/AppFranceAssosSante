@@ -113,7 +113,7 @@ router.get("/dons/annee/:assosId", async (req, res) => {
 
       // 3. Transformation en tableau simple d'années
 
-      const result = years.map(y => y._id.toString()); // Convertir en liste de strings
+      const result = years.map(y => y.year.toString()); // Convertir en liste de strings
       res.json(result);
   } catch (error) {
       console.error("Erreur lors de la récupération des années des dons:", error);
