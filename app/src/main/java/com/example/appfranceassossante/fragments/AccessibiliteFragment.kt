@@ -11,11 +11,12 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Spinner
 import androidx.lifecycle.ViewModelProvider
-import com.example.appfranceassossante.utilsAccessibilite.textToSpeech.AccessibilityPreferences
+import com.example.appfranceassossante.utilsAccessibilite.AccessibilityPreferences
 import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.models.UserViewModel
-import com.example.appfranceassossante.utilsAccessibilite.textToSpeech.SharedViewModel
+import com.example.appfranceassossante.utilsAccessibilite.ColorBlindnessFilter
+import com.example.appfranceassossante.utilsAccessibilite.SharedViewModel
 import com.example.appfranceassossante.utilsAccessibilite.textSize.TextSizeManager
 
 
@@ -55,8 +56,8 @@ class AccessibiliteFragment : BaseFragment() {
             updateRadioButtonsState(checked)
 
             if (!checked) {
-                AccessibilityPreferences.saveDaltonismType(requireContext(), null.toString())
-                daltonismRadioGroup.clearCheck()
+                daltonismRadioGroup.clearCheck() // décoche tous les radio btn
+                ColorBlindnessFilter.removeFilter(requireActivity().window) // retire le filtre
             }
         }
 
@@ -68,7 +69,15 @@ class AccessibiliteFragment : BaseFragment() {
                 R.id.radio_tritanopie -> "tritanopie"
                 else -> null
             }
-            type?.let { AccessibilityPreferences.saveDaltonismType(requireContext(), it) }
+
+            // sauvegarde le type ou rien sinon
+            AccessibilityPreferences.saveDaltonismType(requireContext(), type ?: "")
+
+            type?.let {
+                ColorBlindnessFilter.applyFilter(requireActivity().window, it) // applique filtre si type selectionné
+            } ?: run {
+                ColorBlindnessFilter.removeFilter(requireActivity().window) // retire filtre sinon
+            }
         }
 
         // checkbox text to speech
@@ -108,12 +117,19 @@ class AccessibiliteFragment : BaseFragment() {
         // restaure état checkbox daltonisme
         val isDaltonismEnabled = AccessibilityPreferences.getDaltonismEnabled(requireContext())
         daltonismCheckbox.isChecked = isDaltonismEnabled
-        updateRadioButtonsState(isDaltonismEnabled)
+        if(!isDaltonismEnabled){
+            daltonismRadioGroup.clearCheck()
+            updateRadioButtonsState(false)
+        }
+
 
         // restaure radio btn daltonisme
         val daltonismType = AccessibilityPreferences.getDaltonismType(requireContext())
-        daltonismType?.let {
-            val radioId = when (it) {
+        if (daltonismType.isNullOrEmpty()) {
+            daltonismRadioGroup.clearCheck() // Aucun bouton ne sera sélectionné
+            ColorBlindnessFilter.removeFilter(requireActivity().window)
+        } else {
+            val radioId = when (daltonismType) {
                 "protanopie" -> R.id.radio_protanopie
                 "deuteranopie" -> R.id.radio_deuteranopie
                 "tritanopie" -> R.id.radio_tritanopie
@@ -122,6 +138,12 @@ class AccessibiliteFragment : BaseFragment() {
             if (radioId != -1) {
                 daltonismRadioGroup.check(radioId)
             }
+            ColorBlindnessFilter.applyFilter(requireActivity().window, daltonismType)
+        }
+
+        // Si un type de daltonisme était activé, applique le filtre au lancement
+        if (isDaltonismEnabled && !daltonismType.isNullOrEmpty()) {
+            ColorBlindnessFilter.applyFilter(requireActivity().window, daltonismType)
         }
 
         // restaure taille du texte

@@ -11,7 +11,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
-import com.example.appfranceassossante.utilsAccessibilite.textToSpeech.SharedViewModel
+import com.example.appfranceassossante.utilsAccessibilite.SharedViewModel
 import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Locale

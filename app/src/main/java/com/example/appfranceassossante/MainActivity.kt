@@ -24,7 +24,9 @@ import androidx.lifecycle.lifecycleScope
 import com.example.appfranceassossante.fragments.ProfilAdminFragment
 import com.example.appfranceassossante.fragments.ProfilFragment
 import com.example.appfranceassossante.models.UserViewModel
+import com.example.appfranceassossante.utilsAccessibilite.ColorBlindnessFilter
 import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseActivity
+import com.example.appfranceassossante.utilsAccessibilite.AccessibilityPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -34,6 +36,9 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // applique fitre daltonisme si besoin
+        applyDaltonismFilterOnStart()
 
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
@@ -184,5 +189,14 @@ class MainActivity : BaseActivity() {
         return context.createConfigurationContext(config)
     }
 
+    // recupere le type dedaltonisme
+    private fun applyDaltonismFilterOnStart() {
+        // Récupérer le type de daltonisme depuis les préférences
+        val daltonismType = AccessibilityPreferences.getDaltonismType(this)
 
+        // Si un type est défini, appliquer le filtre
+        daltonismType?.let {
+            ColorBlindnessFilter.applyFilter(window, it)
+        }
+    }
 }

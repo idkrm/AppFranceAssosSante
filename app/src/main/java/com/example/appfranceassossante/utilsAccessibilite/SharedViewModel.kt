@@ -1,4 +1,4 @@
-package com.example.appfranceassossante.utilsAccessibilite.textToSpeech
+package com.example.appfranceassossante.utilsAccessibilite
 
 import android.app.Application
 import android.content.Context
