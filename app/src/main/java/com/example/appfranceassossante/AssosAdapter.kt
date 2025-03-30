@@ -6,16 +6,21 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.example.appfranceassossante.fragments.AssosFragment
 import com.example.appfranceassossante.models.Assos
 
 class AssosAdapter(private val activity: Context,
                    private val itemResource: Int,
-                   private var assos: List<Assos>
-) : ArrayAdapter<Assos>(activity, itemResource, assos ), Filterable {
+                   private var assos: MutableList<Assos> // Liste mutable
+) : ArrayAdapter<Assos>(activity, itemResource, assos), Filterable {
+
+    // Seconde liste pour ne pas perdre les données lors de la recherche
+    private var listeOriginal : List<Assos> = assos.toList() // Convertion en liste static
 
     public override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
@@ -36,4 +41,37 @@ class AssosAdapter(private val activity: Context,
         return layout
     }
 
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val filteredList = mutableListOf<Assos>()
+                val query = constraint?.toString()?.lowercase()?.trim() ?: ""
+
+                if (query.isEmpty()) {
+                    filteredList.addAll(listeOriginal)
+                } else {
+                    listeOriginal.forEach { asso ->
+                        if (asso.getAssosName().lowercase().contains(query)
+                            || asso.getAcronyme().lowercase().contains(query)
+                        ) {
+                            filteredList.add(asso)
+                        }
+                    }
+                }
+
+                return FilterResults().apply {
+                    values = filteredList
+                    count = filteredList.size
+                }
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                if (results?.values is List<*>) {
+                    clear()
+                    addAll(results.values as List<Assos>)
+                    notifyDataSetChanged()
+                }
+            }
+        }
+    }
 }

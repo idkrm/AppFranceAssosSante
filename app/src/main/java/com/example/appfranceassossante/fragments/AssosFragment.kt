@@ -75,29 +75,6 @@ class AssosFragment : BaseFragment() {
         return view
     }
 
-//    fun setDynamicHeight(gridView: GridView, columns: Int) {
-//        val listAdapter = gridView.adapter ?: return
-//
-//        var totalHeight = 0
-//        val items = listAdapter.count
-//        val rows = Math.ceil((items / columns.toDouble())).toInt()
-//
-//        for (i in 0 until rows) {
-//            val listItem = listAdapter.getView(i, null, gridView)
-//            listItem.measure(0, 0)
-//            totalHeight += listItem.measuredHeight
-//        }
-//
-//        val params = gridView.layoutParams
-//        params.height = totalHeight + (gridView.verticalSpacing * (rows - 1))
-//        gridView.layoutParams = params
-//        gridView.requestLayout()
-//    }
-
-//    fun setAdapterFilter(Text : String) : String {
-//
-//    }
-
     private fun showFilterDialog() {
         val filters = getFiltersFromDatabase() // recup filtres
         val filterNames = filters.map { it.name }.toTypedArray() // nom des filtres
@@ -156,7 +133,7 @@ class AssosFragment : BaseFragment() {
     }
 
     private fun updateAssociations(associations: List<Assos>) {
-        adapter = AssosAdapter(requireContext(), R.layout.item_asso, associations)
+        adapter = AssosAdapter(requireContext(), R.layout.item_asso, assosListe)
         gridView.adapter = adapter
     }
 }
