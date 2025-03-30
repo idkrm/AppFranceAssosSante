@@ -18,7 +18,7 @@ class AssosAdapter(private val activity: Context,
 ) : ArrayAdapter<Assos>(activity, itemResource, assos), Filterable {
 
     // Copie de la liste mutable, cela permet de référence pour les filtres
-    private var originalList : List<Assos> = assos.toList()
+    private var listeOriginal : List<Assos> = assos.toList()
 
     public override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
@@ -47,9 +47,9 @@ class AssosAdapter(private val activity: Context,
                 val query = constraint?.toString()?.lowercase()?.trim() ?: ""
 
                 if (query.isEmpty()) {
-                    filteredList.addAll(originalList)
+                    filteredList.addAll(listeOriginal)
                 } else {
-                    originalList.forEach { asso ->
+                    listeOriginal.forEach { asso ->
                         if (asso.getAssosName().lowercase().contains(query)
                             || asso.getAcronyme().lowercase().contains(query)) {
                             filteredList.add(asso)
@@ -71,13 +71,5 @@ class AssosAdapter(private val activity: Context,
                 }
             }
         }
-    }
-
-    // Méthode pour mettre à jour les données
-    fun updateData(newList: List<Assos>) {
-        originalList = newList.toList()
-        clear()
-        addAll(newList)
-        notifyDataSetChanged()
     }
 }
