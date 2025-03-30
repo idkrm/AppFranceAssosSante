@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         tools:context=".fragments.MesDonsFragment"
         android:layout_margin="20dp"
+        android:layout_marginBottom="30dp"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -110,6 +111,7 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:text="@string/retour"
+            android:layout_marginBottom="30dp"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"/>
     </LinearLayout>

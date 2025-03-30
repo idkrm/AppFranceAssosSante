@@ -23,6 +23,7 @@ class ProfilFragment : BaseFragment() {
     private lateinit var tvNom: TextView
     private lateinit var tvPrenom: TextView
     private lateinit var tvMail: TextView
+    private lateinit var btnDeco: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +31,7 @@ class ProfilFragment : BaseFragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_profil, container, false)
 
-        userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
 
         tvCivilite = view.findViewById(R.id.civilitepersonne)
         tvNom = view.findViewById(R.id.nompersonne)
@@ -38,6 +39,7 @@ class ProfilFragment : BaseFragment() {
         tvMail = view.findViewById(R.id.mailpersonne)
 
         showUserInfo() // remplis les text view des infos du user
+
         val flagDrawable = langueFlag() // met le bon drapeau
         flagDrawable.setBounds(0, 0, 50, 50)
         val btnlangue = view.findViewById<Button>(R.id.langue)
@@ -59,6 +61,17 @@ class ProfilFragment : BaseFragment() {
             transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
             transaction.commit()
         }
+
+        btnDeco = view.findViewById(R.id.btn_deco)
+        btnDeco.setOnClickListener{
+            userViewModel.reinitialiserDonnees()
+            userViewModel.setUserLoggedIn(false)
+            
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, SeConnecterFragment())
+            transaction.commit()
+        }
+
         return view
     }
 

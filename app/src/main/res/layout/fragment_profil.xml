@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:layout_marginBottom="30dp"
         android:orientation="vertical">
 
         <TextView
@@ -194,6 +195,7 @@
             android:orientation="vertical">
 
             <Button
+                android:id="@+id/btn_deco"
                 android:layout_width="300dp"
                 android:layout_height="match_parent"
                 android:text="@string/deco"
@@ -202,11 +204,13 @@
                 android:background="@drawable/btn_se_deconnecter"/>
 
             <Button
+                android:id="@+id/btnSuppr"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:text="@string/suppression"
                 android:textColor="@color/rouge2"
                 android:textSize="15sp"
+                android:layout_marginBottom="30dp"
                 android:background="@drawable/btn_se_deconnecter"/>
         </LinearLayout>
     </LinearLayout>

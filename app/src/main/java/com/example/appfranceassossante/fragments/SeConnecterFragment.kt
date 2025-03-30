@@ -91,7 +91,6 @@ class SeConnecterFragment : BaseFragment() {
 
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)
-        transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
         transaction.commit()
     }
 

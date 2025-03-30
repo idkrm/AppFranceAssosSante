@@ -68,7 +68,11 @@ class ProfilAdminFragment : BaseFragment() {
         btndeco.setOnClickListener{
             userViewModel.reinitialiserDonnees()
             userViewModel.setUserLoggedIn(false)
-            fragmentRemplace(SeConnecterFragment()) // remplace le fragment actuel par le fragment qui suit ("SeConnecterFragment")
+
+            // pas utilisé la méthode fragmentRemplace pcq faut pas l'ajouter au backstack
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, SeConnecterFragment())
+            transaction.commit()
         }
 
         /*
