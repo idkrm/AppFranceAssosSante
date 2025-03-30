@@ -6,11 +6,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import android.widget.Filter
+import com.example.appfranceassossante.fragments.AssosFragment
 import com.example.appfranceassossante.models.Assos
 
 class AssosAdapter(private val activity: Context,

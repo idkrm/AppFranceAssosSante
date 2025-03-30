@@ -95,7 +95,10 @@ class DonPaiementFragment : BaseFragment() {
                 val donCreated : Boolean
                 if(donViewModel.isUnique()){
                     val donData = donViewModel.collectDonUData()
-                    donCreated = createDonUTask.createDonUInBG(donData)}
+                    donCreated = createDonUTask.createDonUInBG(donData)
+                    Log.d("DON_DEBUG", "Données du don unique : $donData")////
+                }
+
                 else{
                     val donData = donViewModel.collectDonRData()
                     donCreated = createDonRTask.createDonRInBG(donData)}

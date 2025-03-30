@@ -20,7 +20,7 @@ const donationSchema = new mongoose.Schema({
   },
   typePaiement: {
     type: String,
-    enum: ['CB', 'PayPal', 'GooglePay'],
+    enum: ['CB', 'PayPal', 'GooglePay','ApplePay'],
     required: true,
   },
 });

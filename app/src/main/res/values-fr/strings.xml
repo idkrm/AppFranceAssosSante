@@ -27,10 +27,10 @@
     <string name="don_recurrent">Don récurrent</string>
     <string name="mensuel">Mensuel</string>
     <string name="annuel">Annuel</string>
-    <string name="carte_bancaire">Carte bancaire  - </string>
-    <string name="paypal">Paypal - </string>
-    <string name="googlepay">GooglePay  -</string>
-    <string name="apple_pay">Apple Pay - </string>
+    <string name="carte_bancaire">Carte bancaire</string>
+    <string name="paypal">Paypal</string>
+    <string name="googlepay">GooglePay</string>
+    <string name="apple_pay">ApplePay</string>
     <string name="mode_de_paiement">Mode de paiement</string>
     <string name="payer">Payer</string>
 

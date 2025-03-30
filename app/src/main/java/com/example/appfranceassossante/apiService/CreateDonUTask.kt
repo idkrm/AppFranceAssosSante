@@ -24,20 +24,34 @@ class CreateDonUTask(private val context: Context) {
                 connection.setRequestProperty("Content-Type", "application/json")
                 connection.doOutput = true
 
+                val paiement : String
+                if(don.paiement.equals("Credit card")||don.paiement.equals("Carte bancaire")||don.paiement.equals("银行卡"))
+                    paiement = "CB"
+                else if(don.paiement.equals("GooglePay"))
+                    paiement = "GooglePay"
+                else if(don.paiement.equals("ApplePay"))
+                    paiement="ApplePay"
+                else
+                    paiement="Paypal"
+
                 // Créer le corps de la requête (JSON)
                 val jsonBody = JSONObject().apply {
                     put("montant", don.montant)
                     put("date", don.date)
                     put("utilisateurEmail", don.emailUtilisateur)
                     put("association", don.association)
-                    put("typePaiement", don.paiement)
+                    put("typePaiement", paiement)
                 }
+                Log.d("DON_HTTP", "Envoi des données au serveur ")//
 
                 val outputStream: OutputStream = connection.outputStream
                 outputStream.write(jsonBody.toString().toByteArray())
                 outputStream.flush()
 
                 val responseCode = connection.responseCode
+                val response = connection.responseMessage
+                Log.d("DON_HTTP", "Réponse serveur : $response")
+
                 if (responseCode == HttpURLConnection.HTTP_CREATED) {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(context, "Don créé avec succès", Toast.LENGTH_SHORT).show()

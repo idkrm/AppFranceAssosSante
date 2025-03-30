@@ -10,24 +10,27 @@ const router = express.Router();
 // Route pour créer un don unique
 router.post('/donations', async (req, res) => {
   try {
-    const { montant, associationNom, utilisateurEmail, typePaiement, date } = req.body;
-
+    const { montant, date, utilisateurEmail, associationNom, typePaiement,  } = req.body;
+     console.log("Don reçu :", req.body);
     // Vérifie si l'utilisateur existe
     if(utilisateurEmail != null){
     const user = await User.findOne({email: utilisateurEmail});
         if (!user) {
+            console.error("user non trouvée :", user);
           return res.status(400).json({ message: 'Utilisateur non trouvé' });
         }
     }
 
-    const associationData = await Assos.findOne({ nom: associationNom });
+    console.log(`Recherche de association avec le nom: '${req.body.association}'`);
+    const associationData = await Association.findOne({ nom: req.body.association });
     if (!associationData) {
+        console.error("Association non trouvée :", associationData);
           return res.status(400).json({ message: "Association non trouvée" });
         }
 
-    const donation = new Don({
+    const donation = new Donation({
       montant,
-      association: associationData,
+      association: new mongoose.Types.ObjectId(associationData._id),
       date: new Date(date),
       emailUtilisateur: utilisateurEmail,
       typePaiement,
@@ -52,20 +55,20 @@ router.post('/recurring-donations', async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: 'Utilisateur non trouvé' });
     }
-    const associationData = await Assos.findOne({ nom: associationNom });
+    const associationData = await Association.findOne({ nom: req.body.association });
         if (!associationData) {
               return res.status(400).json({ message: "Association non trouvée" });
         }
 
     // Vérifie si un don récurrent de ce type existe déjà pour cette association et cet utilisateur
-    const existingDonation = await checkRecurringDonation(utilisateurId, associationData._id, frequence);
+    const existingDonation = await checkRecurringDonation(utilisateurEmail, new mongoose.Types.ObjectId(associationData._id), frequence);
     if (existingDonation) {
       return res.status(400).json({ message: 'Un don récurrent existe déjà pour cette association et cette fréquence.' });
     }
 
     const recurringDonation = new DonRec({
       montant,
-      association: associationData._id,
+      association: new mongoose.Types.ObjectId(associationData._id),
       date: new Date(),
       utilisateurEmail,
       typePaiement,

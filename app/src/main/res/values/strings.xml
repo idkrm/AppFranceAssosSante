@@ -26,10 +26,10 @@
     <string name="don_recurrent">Recurring donation</string>
     <string name="mensuel">Monthly</string>
     <string name="annuel">Annually</string>
-    <string name="carte_bancaire">Credit card  - </string>
-    <string name="paypal">Paypal - </string>
-    <string name="googlepay">Google Pay  - </string>
-    <string name="apple_pay">Apple Pay - </string>
+    <string name="carte_bancaire">Credit card</string>
+    <string name="paypal">Paypal</string>
+    <string name="googlepay">GooglePay</string>
+    <string name="apple_pay">ApplePay</string>
     <string name="mode_de_paiement">Payment method</string>
     <string name="payer">Pay</string>
 
