@@ -32,6 +32,8 @@ class DonFragment : BaseFragment() {
         val view = inflater.inflate(R.layout.fragment_don, container, false)
         spinnerAssos = view.findViewById(R.id.spinner_assos)
         donViewModel = ViewModelProvider(requireActivity()).get(DonViewModel::class.java)
+
+        //spinner
         GetAssosTask { assos ->
             requireActivity().runOnUiThread { setupSpinner(assos) }
         }.execute()
@@ -39,6 +41,9 @@ class DonFragment : BaseFragment() {
         // recup le bouton suivant
         val btn = view.findViewById<Button>(R.id.suivant)
         btn.setOnClickListener{
+            //on met assos dans donviewmodel
+            val assoSelected = spinnerAssos.selectedItem.toString().trim()
+            donViewModel.setAssociationName(assoSelected)
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             // remplace le fragment actuel par le fragment qui suit ("DonMontantFragment")
             transaction.replace(R.id.fragment_container, DonMontantFragment())
@@ -62,5 +67,8 @@ class DonFragment : BaseFragment() {
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, nomsAssos)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerAssos.adapter = adapter
+        if (nomsAssos.isNotEmpty()) {
+            spinnerAssos.setSelection(0)
+        }
     }
 }
