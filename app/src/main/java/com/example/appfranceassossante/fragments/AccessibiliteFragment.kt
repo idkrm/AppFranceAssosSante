@@ -56,6 +56,7 @@ class AccessibiliteFragment : BaseFragment() {
 
             if (!checked) {
                 AccessibilityPreferences.saveDaltonismType(requireContext(), null.toString())
+                daltonismRadioGroup.clearCheck()
             }
         }
 
@@ -84,23 +85,12 @@ class AccessibiliteFragment : BaseFragment() {
 
         // Observer les changements en temps réel du userviewmodel.handicap et ca va
         // activier les setOnCheckedChangeListener normalement
+        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
         userViewModel.handicap.observe(viewLifecycleOwner) { handicap ->
             setupSpinner()
             if(userViewModel.isUserLoggedIn()){
                 if (handicap.equals(R.string.lecture))
                     checkboxSpeech.isChecked = true
-                else if(handicap.equals(R.string.deuteranopie)){
-                    daltonismCheckbox.isChecked = true
-                    deuteranopie.isChecked = true
-                }
-                else if(handicap.equals(R.string.protanopie)){
-                    daltonismCheckbox.isChecked = true
-                    protanopie.isChecked = true
-                }
-                else if(handicap.equals(R.string.tritanopie)){
-                    daltonismCheckbox.isChecked = true
-                    tritanopie.isChecked = true
-                }
                 else if(handicap.equals(R.string.malvoyant)){
                     spinner.setSelection(3, false)
                 }

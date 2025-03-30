@@ -8,10 +8,20 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#a9adb0</color>
+    <color name="grisblanc">#E2E2E2</color>
+
+    <color name="violetclair">#BBB9D5</color>
+    <color name="roseclair">#FCE2DE</color>
+    <color name="violettresclair">#E6E6F0</color>
+
+    <color name="fairedon1">#EB563A</color>
+    <color name="fairedon2">#F8AAB0</color>
 
     <color name="orange_logo">#EA5F44</color>
     <color name="turquoise_logo">#0DACB6</color>
     <color name="bleu_logo">#3C3786</color>
+
+    <color name="outline">#8B000000</color>
 
     <color name="violet_splash">#A6A3C8</color>
     <color name="orange_splash">#F5BEB3</color>
