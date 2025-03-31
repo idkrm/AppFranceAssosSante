@@ -55,6 +55,7 @@ class GetListDonsRecByYearTask(private val year: String, private val assosID: St
 
     private fun parseResponse(jsonResponse: String): List<DonRecurrent> {
         return try {
+            Log.d("GetListDonsRecByYear", "Réponse JSON reçue: $jsonResponse")
             val jsonObject = JSONObject(jsonResponse)
 
             val donsArray = jsonObject.getJSONArray("dons")
@@ -62,13 +63,19 @@ class GetListDonsRecByYearTask(private val year: String, private val assosID: St
 
             List(donsArray.length()) { i ->
                     val donJson = donsArray.getJSONObject(i)
+                Log.d("GetListDonsRecByYear", "Traitement du don #$i : $donJson") // ✅ Log de chaque don
+
+                // Vérifier si "typePaiement" est bien présent
+                if (!donJson.has("typePaiement")) {
+                    Log.e("GetListDonsRecByYear", "Erreur: typePaiement manquant pour le don #$i")
+                }
                     DonRecurrent(
                         montant = donJson.getDouble("montant"),
                         date = Don.parseDate(donJson.getString("date")) ?: Date(),
                         dateFin = Don.parseDate(donJson.getString("dateFin")) ?: Date(),
                         emailUtilisateur = donJson.getString("utilisateurEmail"),
                         frequence = donJson.getString("frequence"),
-                        paiement = donJson.getString("typePaiement"),
+                        paiement = donJson.optString("typePaiement",""),
                         association = donJson.optString("association", "")
                     )
             }
