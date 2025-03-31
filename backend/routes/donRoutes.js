@@ -142,10 +142,16 @@ router.get("/dons_rec/annee/:assosId", async (req, res) => {
                   _id: { $year: "$date" } // Extraire l'année de chaque don
               }
           },
-          { $sort: { "_id": -1 } } // Trier par année décroissante
+          { $sort: { "_id": -1 } }, // Trier par année décroissante
+          {
+              $project: {
+                year: "$_id", // Renommer pour plus de clarté
+                _id: 0
+              }
+          }
       ]);
 
-      const result = years.map(y => y._id.toString()); // Convertir en liste de strings
+      const result = years.map(y => y.year.toString()); // Convertir en liste de strings
       res.json(result);
   } catch (error) {
       console.error("Erreur lors de la récupération des années des dons:", error);
@@ -431,6 +437,7 @@ router.get("/dons/rec/details/:assosId/:year", async (req, res) => {
         }
       ]);
 
+      console.log(`Résultat dons pour ${year}:`, result);
       res.status(200).json({dons: result });
 
   } catch (error) {

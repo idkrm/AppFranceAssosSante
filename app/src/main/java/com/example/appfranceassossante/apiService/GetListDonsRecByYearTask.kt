@@ -71,7 +71,7 @@ class GetListDonsRecByYearTask(private val year: String, private val assosID: St
                 }
                     DonRecurrent(
                         montant = donJson.getDouble("montant"),
-                        date = Don.parseDate(donJson.getString("date")) ?: Date(),
+                        date = Don.parseDate(donJson.optString("date", "")) ?: Date(),
                         dateFin = Don.parseDate(donJson.getString("dateFin")) ?: Date(),
                         emailUtilisateur = donJson.getString("utilisateurEmail"),
                         frequence = donJson.getString("frequence"),
