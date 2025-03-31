@@ -55,6 +55,7 @@ class GetDonRecUserTask {
                                         association = associationName,
 
                                     )
+                                    Log.i("GetDonRecUserTask", "Nombre de dons récurrents récupérés: ${donsRecList.size}")
                                     donsRecList.add(donRec)
                                     Log.i("GetDonRecUserTask", "Nombre de dons récurrents récupérés: ${donsRecList.size}")
                                 } catch (e: JSONException) {

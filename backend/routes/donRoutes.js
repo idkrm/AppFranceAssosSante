@@ -192,27 +192,32 @@ router.get("/dons/total/:assosId/:year", async (req, res) => {
 
       // Filtrer les dons qui appartiennent à l'année donnée
       const dons = await Donation.aggregate([
-          {
-              $match: {
-                  association: new mongoose.Types.ObjectId(associationId), // Filtre par association
-                  //date: {
-                  //    $gte: new Date(Date.UTC(year, 0, 1, 0, 0, 0)), // 1er Janvier UTC
-                  //    $lt: new Date(Date.UTC(year + 1, 0, 1, 0, 0, 0)) // 1er Janvier année suivante
-                  //}
-                  $expr: {
-                    $eq: [{ $year: "$date" }, year]
-                }
-              }
-          },
-          {
-              $group: {
-                  _id: null,
-                  total: { $sum: "$montant" } // Somme des montants des dons
-              }
+        {
+          $match: {
+              association: new mongoose.Types.ObjectId(associationId),
+              date: { $exists: true, $ne: null }
           }
+      },
+      {
+          $addFields: {
+              year: { $year: "$date" } // Extraction de l'année
+          }
+      },
+      {
+          $match: {
+              year: year // Filtre sur l'année demandée
+          }
+      },
+      {
+          $group: {
+              _id: null,
+              total: { $sum: "$montant" }
+          }
+      }
       ]);
+      console.log(`Résultat agrégation pour ${year}:`, dons);
 
-      res.json({total: result[0]?.total || 0.0});
+      res.json({total: dons[0]?.total || 0.0});
   } catch (error) {
       console.error("Erreur lors de la récupération du total des dons:", error);
       res.status(500).json({ error: "Erreur serveur" });
@@ -233,23 +238,29 @@ router.get("/dons/rec/total/:assosId/:year", async (req, res) => {
 
       // Filtrer les dons qui appartiennent à l'année donnée
       const dons = await RecurringDonation.aggregate([
-          {
-                $match: {
-                  association: new mongoose.Types.ObjectId(associationId), // Filtre par association
-                  date: {
-                    $gte: new Date(Date.UTC(year, 0, 1, 0, 0, 0)), // 1er Janvier UTC
-                    $lt: new Date(Date.UTC(year + 1, 0, 1, 0, 0, 0)) // 1er Janvier année suivantee
-                  }
-              }
-          },
-          {
-              $group: {
-                  _id: null,
-                  total_rec: { $sum: "$montant" } // Somme des montants des dons
-              }
+        {
+          $match: {
+              association: new mongoose.Types.ObjectId(associationId),
+              date: { $exists: true, $ne: null }
           }
+      },
+      {
+          $addFields: {
+              year: { $year: "$date" } // Extraction de l'année
+          }
+      },
+      {
+          $match: {
+              year: year // Filtre sur l'année demandée
+          }
+      },
+      {
+          $group: {
+              _id: null,
+              total: { $sum: "$montant" }
+          }
+      }
       ]);
-
       if (dons.length > 0) {
           res.json({ total_rec: dons[0].total });
       } else {
@@ -328,6 +339,8 @@ router.get("/dons/user/:email", async (req, res) => {
         return res.status(404).json({ message: "Aucune association trouvée" });
       }
 
+      console.log(`Résultat agrégation pour ${mail}:`, donsMail);
+
     res.status(200).json(donsMail);
   } catch (error) {
     console.error("Erreur serveur:", error);
@@ -366,5 +379,68 @@ router.get("/donsrec/user/:email", async (req, res) => {
   }
 });
 
+
+// Route pour récupérer les dons récurrents d'une année spécifique d'une association
+router.get("/dons/rec/details/:assosId/:year", async (req, res) => {
+  try {
+      const year = parseInt(req.params.year);
+      if (isNaN(year)) return res.status(400).json({ error: "Année invalide" });
+      
+      const associationId = req.params.assosId;
+      if (!mongoose.Types.ObjectId.isValid(associationId)) {
+        return res.status(400).json({ error: "ID d'association invalide" });
+      }
+
+      // Pipeline d'agrégation amélioré
+      const result = await RecurringDonation.aggregate([
+        {
+          $match: {
+              association: new mongoose.Types.ObjectId(associationId),
+              date: { $exists: true, $ne: null },
+              dateFin: { $exists: true, $ne: null }
+          }
+        },
+        {
+          $addFields: {
+              startYear: { $year: "$date" },
+              endYear: { $year: "$dateFin" }
+          }
+        },
+        {
+          $match: {
+            $or: [
+              { startYear: year },  // Débute cette année-là
+              { endYear: year },    // Termine cette année-là
+              { $and: [             // Actif durant l'année
+                  { startYear: { $lt: year } },
+                  { endYear: { $gt: year } }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          $project: {
+            _id: 1,
+            montant: 1,
+            date: 1,
+            dateFin: 1,
+            utilisateurEmail: 1, // Ajoutez les champs nécessaires
+            frequence: 1
+          }
+        }
+      ]);
+
+      res.status(200).json({dons: result });
+
+  } catch (error) {
+      console.error("Erreur lors de la récupération des dons récurrents:", error);
+      res.status(500).json({ 
+          success: false,
+          error: "Erreur serveur",
+          details: error.message 
+      });
+  }
+});
 
 module.exports = router;

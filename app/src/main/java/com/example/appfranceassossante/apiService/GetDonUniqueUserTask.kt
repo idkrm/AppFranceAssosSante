@@ -43,15 +43,18 @@ class GetDonUniqueUserTask {
                                         Log.i("GetDonUniqueUserTask", "JSON reçu pour l'index $i: $jsonObject")
 
                                         val don = Don(
+                                            emailUtilisateur = jsonObject.getString("emailUtilisateur"),
                                             montant = jsonObject.getDouble("montant"),
                                             association = associationName,
                                             date = Don.parseDate(jsonObject.getString("date")),
                                             emailUtilisateur = jsonObject.getString("emailUtilisateur"),
                                             paiement = jsonObject.getString("typePaiement"),
+                                            association = associationName,
                                         )
                                         donsList.add(don)
                                         Log.i("GetDonUniqueUserTask", "Don ajouté: $don")
                                         Log.i("GetDonUniqueUserTask", "Nombre de dons récupérés: ${donsList.size}")
+                                        donsList.add(don)
                                     } catch (e: JSONException) {
                                         Log.e("GetDonUniqueUserTask", "Don invalide à l'index $i", e)
                                     }

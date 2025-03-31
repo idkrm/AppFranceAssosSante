@@ -11,14 +11,19 @@ import android.widget.Spinner
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import android.widget.Toast
+import androidx.compose.ui.text.font.Typeface
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.apiService.GetAssosIDTask
+import com.example.appfranceassossante.apiService.GetListDonsRecByYearTask
 import com.example.appfranceassossante.apiService.GetListYearDonRecTask
 import com.example.appfranceassossante.apiService.GetListYearDonTask
-import com.example.appfranceassossante.apiService.GetMonthDonTask
+import com.example.appfranceassossante.apiService.GetTotalYearDonRecTask
 import com.example.appfranceassossante.apiService.GetTotalYearDonTask
+import com.example.appfranceassossante.models.DonRecurrent
 import com.example.appfranceassossante.models.UserViewModel
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
@@ -27,6 +32,8 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class LesdonsFragment : BaseFragment() {
 
@@ -36,6 +43,7 @@ class LesdonsFragment : BaseFragment() {
     private lateinit var totalannee: Spinner
     private lateinit var totalrec: Spinner
     private var asId: String? = null
+    private lateinit var selectedYear : String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +52,9 @@ class LesdonsFragment : BaseFragment() {
         val view = inflater.inflate(R.layout.fragment_les_dons, container, false)
 
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+
+        barChart = view.findViewById(R.id.graph_bar)
+        tableDon = view.findViewById(R.id.tabledon)
 
         val nomassos = view.findViewById<TextView>(R.id.nomassociation)
         val nomAsso = userViewModel.admin.value?.getAssosName().toString()
@@ -101,12 +112,13 @@ class LesdonsFragment : BaseFragment() {
                         id: Long
                     ) {
                         // Lorsque l'utilisateur sélectionne une année dans le spinner 'totalannee'
-                        val selectedYear = totalrec.selectedItem.toString()
+                        selectedYear = totalrec.selectedItem.toString()
                         anneedonation.text = selectedYear
                         // Exécuter la requête pour obtenir le total des dons de l'année sélectionnée
-                        GetTotalYearDonTask(selectedYear, asId!!) { total ->
-                            montantrec.text = "$total €"
+                        GetTotalYearDonRecTask(selectedYear, asId!!) { total_rec ->
+                            montantrec.text = "$total_rec €"
                         }.execute()
+                        loadDonationData()
                     }
 
                     override fun onNothingSelected(parentView: AdapterView<*>) {
@@ -114,17 +126,12 @@ class LesdonsFragment : BaseFragment() {
                     }
                 }
 
-                barChart = view.findViewById(R.id.graph_bar)
-                tableDon = view.findViewById(R.id.tabledon)
-
                 remplirGraph()
-                loadDonationData()
             } else {
                 // Gérer le cas où l'ID est null (association non trouvée)
                 println("Association non trouvée")
             }
         }.execute()
-        nomassos.text = "123"
         return view
     }
 
@@ -137,65 +144,51 @@ class LesdonsFragment : BaseFragment() {
     }
 
     private fun loadDonationData() {
-        // Récupère les années disponibles
-        GetListYearDonRecTask(asId!!) { yearsList ->
-            if (yearsList.isNotEmpty()) {
-                val donationsData = mutableMapOf<String, MutableMap<String, String>>()
-                var nbYear = yearsList.size
-                for (year in yearsList) {
-                    GetMonthDonTask(year, asId!!) { monthtotal ->
-
-                        donationsData[year] = monthtotal.mapValues { (_, value) -> "$value €"}.toMutableMap()
-
-                        // Vérifie si toutes les requêtes sont terminées
-                        nbYear--
-                        if (nbYear == 0) {
-                            requireActivity().runOnUiThread {
-                                addTableRows(tableDon, donationsData)
-                            }
-                        }
-                    }.execute()
-                }
+        GetListDonsRecByYearTask(
+            year = selectedYear,
+            assosID = asId!!,
+            onSuccess = { donations ->
+                addTableRows(tableDon, donations)
+            },
+            onError = { error ->
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
             }
-        }.execute()
+        ).execute()
     }
 
-    private fun addTableRows(table: TableLayout, data: Map<String, Map<String, String>>){
+    private fun addTableRows(table: TableLayout, data: List<DonRecurrent>){
         table.removeAllViews() // Nettoyer la table avant d'ajouter de nouvelles données
 
         // header
-        val rowHeader = TableRow(table.context)
-        val header = listOf("Année-Mois", getString(R.string.jan), getString(R.string.fev), getString(R.string.mars), getString(R.string.avr),
-            getString(R.string.mai), getString(R.string.juin), getString(R.string.juil), getString(R.string.aout), getString(R.string.sept),
-            getString(R.string.oct), getString(R.string.nov), getString(R.string.dec))
-
-        for(h in header){
-            val elem = TextView(table.context)
-            elem.text = h
-            elem.setPadding(8, 8, 8, 8)
-            rowHeader.addView(elem)
+        val rowHeader = TableRow(requireContext()).apply {
+            listOf("Utilisateur", "Montant", "Fréquence", "Date début", "Date fin").forEach { headerText ->
+                val textView = TextView(requireContext()).apply {
+                    text = headerText
+                    setPadding(8, 8, 8, 8)
+                }
+                addView(textView)
+            }
         }
-
         table.addView(rowHeader)
 
-        for ((year, values) in data) {
-            val row = TableRow(table.context)
-
-            // Ajouter l'année
-            val annee = TextView(table.context)
-            annee.text = year
-            annee.setPadding(8, 8, 8, 8)
-            row.addView(annee)
-
-            // Ajouter les montants pour chaque mois
-            for (value in values) {
-                val montant = TextView(table.context)
-                montant.text = value.value.toString()
-                montant.setPadding(8, 8, 8, 8)
-                row.addView(montant)
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        data.forEach { don ->
+            TableRow(requireContext()).apply {
+                listOf(
+                    don.emailUtilisateur,
+                    "${don.montant} €",
+                    don.frequence,
+                    dateFormat.format(don.date),
+                    dateFormat.format(don.dateFin)
+                ).forEach { value ->
+                    val textView = TextView(requireContext()).apply {
+                        text = value
+                        setPadding(8, 8, 8, 8)
+                    }
+                    addView(textView)
+                }
+                table.addView(this)
             }
-
-            table.addView(row)
         }
     }
 
@@ -235,7 +228,18 @@ class LesdonsFragment : BaseFragment() {
         }
 
         val barDataSet = BarDataSet(barEntries, "Dons annuels")
-        barDataSet.colors = ColorTemplate.MATERIAL_COLORS.toList()
+        val customColors = listOf(
+            ContextCompat.getColor(requireContext(), R.color.fairedon2),
+            ContextCompat.getColor(requireContext(), R.color.purple_200),
+            ContextCompat.getColor(requireContext(), R.color.turquoise_splash),
+            ContextCompat.getColor(requireContext(), R.color.roseclair),
+            ContextCompat.getColor(requireContext(), R.color.violet_splash),
+            ContextCompat.getColor(requireContext(), R.color.turquoise_logo),
+            ContextCompat.getColor(requireContext(), R.color.bleu_logo),
+        )
+
+        //barDataSet.colors = ColorTemplate.PASTEL_COLORS.toList()
+        barDataSet.colors = customColors
         barDataSet.valueTextColor = R.color.orange_splash
         barDataSet.valueTextSize = 12f
 
