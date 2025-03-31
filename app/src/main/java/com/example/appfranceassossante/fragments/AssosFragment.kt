@@ -108,13 +108,13 @@ class AssosFragment : BaseFragment() {
 
     private fun getFiltersFromDatabase(): List<Filter> {
         return listOf(
-            Filter(1, "Filtre 1"),
-            Filter(2, "Filtre 2"),
-            Filter(3, "Filtre 3"),
-            Filter(4, "Filtre 4"),
-            Filter(5, "Filtre 5"),
-            Filter(6, "Filtre 6"),
-            Filter(7, "Filtre 7"),
+            Filter(1, "Maladies chroniques"),
+            Filter(2, "Accidents et effets secondaires"),
+            Filter(3, "Handicap et dépendance"),
+            Filter(4, "Santé mentale et bien-être psychique"),
+            Filter(5, "Droits des patients et accès aux soins"),
+            Filter(6, "Soutien aux aidants et proches"),
+            Filter(7, "Prévention et santé publique"),
         )
     }
 

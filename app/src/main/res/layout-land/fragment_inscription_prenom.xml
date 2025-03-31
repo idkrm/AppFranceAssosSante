@@ -3,42 +3,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_margin="20dp"
-    android:gravity="center">
-
+    android:gravity="center"
+    android:weightSum="100">
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="15dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/dejainscrit"/>
-
-        <Button
-            android:id="@+id/connnection"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:text="@string/connection"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_weight="50"
         android:padding="20dp"
-        android:background="@drawable/fond_bleu_arrondi"
-        android:layout_marginBottom="30dp">
+        android:background="@drawable/fond_bleu_arrondi">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/champs"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:layout_marginBottom="15dp"/>
 
         <TextView
@@ -46,14 +27,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/inscription_prenom"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:layout_marginBottom="20dp"/>
 
         <EditText
             android:id="@+id/prenom"
             android:background="@drawable/edit_text"
             android:layout_gravity="center"
-            android:layout_width="400dp"
+            android:layout_width="300dp"
             android:layout_height="40dp"
             android:hint="Ex: Lucie"
             android:padding="10dp">
@@ -62,32 +43,57 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/suivant"
-            android:layout_width="200dp"
+        android:layout_weight="50"
+        android:orientation="vertical"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/suivant"
-            android:paddingStart="30dp"
-            android:paddingEnd="30dp"
-            android:textColor="@color/black"
-            android:background="@drawable/btn_suivant"
-            android:layout_marginEnd="100dp"/>
+            android:orientation="horizontal"
+            android:layout_marginBottom="15dp">
 
-        <Button
-            android:id="@+id/retour"
-            android:layout_width="200dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dejainscrit"/>
+
+            <Button
+                android:id="@+id/connnection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="@string/connection"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/retour"
-            android:paddingStart="30dp"
-            android:paddingEnd="30dp"
-            android:textColor="@color/black"
-            android:background="@drawable/btn_retour"/>
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
 
+            <Button
+                android:id="@+id/suivant"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/suivant"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:textColor="@color/black"
+                android:background="@drawable/btn_suivant"
+                android:layout_marginBottom="20dp"/>
+
+            <Button
+                android:id="@+id/retour"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/retour"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:textColor="@color/black"
+                android:background="@drawable/btn_retour"/>
+
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
