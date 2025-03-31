@@ -131,7 +131,7 @@ router.get("/dons_rec/annee/:assosId", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(associationId)) {
       return res.status(400).json({ error: "ID d'association invalide" });
     }
-      const years = await RecurringDonation.aggregate([
+      const years = await RecurringDonations.aggregate([
           {
               $match: {
                 association: new mongoose.Types.ObjectId(associationId), // Filtre par association
@@ -237,7 +237,7 @@ router.get("/dons/rec/total/:assosId/:year", async (req, res) => {
       }
 
       // Filtrer les dons qui appartiennent à l'année donnée
-      const dons = await RecurringDonation.aggregate([
+      const dons = await RecurringDonations.aggregate([
         {
           $match: {
               association: new mongoose.Types.ObjectId(associationId),
@@ -392,7 +392,7 @@ router.get("/dons/rec/details/:assosId/:year", async (req, res) => {
       }
 
       // Pipeline d'agrégation amélioré
-      const result = await RecurringDonation.aggregate([
+      const result = await RecurringDonations.aggregate([
         {
           $match: {
               association: new mongoose.Types.ObjectId(associationId),

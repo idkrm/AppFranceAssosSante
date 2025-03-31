@@ -47,9 +47,7 @@ class GetDonUniqueUserTask {
                                             montant = jsonObject.getDouble("montant"),
                                             association = associationName,
                                             date = Don.parseDate(jsonObject.getString("date")),
-                                            emailUtilisateur = jsonObject.getString("emailUtilisateur"),
-                                            paiement = jsonObject.getString("typePaiement"),
-                                            association = associationName,
+                                            paiement = jsonObject.getString("typePaiement")
                                         )
                                         donsList.add(don)
                                         Log.i("GetDonUniqueUserTask", "Don ajouté: $don")
