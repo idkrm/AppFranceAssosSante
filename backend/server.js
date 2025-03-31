@@ -50,29 +50,6 @@ app.get("/redirect", (req, res) => {
   `);
 });
 
-const deepLinkUrl = "monapp://deeplink/page";  // Deep link vers l'app
-const playStoreUrl = "https://play.google.com/store/apps";  // L'URL du Play Store pour ton app
-
-app.get("/redirect", (req, res) => {
-  console.log("Redirection demandée !");
-  res.send(`
-    <html>
-      <head>
-        <title>Redirection...</title>
-        <script>
-          window.location.href = "${deepLinkUrl}";
-          setTimeout(() => { window.location.href = "${playStoreUrl}"; }, 2000);
-        </script>
-      </head>
-      <body>
-        <p>Si la redirection ne fonctionne pas, <a href="${playStoreUrl}">cliquez ici</a>.</p>
-      </body>
-    </html>
-  `);
-});
-
-const cors = require('cors');
-app.use(cors());
 
 // Démarrer le serveur
 const PORT = 5000;
