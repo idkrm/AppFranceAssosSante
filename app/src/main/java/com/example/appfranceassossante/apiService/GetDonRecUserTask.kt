@@ -16,14 +16,20 @@ class GetDonRecUserTask {
     suspend fun getDonRecUserInBG(mail: String): List<DonRecurrent> {
         return withContext(Dispatchers.IO) {
             try {
-                val url = URL("http://10.0.2.2:5000/donation/donsrec/$mail")
+                val url = URL("http://10.0.2.2:5000/donations/donsrec/user/$mail")
+                Log.d("GetDonRecUserTask", "URL appelée: $url")
+
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "GET"
+                Log.d("GetDonRecUserTask", "Code réponse HTTP: ${connection.responseCode}")
 
                 when (connection.responseCode) {
                     HttpURLConnection.HTTP_OK -> {
                         connection.inputStream.bufferedReader().use { reader ->
-                            val jsonResponse = JSONArray(reader.readText())
+                            val responseText = reader.readText()
+                            Log.d("GetDonRecUserTask", "Réponse brute de l'API: $responseText")
+                            val jsonResponse = JSONArray(responseText)
+
                             val donsRecList = mutableListOf<DonRecurrent>()
 
                             for (i in 0 until jsonResponse.length()) {
@@ -40,17 +46,17 @@ class GetDonRecUserTask {
 
 
                                     val donRec = DonRecurrent(
-                                        emailUtilisateur = jsonObject.getString("emailUtilisateur"),
+                                        emailUtilisateur = jsonObject.getString("utilisateurEmail"),
                                         montant = jsonObject.getDouble("montant"),
                                         date = Don.parseDate(jsonObject.getString("date")),
-                                        paiement = jsonObject.getString("paiement"),
+                                        paiement = jsonObject.getString("typePaiement"),
                                         frequence = jsonObject.getString("frequence"),
                                         dateFin = Don.parseDate(jsonObject.getString("dateFin")),
                                         association = associationName,
 
                                     )
-                                    Log.i("GetDonRecUserTask", "Nombre de dons récurrents récupérés: ${donsRecList.size}")
                                     donsRecList.add(donRec)
+                                    Log.i("GetDonRecUserTask", "Nombre de dons récurrents récupérés: ${donsRecList.size}")
                                 } catch (e: JSONException) {
                                     Log.e("GetDonRecUserTask", "Don invalide à l'index $i", e)
                                 }

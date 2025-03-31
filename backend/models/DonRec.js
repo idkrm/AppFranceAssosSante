@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const recurringDonationSchema = new mongoose.Schema({
+const recurringDonationsSchema = new mongoose.Schema({
   montant: {
     type: Number,
     required: true,
@@ -15,7 +15,7 @@ const recurringDonationSchema = new mongoose.Schema({
     required: true,
   },
   utilisateurEmail: {
-      type: mongoose.Schema.Types.ObjectId, // Référence à l'utilisateur'
+      type: String, // Référence à l'utilisateur'
       ref: 'User',
       required: true,
     },
@@ -35,6 +35,6 @@ const recurringDonationSchema = new mongoose.Schema({
   },
 });
 
-const RecurringDonation = mongoose.model('RecurringDonation', recurringDonationSchema);
+const RecurringDonations = mongoose.model('RecurringDonations', recurringDonationsSchema);
 
-module.exports = RecurringDonation;
+module.exports = RecurringDonations;

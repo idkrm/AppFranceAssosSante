@@ -32,7 +32,7 @@ class CreateDonUTask(private val context: Context) {
                 else if(don.paiement.equals("ApplePay"))
                     paiement="ApplePay"
                 else
-                    paiement="Paypal"
+                    paiement="PayPal"
 
                 // Créer le corps de la requête (JSON)
                 val jsonBody = JSONObject().apply {
@@ -54,19 +54,19 @@ class CreateDonUTask(private val context: Context) {
 
                 if (responseCode == HttpURLConnection.HTTP_CREATED) {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Don créé avec succès", Toast.LENGTH_SHORT).show()
+                        Log.d("DON_HTTP", "Don créé avec succès")
                     }
                     true
                 } else {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Erreur lors de la création. Code: $responseCode", Toast.LENGTH_SHORT).show()
+                        Log.d("DON_HTTP", "Erreur lors de la création du don")
                     }
                     false
                 }
             } catch (e: Exception) {
                 Log.e("CreateDonUTask", "Erreur réseau", e)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(context, "Erreur de connexion: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Log.d("DON_HTTP", "Erreur de connexion: ${e.message}")
                 }
                 false
             }

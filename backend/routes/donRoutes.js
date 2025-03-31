@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Donation = require('../models/Don');
-const RecurringDonation = require('../models/DonRec');
+const RecurringDonations = require('../models/DonRec');
 const User = require('../models/User');
 const Association = require('../models/Assos');
 
@@ -317,12 +317,12 @@ router.get("/dons/rec/mois/:associationId/:year", async (req, res) => {
 });
 
 // Route pour récupérer les dons par le mail de l'utilisateur
-router.get("/dons/:email", async (req, res) => {
+router.get("/dons/user/:email", async (req, res) => {
   try {
       const mail = req.params.email;
 
       // Trouver toutes les associations ayant ce filtre
-      const donsMail = await Donation.find({ emailUtilisateur: mail }).populate("association");;
+      const donsMail = await Donation.find({ emailUtilisateur: mail }).populate("association");
 
       if (donsMail.length === 0) {
         return res.status(404).json({ message: "Aucune association trouvée" });
@@ -336,22 +336,35 @@ router.get("/dons/:email", async (req, res) => {
 });
 
 // Route pour récupérer les dons récurrents par le mail de l'utilisateur
-router.get("/donsrec/:email", async (req, res) => {
+router.get("/donsrec/user/:email", async (req, res) => {
   try {
       const mail = req.params.email;
+      console.log("📩 Email reçu:", mail);
 
-      // Trouver toutes les associations ayant ce filtre
-      const donsRecMail = await RecurringDonation.find({ emailUtilisateur: mail }).populate("association");;
-
-      if (donsRecMail.length === 0) {
-        return res.status(404).json({ message: "Aucune association trouvée" });
+      // Vérifier si l'email est bien récupéré
+      if (!mail) {
+          console.error("⚠️ Erreur: Email non fourni !");
+          return res.status(400).json({ message: "Email manquant dans la requête" });
       }
 
-    res.status(200).json(donsRecMail);
+      // Chercher les dons récurrents pour cet email
+      const donsRecMail = await RecurringDonations.find({ utilisateurEmail: mail }).populate("association");
+      console.log("📢 Dons trouvés:", donsRecMail);
+
+      // Vérifier si la requête retourne bien des résultats
+      if (donsRecMail.length === 0) {
+          console.warn("⚠️ Aucun don trouvé pour cet utilisateur.");
+          return res.status(404).json({ message: "Aucun don trouvé" });
+      }
+
+      // Retourner les dons trouvés
+      res.status(200).json(donsRecMail);
+
   } catch (error) {
-    console.error("Erreur serveur:", error);
-    res.status(500).json({ message: "Erreur interne du serveur" });
-}
+      console.error("❌ Erreur serveur:", error);
+      res.status(500).json({ message: "Erreur interne du serveur" });
+  }
 });
+
 
 module.exports = router;

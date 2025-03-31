@@ -15,12 +15,12 @@ const donationSchema = new mongoose.Schema({
     required: true,
   },
   emailUtilisateur: {
-    type: mongoose.Schema.Types.ObjectId, // Référence à l'utilisateur
+    type: String, // Référence à l'utilisateur
     ref: 'User',
   },
   typePaiement: {
     type: String,
-    enum: ['CB', 'PayPal', 'GooglePay','ApplePay'],
+    enum: ['CB', 'PayPal', 'GooglePay'],
     required: true,
   },
 });
