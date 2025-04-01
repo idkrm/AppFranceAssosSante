@@ -148,28 +148,49 @@ router.get("/dons_rec/annee/:assosId", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(associationId)) {
       return res.status(400).json({ error: "ID d'association invalide" });
     }
-      const years = await RecurringDonations.aggregate([
-          {
-              $match: {
-                association: new mongoose.Types.ObjectId(associationId), // Filtre par association
-              }
-            },
-            {
-              $group: {
-                  _id: { $year: "$date" } // Extraire l'année de chaque don
-              }
-          },
-          { $sort: { "_id": -1 } }, // Trier par année décroissante
-          {
-              $project: {
-                year: "$_id", // Renommer pour plus de clarté
-                _id: 0
-              }
+    const years = await RecurringDonations.aggregate([
+      {
+        $match: {
+          association: new mongoose.Types.ObjectId(associationId),
+          $or: [
+            { date: { $exists: true, $ne: null } },
+            { dateFin: { $exists: true, $ne: null } }
+          ]
+        }
+      },
+      {
+        $facet: {
+          startYears: [
+            { $group: { _id: { $year: "$date" } } }
+          ],
+          endYears: [
+            { $group: { _id: { $year: "$dateFin" } } }
+          ]
+        }
+      },
+      {
+        $project: {
+          allYears: {
+            $setUnion: [
+              "$startYears._id",
+              "$endYears._id"
+            ]
           }
-      ]);
+        }
+      },
+      { $unwind: "$allYears" },
+      { $replaceRoot: { newRoot: "$allYears" } },
+      { $sort: { _id: -1 } },
+      {
+        $group: {
+          _id: null,
+          years: { $push: "$_id" }
+        }
+      }
+    ]);
 
-      const result = years.map(y => y.year.toString()); // Convertir en liste de strings
-      res.json(result);
+    const result = years.length > 0 ? years[0].years : [];
+    res.status(200).json(result);
   } catch (error) {
       console.error("Erreur lors de la récupération des années des dons:", error);
       res.status(500).json({ error: "Erreur serveur" });

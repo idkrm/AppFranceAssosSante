@@ -72,7 +72,8 @@ class LesdonsFragment : BaseFragment() {
 
                 totalannee = view.findViewById(R.id.totalannee)
                 GetListYearDonTask(asId!!) { yearsList ->
-                    updateYearSpinner(totalannee, yearsList)
+                    val listTotalAnnee = listOf("") + yearsList
+                    updateYearSpinner(totalannee, listTotalAnnee)
                 }.execute()
 
                 val montantannee = view.findViewById<TextView>(R.id.montantannee)
@@ -101,7 +102,8 @@ class LesdonsFragment : BaseFragment() {
 
                 anneeTab = view.findViewById(R.id.annee_tab)
                 GetListYearDonRecTask(asId!!) { yearsList ->
-                    updateYearSpinner(anneeTab, yearsList)
+                    val listAnneeTab = listOf("") + yearsList
+                    updateYearSpinner(anneeTab, listAnneeTab)
                 }.execute()
 
                 moisTab = view.findViewById(R.id.mois_tab)
@@ -129,6 +131,7 @@ class LesdonsFragment : BaseFragment() {
                         GetTotalYearDonRecTask(selectedYear, asId!!) { total_rec ->
                             montantrec.text = "$total_rec €"
                         }.execute()
+                        loadDonationDataAnnuel()
                         moisTab.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parentView: AdapterView<*>,
@@ -139,7 +142,7 @@ class LesdonsFragment : BaseFragment() {
                                 // Lorsque l'utilisateur sélectionne une année dans le spinner 'totalannee'
                                 selectedMonth = moisTab.selectedItem.toString()
                                 moistabmensuel.text = selectedMonth
-                                loadDonationData()
+                                loadDonationDataMensuel()
                             }
                             override fun onNothingSelected(parentView: AdapterView<*>) {
                                 // Aucune action nécessaire ici
@@ -169,9 +172,10 @@ class LesdonsFragment : BaseFragment() {
         }
     }
 
-    private fun loadDonationData() {
-        GetListDonsRecByYearTask(
+    private fun loadDonationDataMensuel() {
+        GetListDonsRecByYearMonthTask(
             year = selectedYear,
+            month = selectedMonth,
             assosID = asId!!,
             onSuccess = { datadons ->
                 addTableRows(tableDonMensuel, datadons)
@@ -180,9 +184,11 @@ class LesdonsFragment : BaseFragment() {
                 Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
             }
         ).execute()
-        GetListDonsRecByYearMonthTask(
+    }
+
+    private fun loadDonationDataAnnuel() {
+        GetListDonsRecByYearTask(
             year = selectedYear,
-            month = selectedMonth,
             assosID = asId!!,
             onSuccess = { datadons ->
                 addTableRows(tableDonAnnuel, datadons)
