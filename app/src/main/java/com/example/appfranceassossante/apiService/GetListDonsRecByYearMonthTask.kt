@@ -16,7 +16,7 @@ class GetListDonsRecByYearMonthTask(private val year: String, private val month:
     suspend fun getListDonsRecByYearMonthInBG(): DonsAggregate {
         return withContext(Dispatchers.IO) {
             try {
-                val url = URL("http://10.0.2.2:5000/donations/dons/rec/details/$assosID/$year/$month")
+                val url = URL("http://10.0.2.2:5000/donations/dons/rec/details-mensuel/$assosID/$year/$month")
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "GET"
 

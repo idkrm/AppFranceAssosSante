@@ -19,6 +19,7 @@ import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.apiService.GetAssosIDTask
 import com.example.appfranceassossante.apiService.GetListDonsRecByYearMonthTask
+import com.example.appfranceassossante.apiService.GetListDonsRecByYearTask
 import com.example.appfranceassossante.apiService.GetListYearDonRecTask
 import com.example.appfranceassossante.apiService.GetListYearDonTask
 import com.example.appfranceassossante.apiService.GetTotalYearDonRecTask
@@ -169,9 +170,8 @@ class LesdonsFragment : BaseFragment() {
     }
 
     private fun loadDonationData() {
-        GetListDonsRecByYearMonthTask(
+        GetListDonsRecByYearTask(
             year = selectedYear,
-            month = selectedMonth,
             assosID = asId!!,
             onSuccess = { datadons ->
                 addTableRows(tableDonMensuel, datadons)

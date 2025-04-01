@@ -404,7 +404,7 @@ router.get("/donsrec/user/:email", async (req, res) => {
 
 
 // Route pour récupérer les dons récurrents d'une année spécifique d'une association
-router.get("/dons/rec/details/:assosId/:year/:month", async (req, res) => {
+router.get("/dons/rec/details-mensuel/:assosId/:year/:month", async (req, res) => {
   try {
       const year = parseInt(req.params.year);
       if (isNaN(year)) return res.status(400).json({ error: "Année invalide" });
@@ -473,7 +473,7 @@ router.get("/dons/rec/details/:assosId/:year/:month", async (req, res) => {
 });
 
 // Route pour récupérer les dons récurrents d'une année spécifique d'une association
-router.get("/dons/rec/details/:assosId/:year", async (req, res) => {
+router.get("/dons/rec/details-annuel/:assosId/:year", async (req, res) => {
   try {
       const year = parseInt(req.params.year);
       if (isNaN(year)) return res.status(400).json({ error: "Année invalide" });
