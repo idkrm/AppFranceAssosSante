@@ -11,12 +11,12 @@ import java.io.BufferedReader
 import java.net.HttpURLConnection
 import java.net.URL
 
-class GetListDonsRecByYearTask (private val year: String, private val assosID: String, private val onSuccess: (DonsAggregate) -> Unit, private val onError: (String) -> Unit) {
+class GetListDonsRecByYearMonthTask(private val year: String, private val month: String, private val assosID: String, private val onSuccess: (DonsAggregate) -> Unit, private val onError: (String) -> Unit) {
 
-    suspend fun getListDonsRecByYearInBG(): DonsAggregate {
+    suspend fun getListDonsRecByYearMonthInBG(): DonsAggregate {
         return withContext(Dispatchers.IO) {
             try {
-                val url = URL("http://10.0.2.2:5000/donations/dons/rec/details/$assosID/$year")
+                val url = URL("http://10.0.2.2:5000/donations/dons/rec/details/$assosID/$year/$month")
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "GET"
 
@@ -29,20 +29,20 @@ class GetListDonsRecByYearTask (private val year: String, private val assosID: S
 
                     HttpURLConnection.HTTP_NOT_FOUND -> {
                         Log.i(
-                            "GetListDonsRecByYear",
-                            "Aucun don trouvé pour l'association: $assosID et année: $year"
+                            "GetListDonsRecByYearMonth",
+                            "Aucun don trouvé pour l'association: $assosID et année: $year et mois: $month"
                         )
                         DonsAggregate(0.0, 0)  // Retourne un aggregate vide
                     }
 
                     else -> {
                         val error = "Erreur serveur: ${connection.responseCode}"
-                        Log.e("GetListDonsRecByYear", error)
+                        Log.e("GetListDonsRecByYearMonth", error)
                         throw Exception(error)
                     }
                 }
             } catch (e: Exception) {
-                Log.e("GetListDonsRecByYear", "Erreur réseau", e)
+                Log.e("GetListDonsRecByYearMonth", "Erreur réseau", e)
                 throw e
             }
         }
@@ -50,7 +50,7 @@ class GetListDonsRecByYearTask (private val year: String, private val assosID: S
 
     private fun parseResponse(jsonResponse: String): DonsAggregate {
         return try {
-            Log.d("GetListDonsRecByYear", "Réponse JSON reçue: $jsonResponse")
+            Log.d("GetListDonsRecByYearMonth", "Réponse JSON reçue: $jsonResponse")
             val jsonObject = JSONObject(jsonResponse)
 
             val dataObject  = jsonObject.getJSONObject("data")
@@ -60,7 +60,7 @@ class GetListDonsRecByYearTask (private val year: String, private val assosID: S
                 count = dataObject.getInt("count")
             )
         } catch (e: Exception) {
-            Log.e("GetListDonsRecByYear", "Erreur de parsing", e)
+            Log.e("GetListDonsRecByYearMonth", "Erreur de parsing", e)
             throw e
         }
     }
@@ -68,7 +68,7 @@ class GetListDonsRecByYearTask (private val year: String, private val assosID: S
     fun execute() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val dons = getListDonsRecByYearInBG()
+                val dons = getListDonsRecByYearMonthInBG()
                 onSuccess(dons)
             } catch (e: Exception) {
                 onError(e.message ?: "Erreur inconnue")

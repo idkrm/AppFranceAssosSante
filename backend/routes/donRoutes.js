@@ -404,6 +404,75 @@ router.get("/donsrec/user/:email", async (req, res) => {
 
 
 // Route pour récupérer les dons récurrents d'une année spécifique d'une association
+router.get("/dons/rec/details/:assosId/:year/:month", async (req, res) => {
+  try {
+      const year = parseInt(req.params.year);
+      if (isNaN(year)) return res.status(400).json({ error: "Année invalide" });
+      
+      const month = parseInt(req.params.month);
+      if (isNaN(month) || month < 1 || month > 12) return res.status(400).json({ error: "Mois invalide" });
+      
+      const associationId = req.params.assosId;
+      if (!mongoose.Types.ObjectId.isValid(associationId)) {
+        return res.status(400).json({ error: "ID d'association invalide" });
+      }
+
+      // Pipeline d'agrégation amélioré
+      const result = await RecurringDonations.aggregate([
+        {
+          $match: {
+            association: new mongoose.Types.ObjectId(associationId),
+            date: { $exists: true, $ne: null },
+            dateFin: { $exists: true, $ne: null },
+            $expr: {
+              $or: [
+                // Cas 1: Don actif pendant le mois cible
+                { $and: [
+                    { $lte: [{ $year: "$date" }, year] },
+                    { $or: [
+                        { $gte: [{ $year: "$dateFin" }, year] },
+                        { $eq: ["$dateFin", null] }
+                    ]},
+                    { $lte: [{ $month: "$date" }, month] },
+                    { $or: [
+                        { $gte: [{ $month: "$dateFin" }, month] },
+                        { $eq: ["$dateFin", null] }
+                    ]}
+                ]},
+                // Cas 2: Don commencé pendant le mois cible
+                { $and: [
+                    { $eq: [{ $year: "$date" }, year] },
+                    { $eq: [{ $month: "$date" }, month] }
+                ]}
+              ]
+            }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            total: { $sum: "$montant" },
+            count: { $sum: 1 }
+          }
+        }
+      ]);
+
+      console.log(`Résultat dons pour ${year}:`, result);
+      const responseData = result.length > 0 ? result[0] : { total: 0, count: 0 };
+      
+      res.status(200).json({data: responseData});
+
+  } catch (error) {
+      console.error("Erreur lors de la récupération des dons récurrents:", error);
+      res.status(500).json({ 
+          success: false,
+          error: "Erreur serveur",
+          details: error.message 
+      });
+  }
+});
+
+// Route pour récupérer les dons récurrents d'une année spécifique d'une association
 router.get("/dons/rec/details/:assosId/:year", async (req, res) => {
   try {
       const year = parseInt(req.params.year);
@@ -443,19 +512,18 @@ router.get("/dons/rec/details/:assosId/:year", async (req, res) => {
           }
         },
         {
-          $project: {
-            _id: 1,
-            montant: 1,
-            date: 1,
-            dateFin: 1,
-            utilisateurEmail: 1, // Ajoutez les champs nécessaires
-            frequence: 1
+          $group: {
+            _id: null,
+            total: { $sum: "$montant" },
+            count: { $sum: 1 }
           }
         }
       ]);
 
       //console.log(`Résultat dons pour ${year}:`, result);
-      res.status(200).json({dons: result });
+      const responseData = result.length > 0 ? result[0] : { total: 0, count: 0 };
+    
+      res.status(200).json({data: responseData});
 
   } catch (error) {
       console.error("Erreur lors de la récupération des dons récurrents:", error);
