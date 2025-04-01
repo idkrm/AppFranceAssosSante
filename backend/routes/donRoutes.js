@@ -238,7 +238,7 @@ router.get("/dons/total/:assosId/:year", async (req, res) => {
           }
       }
       ]);
-      console.log(`Résultat agrégation pour ${year}:`, dons);
+      //console.log(`Résultat agrégation pour ${year}:`, dons);
 
       res.json({total: dons[0]?.total || 0.0});
   } catch (error) {
@@ -362,7 +362,7 @@ router.get("/dons/user/:email", async (req, res) => {
         return res.status(404).json({ message: "Aucune association trouvée" });
       }
 
-      console.log(`Résultat agrégation pour ${mail}:`, donsMail);
+      //console.log(`Résultat agrégation pour ${mail}:`, donsMail);
 
     res.status(200).json(donsMail);
   } catch (error) {
@@ -375,7 +375,7 @@ router.get("/dons/user/:email", async (req, res) => {
 router.get("/donsrec/user/:email", async (req, res) => {
   try {
       const mail = req.params.email;
-      console.log("📩 Email reçu:", mail);
+      //console.log("📩 Email reçu:", mail);
 
       // Vérifier si l'email est bien récupéré
       if (!mail) {
@@ -385,7 +385,7 @@ router.get("/donsrec/user/:email", async (req, res) => {
 
       // Chercher les dons récurrents pour cet email
       const donsRecMail = await RecurringDonations.find({ utilisateurEmail: mail }).populate("association");
-      console.log("📢 Dons trouvés:", donsRecMail);
+      //console.log("📢 Dons trouvés:", donsRecMail);
 
       // Vérifier si la requête retourne bien des résultats
       if (donsRecMail.length === 0) {
@@ -454,7 +454,7 @@ router.get("/dons/rec/details/:assosId/:year", async (req, res) => {
         }
       ]);
 
-      console.log(`Résultat dons pour ${year}:`, result);
+      //console.log(`Résultat dons pour ${year}:`, result);
       res.status(200).json({dons: result });
 
   } catch (error) {
@@ -466,5 +466,49 @@ router.get("/dons/rec/details/:assosId/:year", async (req, res) => {
       });
   }
 });
+
+router.put('/deleteDonRecurrent', async (req, res) => {
+  try {
+    const { emailUser, frequence, assos } = req.body;
+    console.log(`Body deleteDonRecurrent : ${req.body}`)
+
+    // Récupération de l'association
+    const assoDuDon = await Association.findOne({ nom: assos });
+    console.log(`Association trouvée : ${assoDuDon}`);
+
+    if (!assoDuDon) {
+      console.log(`Association avec le nom ${assos} non trouvée.`);
+      return res.status(404).json({ message: "Association non trouvée" });
+    }
+
+    // Vérification de l'existence du don récurrent
+    const donation = await RecurringDonations.findOne({
+      association: new mongoose.Types.ObjectId(assoDuDon._id),
+      frequence: frequence,
+      utilisateurEmail: emailUser
+    });
+    console.log(`Don récurrent trouvé : ${donation}`);
+
+    if (!donation) {
+      console.log(`Don récurrent avec frequence ${frequence} pour l'utilisateur ${emailUser} et l'association ${assos} non trouvé.`);
+      return res.status(404).json({ message: "Don récurrent non trouvé" });
+    }
+
+    // Mise à jour de la date de fin
+    donation.dateFin = new Date();
+    console.log(`Mise à jour de la date de fin : ${donation.dateFin}`);
+
+    // Sauvegarde de la modification
+    await donation.save();
+    console.log('Don récurrent supprimé avec succès');
+
+    // Réponse
+    res.status(200).json({ message: "Suppression du don !", donation });
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour de la date :", error);
+    res.status(500).json({ message: "Erreur du serveur" });
+  }
+});
+
 
 module.exports = router;

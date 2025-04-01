@@ -1,6 +1,7 @@
 
 package com.example.appfranceassossante.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Typeface
 import android.graphics.text.LineBreaker
@@ -9,6 +10,7 @@ import java.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
+import android.widget.Toast
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,8 +28,10 @@ import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.models.Don
 import com.example.appfranceassossante.DonationAdapter
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.apiService.DeleteDonRTask
 import com.example.appfranceassossante.apiService.GetDonRecUserTask
 import com.example.appfranceassossante.apiService.GetDonUniqueUserTask
+import com.example.appfranceassossante.models.DonRecurrent
 import com.example.appfranceassossante.models.UserViewModel
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -42,7 +46,9 @@ class MesDonsFragment : BaseFragment() {
     private lateinit var tableMesDons: TableLayout
     private lateinit var tableMesDonsRec: TableLayout
     private var donations = mutableListOf<Don>()
-    private var donationsRec = mutableListOf<Don>()
+    private var donationsRec = mutableListOf<DonRecurrent>()
+    private var selectedDon: DonRecurrent? = null
+    private lateinit var annulerButton: Button
     //private lateinit var viewLifecycleOwner: LifecycleOwner
 
     private val columnWeights = floatArrayOf(3.5f, 2.3f, 2.5f, 3f)
@@ -52,7 +58,7 @@ class MesDonsFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_mes_dons, container, false)
-
+         annulerButton = view.findViewById(R.id.annule)
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
         mail = userViewModel.mail.value.toString() // recup le mail du user
         Log.d("MesDonsFragment", "Mail utilisateur récupéré: $mail")
@@ -84,6 +90,9 @@ class MesDonsFragment : BaseFragment() {
 
         configureSpinner(view) // charge le spinner
         configureBackButton(view) // le btn back
+
+        setupAnnulerButton()
+
 
         return view
     }
@@ -157,8 +166,26 @@ class MesDonsFragment : BaseFragment() {
                 addView(createDonTextView(formatDate(don.date.toString()), columnWeights[1])) // Formatage de la date
                 addView(createDonTextView(formatMontant(don.montant), columnWeights[2])) // Formatage du montant
                 addView(createDonTextView(don.paiement, columnWeights[3]))
+
+                setOnClickListener {
+                    //selection de la ligne
+                    toggleSelection(don)
+                }
             }
             tableMesDonsRec.addView(row)
+        }
+    }
+    // Fonction qui gère la sélection et la désélection d'une ligne
+    private fun toggleSelection(don: DonRecurrent) {
+        // Si un don est déjà sélectionné, désélectionne-le
+        if ( selectedDon == don) {
+            selectedDon = null
+            view?.findViewById<Button>(R.id.annule)?.setBackgroundColor(resources.getColor(R.color.fond_bleu))
+        } else {
+            // Sélectionner le don
+            selectedDon = don
+            // Rendre le bouton Annuler plus foncé
+            view?.findViewById<Button>(R.id.annule)?.setBackgroundColor(resources.getColor(R.color.bleu_logo))
         }
     }
 
@@ -237,6 +264,7 @@ class MesDonsFragment : BaseFragment() {
                 addView(createDonTextView(formatDate(don.date.toString()), columnWeights[1])) // Formatage de la date
                 addView(createDonTextView(formatMontant(don.montant), columnWeights[2])) // Formatage du montant
                 addView(createDonTextView(don.paiement, columnWeights[3]))
+
             }
             tableMesDons.addView(row)
         }
@@ -264,5 +292,59 @@ class MesDonsFragment : BaseFragment() {
 
     private fun formatMontant(amount: Double): String {
         return String.format(Locale.FRANCE, "%.0f€", amount) // Supprime la décimale et ajoute l'€
+    }
+
+    // Bouton annuler pour supprimer un don après confirmation
+    private fun setupAnnulerButton() {
+
+        annulerButton?.setOnClickListener {
+            // Si un don est sélectionné, on affiche la boîte de dialogue de confirmation
+            if (selectedDon != null) {
+                showConfirmationDialog(selectedDon!!)
+            } else {
+                Toast.makeText(requireContext(), "Aucun don sélectionné", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    private fun showConfirmationDialog(don: DonRecurrent) {
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle("Confirmation")
+            .setMessage("Êtes-vous sûr de vouloir supprimer ce don récurrent ?")
+            .setPositiveButton("Supprimer") { _, _ ->
+                // Supprimer le don
+                lifecycleScope.launch {
+                    onDeleteDonClick(don)
+                }
+            }
+            .setNegativeButton("Annuler", null)
+            .create()
+
+        dialog.show()
+    }
+
+
+    private suspend fun onDeleteDonClick( don: DonRecurrent) {
+        // Récupère les données de la ligne sélectionnée
+        val email = userViewModel.mail.value as String
+        val assos = don.association
+        val frequence = don.frequence
+
+        // Appel à la méthode deleteDon pour supprimer le don récurrent
+        deleteDon(email, assos, frequence)
+
+        // Met à jour le tableau après suppression
+        updateDonationsTable()
+    }
+
+    private fun deleteDon(email: String, assos: String, frequence:String){
+        val deleteTask = DeleteDonRTask(requireContext())
+        deleteTask.execute(email, frequence, assos) { success ->
+            if (success) {
+                Log.d("MainActivity", "Le don récurrent a été annulé.")
+            } else {
+                // Faire quelque chose en cas d'échec
+                Log.e("MainActivity", "L'annulation du don a échoué.")
+            }
+        }
     }
 }
