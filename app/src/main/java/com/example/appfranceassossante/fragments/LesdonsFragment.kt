@@ -2,6 +2,7 @@ package com.example.appfranceassossante.fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +40,8 @@ class LesdonsFragment : BaseFragment() {
 
     private lateinit var userViewModel: UserViewModel
     private lateinit var barChart: BarChart
-    private lateinit var tableDon: TableLayout
+    private lateinit var tableDonMensuel: TableLayout
+    private lateinit var tableDonAnnuel: TableLayout
     private lateinit var totalannee: Spinner
     private lateinit var totalrec: Spinner
     private var asId: String? = null
@@ -51,10 +53,11 @@ class LesdonsFragment : BaseFragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_les_dons, container, false)
 
-        userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
+        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
 
         barChart = view.findViewById(R.id.graph_bar)
-        tableDon = view.findViewById(R.id.tabledon)
+        tableDonMensuel = view.findViewById(R.id.tabledonmensuel)
+        tableDonAnnuel = view.findViewById(R.id.tabledonannuel)
 
         val nomassos = view.findViewById<TextView>(R.id.nomassociation)
         val nomAsso = userViewModel.admin.value?.getAssosName().toString()
@@ -148,7 +151,7 @@ class LesdonsFragment : BaseFragment() {
             year = selectedYear,
             assosID = asId!!,
             onSuccess = { donations ->
-                addTableRows(tableDon, donations)
+                addTableRows(tableDonMensuel, donations)
             },
             onError = { error ->
                 Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
@@ -161,17 +164,19 @@ class LesdonsFragment : BaseFragment() {
 
         // header
         val rowHeader = TableRow(requireContext()).apply {
-            listOf("Utilisateur", "Montant", "Fréquence", "Date début", "Date fin").forEach { headerText ->
+            listOf("Nombre de dons", "Somme des dons").forEach { headerText ->
                 val textView = TextView(requireContext()).apply {
                     text = headerText
+                    setTypeface(typeface, android.graphics.Typeface.BOLD)
                     setPadding(8, 8, 8, 8)
+                    gravity = Gravity.CENTER
                 }
                 addView(textView)
             }
         }
         table.addView(rowHeader)
 
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd/MM/yy", Locale.getDefault())
         data.forEach { don ->
             TableRow(requireContext()).apply {
                 listOf(
