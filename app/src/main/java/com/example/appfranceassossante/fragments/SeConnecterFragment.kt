@@ -49,7 +49,7 @@ class SeConnecterFragment : BaseFragment() {
 
         val btnconnecter = view.findViewById<Button>(R.id.se_connecter)
         btnconnecter.setOnClickListener {
-            LoginClicked()
+            loginClicked()
         }
         val btnsinscrire = view.findViewById<Button>(R.id.sinscrire)
         btnsinscrire.setOnClickListener {
@@ -57,16 +57,16 @@ class SeConnecterFragment : BaseFragment() {
         }
     }
 
-    private fun LoginClicked() {
-        val mail = this.mail.text.toString()
+    private fun loginClicked() {
+        val email = this.mail.text.toString()
         val motDePasse = this.mdp.text.toString()
 
-        if (mail.isEmpty() || motDePasse.isEmpty()) {
+        if (email.isEmpty() || motDePasse.isEmpty()) {
             showToast(R.string.error_message_champs_vides)
             return
         }
 
-        tryLogin(mail, motDePasse)
+        tryLogin(email, motDePasse)
     }
 
     private fun tryLogin(email: String, motdp: String) {
