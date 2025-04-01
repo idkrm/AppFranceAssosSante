@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
                 android:id="@+id/text_don"
@@ -70,8 +70,11 @@
                     android:layout_height="wrap_content"
                     android:text="@string/lecture"
                     android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
                     android:visibility="gone"
-                    android:layout_gravity="center"/>
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:background="@drawable/btn_tts"/>
             </LinearLayout>
 
             <LinearLayout
@@ -119,7 +122,8 @@
                     android:text="@string/lecture"
                     android:layout_gravity="center"
                     android:visibility="gone"
-                    android:layout_marginBottom="30dp"/>
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/btn_tts"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
