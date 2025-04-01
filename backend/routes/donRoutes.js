@@ -21,7 +21,6 @@ router.post('/donations', async (req, res) => {
         }
     }
 
-    console.log(`Recherche de association avec le nom: '${req.body.association}'`);
     const associationData = await Association.findOne({ nom: req.body.association });
     if (!associationData) {
         console.error("Association non trouvée :", associationData);
@@ -44,10 +43,25 @@ router.post('/donations', async (req, res) => {
   }
 });
 
+//pour verifier si le don recurrent existe deja
+const checkRecurringDonation = async (utilisateurEmail, associationId, frequence) => {
+  try {
+    return await RecurringDonations.findOne({
+      emailUtilisateur: utilisateurEmail,
+      association: associationId,
+      frequence: frequence
+    });
+  } catch (error) {
+    console.error('Erreur lors de la vérification du don récurrent :', error);
+    throw error; // Propage l'erreur pour qu'elle soit gérée par le catch de la route
+  }
+};
+
 // Route pour créer un don récurrent
 router.post('/recurring-donations', async (req, res) => {
   try {
     const { montant, associationNom, utilisateurEmail, typePaiement, frequence, dateFin } = req.body;
+    console.log("Don reçu :", req.body);
 
     // Vérifie si l'utilisateur existe
     const user = await User.findOne({email : utilisateurEmail});
@@ -66,7 +80,7 @@ router.post('/recurring-donations', async (req, res) => {
       return res.status(400).json({ message: 'Un don récurrent existe déjà pour cette association et cette fréquence.' });
     }
 
-    const recurringDonation = new DonRec({
+    const recurringDonation = new RecurringDonations({
       montant,
       association: new mongoose.Types.ObjectId(associationData._id),
       date: new Date(),
@@ -83,6 +97,9 @@ router.post('/recurring-donations', async (req, res) => {
     res.status(500).json({ message: 'Erreur du serveur' });
   }
 });
+
+
+
 
 // Route pour récupérer la liste des années avec des dons
 router.get("/dons/annee/:assosId", async (req, res) => {

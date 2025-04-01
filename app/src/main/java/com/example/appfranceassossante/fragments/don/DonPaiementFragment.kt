@@ -57,7 +57,11 @@ class DonPaiementFragment : BaseFragment() {
 
             // Stocker le type de paiement dans le DonViewModel
             donViewModel.setPaymentType(selectedPaymentType)
-            //creation du don
+            //utilisateur
+            if(userViewModel.isUserLoggedIn()) {
+                donViewModel.setUtilisateurEmail(userViewModel.mail.value)
+                donViewModel.setUtilisateurEmailRec(userViewModel.mail.value as String)
+            }
 
             //recupere l'assos a laquelle on a fait un don
             val associationName = donViewModel.getAssociationName()

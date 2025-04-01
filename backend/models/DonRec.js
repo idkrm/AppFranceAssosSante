@@ -21,12 +21,12 @@ const recurringDonationsSchema = new mongoose.Schema({
     },
   typePaiement: {
     type: String,
-    enum: ['CB', 'PayPal', 'Virement', 'Chèque'],
+    enum: ['CB', 'PayPal', 'GooglePay'],
     required: true,
   },
   frequence: {
     type: String,
-    enum: ['mensuel', 'annuel'],
+    enum: ['Mensuel', 'Annuel'],
     required: true,
   },
   dateFin: {
