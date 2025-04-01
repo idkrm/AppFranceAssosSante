@@ -1,6 +1,7 @@
 
 package com.example.appfranceassossante.fragments
 
+import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -9,17 +10,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.compose.material3.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.models.UserViewModel
 import java.util.Locale
 import androidx.core.graphics.scale
 import androidx.core.graphics.drawable.toDrawable
+import com.example.appfranceassossante.apiService.DeleteUserTask
 import com.example.appfranceassossante.utilsAccessibilite.AccessibilityPreferences
 import com.example.appfranceassossante.utilsAccessibilite.ColorBlindnessFilter
 import com.example.appfranceassossante.utilsAccessibilite.SharedViewModel
 import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.utilsAccessibilite.textSize.TextSizeManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ProfilFragment : BaseFragment() {
     private lateinit var sharedViewModel: SharedViewModel
@@ -65,6 +70,41 @@ class ProfilFragment : BaseFragment() {
             transaction.replace(R.id.fragment_container, MesDonsFragment())
             transaction.addToBackStack(null) // ajoute le fragment actuel au backstack (pour pouvoir retourner dessus quand on fait retour sur le tel)
             transaction.commit()
+        }
+
+        val btnSupprUser = view.findViewById<Button>(R.id.btnSuppr)
+        btnSupprUser.setOnClickListener {
+
+            // Récupérer l'email de l'utilisateur connecté
+            val userEmail = requireContext()
+                .getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+                .getString("user_email", null)
+
+            if (userEmail == null) {
+                Toast.makeText(requireContext(), "Problème de récupération du mail", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Boîte de dialogue pour confirmation
+            MaterialAlertDialogBuilder(requireContext()).apply {
+                setTitle("Confirmation")
+                setMessage("Voulez-vous vraiment supprimer votre compte ?")
+                // _ désigne le paramètre vide
+                setPositiveButton("Supprimer") { _, _ ->
+                    DeleteUserTask(requireContext()).execute(userEmail)
+
+                    // Nettoyage des données de sharedPreferences
+                    requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+                        .edit()
+                        .clear()
+                        .apply()
+
+                    val transaction = parentFragmentManager.beginTransaction()
+                    transaction.replace(R.id.fragment_container, SeConnecterFragment())
+                    transaction.commit()
+                }
+                setNegativeButton("Annuler", null)
+            }.show()
         }
 
         btnDeco = view.findViewById(R.id.btn_deco)
