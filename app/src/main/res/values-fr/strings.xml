@@ -156,4 +156,6 @@
 
     <string name="more">En savoir plus</string>
     <string name="back">Retour</string>
+
+    <string name="date_de_fin">Date de fin :</string>
 </resources>

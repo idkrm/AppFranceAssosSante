@@ -88,26 +88,6 @@
                         android:src="@drawable/gpay"
                         android:layout_marginStart="10dp"/>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginBottom="10dp">
-                    <RadioButton
-                        android:id="@+id/btn_rd_Apay"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/apple_pay"
-                        android:gravity="center"/>
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/apay"
-                        android:layout_marginStart="10dp"/>
-                </LinearLayout>
-
-
             </RadioGroup>
         </LinearLayout>
 

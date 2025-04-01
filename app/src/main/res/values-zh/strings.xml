@@ -152,4 +152,6 @@
 
     <string name="more">了解更多</string>
     <string name="back">返回</string>
+
+    <string name="date_de_fin">结束日期 : </string>
 </resources>

@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.R
@@ -30,6 +31,7 @@ class DonTypeFragment : BaseFragment() {
     private lateinit var recurrentOptionsLayout: RelativeLayout
     private lateinit var donViewModel: DonViewModel
     private lateinit var userViewModel: UserViewModel
+    private lateinit var text: TextView
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
 
@@ -46,6 +48,7 @@ class DonTypeFragment : BaseFragment() {
         radioAnnuel = view.findViewById(R.id.radioAnnuel)
         dateFinEditText = view.findViewById(R.id.dateFinEditText)
         recurrentOptionsLayout = view.findViewById(R.id.recurrentOptionsLayout)
+        text = view.findViewById(R.id.textfin)
         donViewModel = ViewModelProvider(requireActivity()).get(DonViewModel::class.java)
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
 
@@ -114,6 +117,12 @@ class DonTypeFragment : BaseFragment() {
         radioMensuel.isEnabled = enabled
         radioAnnuel.isEnabled = enabled
         dateFinEditText.isEnabled = enabled
+        dateFinEditText.isEnabled = enabled
+        if(enabled){
+            text.setTextColor(resources.getColor(R.color.black))
+        }else
+            text.setTextColor(resources.getColor(R.color.grey))
+
 
         // Affiche ou cache les options de récurrence
         recurrentOptionsLayout.visibility = View.VISIBLE //if (enabled) View.VISIBLE else View.GONE
@@ -159,7 +168,11 @@ class DonTypeFragment : BaseFragment() {
                 transaction.addToBackStack(null) // Ajouter dans le backstack
                 transaction.commit()
             }
-            .setNegativeButton("Annuler", null) // Annuler la boîte de dialogue
+            .setNegativeButton("Annuler") { _, _ ->
+                radioRecurrent.isChecked = false
+                radioUnique.isChecked = true
+                setRecurrentOptionsEnabled(false) // Désactiver les options récurrentes
+            }
             .show()
     }
 

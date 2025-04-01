@@ -159,4 +159,5 @@
 
     <string name="more">More</string>
     <string name="back">Back</string>
+    <string name="date_de_fin">End date:</string>
 </resources>
