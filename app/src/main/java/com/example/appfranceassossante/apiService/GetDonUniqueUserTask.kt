@@ -52,7 +52,6 @@ class GetDonUniqueUserTask {
                                         donsList.add(don)
                                         Log.i("GetDonUniqueUserTask", "Don ajouté: $don")
                                         Log.i("GetDonUniqueUserTask", "Nombre de dons récupérés: ${donsList.size}")
-                                        donsList.add(don)
                                     } catch (e: JSONException) {
                                         Log.e("GetDonUniqueUserTask", "Don invalide à l'index $i", e)
                                     }

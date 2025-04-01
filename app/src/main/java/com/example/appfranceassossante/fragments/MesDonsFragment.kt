@@ -193,54 +193,54 @@ class MesDonsFragment : BaseFragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val ascending = position == 0 // Croissant si 0, sinon décroissant
-
-                // Trier les listes existantes
-                donations.sortWith(compareBy { it.montant })
-                donationsRec.sortWith(compareBy { it.montant })
-
-                if (!ascending) {
-                    donations.reverse()
-                    donationsRec.reverse()
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
+//        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                val ascending = position == 0 // Croissant si 0, sinon décroissant
+//
+//                // Trier les listes existantes
+//                donations.sortWith(compareBy { it.montant })
+//                donationsRec.sortWith(compareBy { it.montant })
+//
+//                if (!ascending) {
+//                    donations.reverse()
+//                    donationsRec.reverse()
+//                }
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<*>?) {}
+//        }
     }
 
-    private suspend fun updateDonationsTable() {
-        tableMesDons.removeAllViews()
-
-        // Définition d'un poids total pour la ligne
-        tableMesDons.weightSum = columnWeights.sum()
-
-        // Création du header
-        val rowHeader = TableRow(context).apply {
-            columnWeights.forEachIndexed { index, weight ->
-                addView(createHeaderTextView(listOf("Association", "Date", "Montant", "Paiement")[index], weight))
-            }
-        }
-        tableMesDons.addView(rowHeader)
-
-        // Récupération des données
-        val getDonUnique = GetDonUniqueUserTask()
-        donations = getDonUnique.getDonUniqueUserInBG(mail).toMutableList()
-        Log.d("MesDonsFragment", "Nombre de dons uniques récupérés: ${donations.size}")
-
-        // Ajout des données à la table
-        donations.forEach { don ->
-            val row = TableRow(context).apply {
-                addView(createDonTextView(don.association, columnWeights[0]))
-                addView(createDonTextView(formatDate(don.date.toString()), columnWeights[1])) // Formatage de la date
-                addView(createDonTextView(formatMontant(don.montant), columnWeights[2])) // Formatage du montant
-                addView(createDonTextView(don.paiement, columnWeights[3]))
-            }
-            tableMesDons.addView(row)
-        }
-    }
+//    private suspend fun updateDonationsTable() {
+//        tableMesDons.removeAllViews()
+//
+//        // Définition d'un poids total pour la ligne
+//        tableMesDons.weightSum = columnWeights.sum()
+//
+//        // Création du header
+//        val rowHeader = TableRow(context).apply {
+//            columnWeights.forEachIndexed { index, weight ->
+//                addView(createHeaderTextView(listOf("Association", "Date", "Montant", "Paiement")[index], weight))
+//            }
+//        }
+//        tableMesDons.addView(rowHeader)
+//
+//        // Récupération des données
+//        val getDonUnique = GetDonUniqueUserTask()
+//        donations = getDonUnique.getDonUniqueUserInBG(mail).toMutableList()
+//        Log.d("MesDonsFragment", "Nombre de dons uniques récupérés: ${donations.size}")
+//
+//        // Ajout des données à la table
+//        donations.forEach { don ->
+//            val row = TableRow(context).apply {
+//                addView(createDonTextView(don.association, columnWeights[0]))
+//                addView(createDonTextView(formatDate(don.date.toString()), columnWeights[1])) // Formatage de la date
+//                addView(createDonTextView(formatMontant(don.montant), columnWeights[2])) // Formatage du montant
+//                addView(createDonTextView(don.paiement, columnWeights[3]))
+//            }
+//            tableMesDons.addView(row)
+//        }
+//    }
 
     private fun configureBackButton(view: View) {
         view.findViewById<Button>(R.id.btnretour).setOnClickListener {

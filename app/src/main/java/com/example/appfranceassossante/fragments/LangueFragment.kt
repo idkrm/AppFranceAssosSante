@@ -13,6 +13,7 @@ import android.widget.RadioGroup
 import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.MainActivity
 import com.example.appfranceassossante.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Locale
 
 class LangueFragment : BaseFragment() {
@@ -63,11 +64,17 @@ class LangueFragment : BaseFragment() {
         config.setLocale(locale)
         requireContext().createConfigurationContext(config)
 
-        //applique la langue en redemarrant l'app
-        val intent = Intent(requireContext(), MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        requireActivity().finish()
+        // Met à jour le contexte des ressources
+        requireActivity().apply {
+            resources.updateConfiguration(config, resources.displayMetrics)
+        }
+
+        // selectionne l'item accueil dans le menu
+        val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)
+        bottomNav?.selectedItemId = R.id.navigation_accueil
+
+        // Redessine l'UI pour appliquer les changements de langue
+        requireActivity().recreate()
     }
 
     //garde la langue choisie meme apres fermeture de l'app

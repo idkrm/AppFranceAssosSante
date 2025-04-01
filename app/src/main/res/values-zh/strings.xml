@@ -134,6 +134,8 @@
     <string name="nov">十一月</string>
     <string name="dec">十二月</string>
     <string name="pashandicap">无</string>
+    <string name="assospersPortrait">协会</string>
+    <string name="assosPortrait">协会</string>
 
     <string name="search">Search…</string>
     <string name="select_filtre">选择过滤器</string>
@@ -147,4 +149,7 @@
     <string name="Droits">患者的权利和获得医疗服务的机会</string>
     <string name="Soutien">为照顾者和亲属提供支持</string>
     <string name="Prévention">预防和公共卫生</string>
+
+    <string name="more">了解更多</string>
+    <string name="back">返回</string>
 </resources>
