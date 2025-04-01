@@ -108,6 +108,9 @@ class LesdonsFragment : BaseFragment() {
 
                 val montantrec = view.findViewById<TextView>(R.id.montantanneedonation)
                 val anneedonation = view.findViewById<TextView>(R.id.anneedonation)
+                val anneetabmensuel = view.findViewById<TextView>(R.id.annee_tab_mensuel)
+                val moistabmensuel = view.findViewById<TextView>(R.id.mois_tab_mensuel)
+                val anneetabannuel = view.findViewById<TextView>(R.id.annee_tab_annuel)
 
                 anneeTab.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
@@ -119,6 +122,8 @@ class LesdonsFragment : BaseFragment() {
                         // Lorsque l'utilisateur sélectionne une année dans le spinner 'totalannee'
                         selectedYear = anneeTab.selectedItem.toString()
                         anneedonation.text = selectedYear
+                        anneetabmensuel.text = selectedYear
+                        anneetabannuel.text = selectedYear
                         // Exécuter la requête pour obtenir le total des dons de l'année sélectionnée
                         GetTotalYearDonRecTask(selectedYear, asId!!) { total_rec ->
                             montantrec.text = "$total_rec €"
@@ -132,6 +137,7 @@ class LesdonsFragment : BaseFragment() {
                             ) {
                                 // Lorsque l'utilisateur sélectionne une année dans le spinner 'totalannee'
                                 selectedMonth = moisTab.selectedItem.toString()
+                                moistabmensuel.text = selectedMonth
                                 loadDonationData()
                             }
                             override fun onNothingSelected(parentView: AdapterView<*>) {

@@ -176,6 +176,7 @@
                     android:textStyle="bold"
                     android:layout_marginEnd="10dp"/>
                 <TextView
+                    android:id="@+id/mois_tab_mensuel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="[mois]"/>
@@ -185,6 +186,7 @@
                     android:text="/"/>
 
                 <TextView
+                    android:id="@+id/annee_tab_mensuel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="[year]"/>
@@ -217,16 +219,9 @@
                     android:text="Annuel : "
                     android:textStyle="bold"
                     android:layout_marginEnd="10dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="[mois]"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="/"/>
 
                 <TextView
+                    android:id="@+id/annee_tab_annuel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="[year]"/>
