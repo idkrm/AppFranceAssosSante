@@ -180,12 +180,12 @@ class MesDonsFragment : BaseFragment() {
         // Si un don est déjà sélectionné, désélectionne-le
         if ( selectedDon == don) {
             selectedDon = null
-            view?.findViewById<Button>(R.id.annule)?.setBackgroundColor(resources.getColor(R.color.fond_bleu))
+            view?.findViewById<Button>(R.id.annule)?.setBackgroundResource(R.drawable.btn_faire_don3)
         } else {
             // Sélectionner le don
             selectedDon = don
             // Rendre le bouton Annuler plus foncé
-            view?.findViewById<Button>(R.id.annule)?.setBackgroundColor(resources.getColor(R.color.bleu_logo))
+            view?.findViewById<Button>(R.id.annule)?.setBackgroundResource(R.drawable.btn_faire_don2)
         }
     }
 
