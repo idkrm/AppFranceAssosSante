@@ -20,7 +20,7 @@ class DeleteDonRTask(private val context: Context) {
         return withContext(Dispatchers.IO) {
             try {
                 // URL de la requête sans les paramètres dans l'URL
-                val url = URL("http://10.0.2.2:5000/deleteDonRecurrent")
+                val url = URL("http://10.0.2.2:5000/donations/deleteDonRecurrent")
                 Log.d("DeleteDonRTask", "param : $emailUser,$frequence,$assos")
 
                 // Ouverture de la connexion HTTP

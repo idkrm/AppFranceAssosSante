@@ -99,7 +99,7 @@
             android:text="@string/annuledon"
             android:padding="10dp"
             android:textColor="@color/black"
-            android:background="@drawable/btn_faire_don2"
+            android:background="@drawable/btn_faire_don3"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"/>
 
