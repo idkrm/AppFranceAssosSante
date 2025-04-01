@@ -77,7 +77,7 @@ class ProfilFragment : BaseFragment() {
 
             // Récupérer l'email de l'utilisateur connecté
             val userEmail = requireContext()
-                .getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+                .getSharedPreferences("user_data", Context.MODE_PRIVATE)
                 .getString("user_email", null)
 
             if (userEmail == null) {
@@ -94,7 +94,7 @@ class ProfilFragment : BaseFragment() {
                     DeleteUserTask(requireContext()).execute(userEmail)
 
                     // Nettoyage des données de sharedPreferences
-                    requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+                    requireContext().getSharedPreferences("user_data", Context.MODE_PRIVATE)
                         .edit()
                         .clear()
                         .apply()
