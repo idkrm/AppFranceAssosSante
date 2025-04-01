@@ -115,7 +115,6 @@ class DonPaiementFragment : BaseFragment() {
                 donViewModel.reinitialiserDonnees()
                 if (donCreated) {
                     Log.d("DON","Don créer")
-                    userViewModel.reinitialiserDonnees()
                 } else {
                     Log.d("DON","Erreur lors de la création du don")
                 }
