@@ -48,7 +48,7 @@
     <string name="lecture">Text to Speech</string>
     <string name="stop">Stop</string>
     <string name="taille">Font size</string>
-    <string name="daltonisme">Daltonism</string>
+    <string name="daltonisme">Color blindness</string>
     <string name="malvoyant">visually imparaired</string>
     <string name="deuteranopie">Deuteranopia (green)</string>
     <string name="protanopie">Protanopia (red)</string>
@@ -143,6 +143,19 @@
     <string name="pashandicap">None</string>
     <string name="assospersPortrait">Organization</string>
     <string name="assosPortrait">Organization</string>
+
+    <string name="search">Search…</string>
+    <string name="select_filtre">Select filters</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="chroniques">Chronic diseases</string>
+    <string name="Accidents">Accidents and side effects</string>
+    <string name="dépendance">Disability and dependency</string>
+    <string name="mentale">Mental health and well-being</string>
+    <string name="Droits">Patient rights and access to healthcare</string>
+    <string name="Soutien">Support for caregivers and relatives</string>
+    <string name="Prévention">Prevention and public health</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="more">More</string>

@@ -18,7 +18,7 @@ import com.example.appfranceassossante.models.Assos
 
 class AssosAdapter(private val activity: Context,
                    private val itemResource: Int,
-                   private var assos: MutableList<Assos>
+                   private var assos: List<Assos>
 ) : ArrayAdapter<Assos>(activity, itemResource, assos), Filterable {
     // Copie de la liste mutable, cela permet de référence pour les filtres
     private var listeOriginale : List<Assos> = assos.toList()

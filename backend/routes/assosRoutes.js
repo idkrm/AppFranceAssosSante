@@ -101,7 +101,7 @@ router.get("/assos/filtre/:filtre", async (req, res) => {
     // Trouver toutes les associations ayant ce filtre
     const assosFiltre = await Association.find({ filtre: { $in: filtres } });
 
-    // console.log(`Associations trouvées:`, assosFiltre);
+    console.log(`Associations trouvées:`, assosFiltre);
 
     res.status(200).json(assosFiltre);
 } catch (error) {
