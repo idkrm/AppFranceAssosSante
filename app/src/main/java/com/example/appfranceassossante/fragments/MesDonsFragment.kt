@@ -34,6 +34,7 @@ import com.example.appfranceassossante.apiService.GetDonUniqueUserTask
 import com.example.appfranceassossante.models.DonRecurrent
 import com.example.appfranceassossante.models.UserViewModel
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
@@ -49,16 +50,20 @@ class MesDonsFragment : BaseFragment() {
     private var donationsRec = mutableListOf<DonRecurrent>()
     private var selectedDon: DonRecurrent? = null
     private lateinit var annulerButton: Button
+    private lateinit var btnInfo: Button
     //private lateinit var viewLifecycleOwner: LifecycleOwner
 
     private val columnWeights = floatArrayOf(3.5f, 2.3f, 2.5f, 3f)
+    private val columnWeightsRec = floatArrayOf(3.5f, 3f, 2.5f, 2.3f)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_mes_dons, container, false)
-         annulerButton = view.findViewById(R.id.annule)
+        annulerButton = view.findViewById(R.id.annule)
+        btnInfo = view.findViewById(R.id.info)
+
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
         mail = userViewModel.mail.value.toString() // recup le mail du user
         Log.d("MesDonsFragment", "Mail utilisateur récupéré: $mail")
@@ -82,7 +87,6 @@ class MesDonsFragment : BaseFragment() {
 //            }
 //        }
 
-
         tableMesDons = view.findViewById(R.id.table_mes_dons)
         tableMesDonsRec = view.findViewById(R.id.table_mes_dons_rec)
 
@@ -92,7 +96,7 @@ class MesDonsFragment : BaseFragment() {
         configureBackButton(view) // le btn back
 
         setupAnnulerButton()
-
+        setupBtnInfo()
 
         return view
     }
@@ -146,12 +150,12 @@ class MesDonsFragment : BaseFragment() {
         tableMesDonsRec.removeAllViews()
 
         // Définition d'un poids total pour la ligne
-        tableMesDonsRec.weightSum = columnWeights.sum()
+        tableMesDonsRec.weightSum = columnWeightsRec.sum()
 
         // Création du header
         val rowHeader = TableRow(context).apply {
-            columnWeights.forEachIndexed { index, weight ->
-                addView(createHeaderTextView(listOf("Association", "Date", "Montant", "Paiement")[index], weight))
+            columnWeightsRec.forEachIndexed { index, weight ->
+                addView(createHeaderTextView(listOf("Association", "Prochain\ndébit", "Montant", "Type")[index], weight))
             }
         }
         tableMesDonsRec.addView(rowHeader)
@@ -161,14 +165,27 @@ class MesDonsFragment : BaseFragment() {
         Log.d("MesDonsFragment", "Nombre de dons récurrents récupérés: ${donationsRec.size}")
 
         donationsRec.forEach { don ->
+            val adjustedDate = Calendar.getInstance().apply {
+                when (don.frequence.lowercase()) {
+                    "Mensuel" -> {
+                        set(Calendar.DAY_OF_MONTH, 1) // On se place au début du mois
+                        add(Calendar.MONTH, 1) // Ajoute 1 mois à partir de maintenant
+                    }
+                    "Annuel" -> {
+                        set(Calendar.MONTH, Calendar.JANUARY) // On se place au début de l'année
+                        set(Calendar.DAY_OF_MONTH, 1)
+                        add(Calendar.YEAR, 1) // Ajoute 1 an
+                    }
+                }
+            }.time
+
             val row = TableRow(context).apply {
-                addView(createDonTextView(don.association, columnWeights[0]))
-                addView(createDonTextView(formatDate(don.date.toString()), columnWeights[1])) // Formatage de la date
-                addView(createDonTextView(formatMontant(don.montant), columnWeights[2])) // Formatage du montant
-                addView(createDonTextView(don.paiement, columnWeights[3]))
+                addView(createDonTextView(don.association, columnWeightsRec[0]))
+                addView(createDonTextView(formatDate(adjustedDate.toString()), columnWeightsRec[1])) // Affiche la nouvelle date
+                addView(createDonTextView(formatMontant(don.montant), columnWeightsRec[2])) // Formatage du montant
+                addView(createDonTextView(don.frequence, columnWeightsRec[3]))
 
                 setOnClickListener {
-                    //selection de la ligne
                     toggleSelection(don)
                 }
             }
@@ -181,11 +198,13 @@ class MesDonsFragment : BaseFragment() {
         if ( selectedDon == don) {
             selectedDon = null
             view?.findViewById<Button>(R.id.annule)?.setBackgroundResource(R.drawable.btn_faire_don3)
+            view?.findViewById<Button>(R.id.info)?.setBackgroundResource(R.drawable.btn_faire_don3)
         } else {
             // Sélectionner le don
             selectedDon = don
             // Rendre le bouton Annuler plus foncé
             view?.findViewById<Button>(R.id.annule)?.setBackgroundResource(R.drawable.btn_faire_don2)
+            view?.findViewById<Button>(R.id.info)?.setBackgroundResource(R.drawable.btn_faire_don2)
         }
     }
 
@@ -344,6 +363,30 @@ class MesDonsFragment : BaseFragment() {
             } else {
                 // Faire quelque chose en cas d'échec
                 Log.e("MainActivity", "L'annulation du don a échoué.")
+            }
+        }
+    }
+
+    private fun setupBtnInfo(){
+        btnInfo.setOnClickListener {
+            // Vérifier si un don a été sélectionné
+            val don = selectedDon
+            if (don != null) {
+                // Créer une boîte de dialogue pour afficher les informations du don
+                val dialog = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                    .setTitle("Informations sur le don")
+                    .setMessage("Association : ${don.association}\n" +
+                            "Montant : ${formatMontant(don.montant)}\n" +
+                            "Fréquence : ${don.frequence}\n" +
+                            "Date de début : ${formatDate(don.date.toString())}\n" +
+                            "Date de fin : ${formatDate(don.dateFin.toString())}")
+                    .setPositiveButton("OK", null)  // Le bouton "OK" pour fermer la boîte de dialogue
+                    .create()
+
+                dialog.show()  // Affiche la boîte de dialogue
+            } else {
+                // Si aucun don n'est sélectionné, afficher un message d'erreur
+                Toast.makeText(requireContext(), "Aucun don sélectionné", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -92,24 +92,44 @@
             </LinearLayout>
         </ScrollView>
 
-        <Button
-            android:id="@+id/annule"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/annuledon"
-            android:padding="10dp"
-            android:textColor="@color/black"
-            android:background="@drawable/btn_faire_don3"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"/>
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="20dp">
+            <Button
+                android:id="@+id/annule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/annuledon"
+                android:textSize="14sp"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:background="@drawable/btn_faire_don3"
+                android:layout_gravity="center"
+                android:layout_marginEnd="30dp"/>
+            <Button
+                android:id="@+id/info"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/more"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:background="@drawable/btn_faire_don3"
+                android:textSize="14sp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
 
         <Button
             android:id="@+id/btnretour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_retour"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp"
             android:text="@string/retour"
             android:layout_marginBottom="30dp"
             android:layout_marginTop="10dp"
