@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Spinner
 import android.widget.TableLayout
 import android.widget.TableRow
@@ -45,6 +46,7 @@ class LesdonsFragment : BaseFragment() {
     private var asId: String? = null
     private lateinit var selectedYear : String
     private lateinit var selectedMonth : String
+    private lateinit var btnGraph: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,6 +59,8 @@ class LesdonsFragment : BaseFragment() {
         barChart = view.findViewById(R.id.graph_bar)
         tableDonMensuel = view.findViewById(R.id.tabledonmensuel)
         tableDonAnnuel = view.findViewById(R.id.tabledonannuel)
+        btnGraph = view.findViewById(R.id.btngraph)
+        altText() // initialise le btn altText
 
         val nomassos = view.findViewById<TextView>(R.id.nomassociation)
         val nomAsso = userViewModel.admin.value?.getAssosName().toString()
@@ -298,5 +302,42 @@ class LesdonsFragment : BaseFragment() {
         barChart.animateY(1000)
         barChart.description.isEnabled = false
         barChart.invalidate() // Mettre à jour l'affichage
+    }
+
+    private fun altText() {
+        btnGraph.setOnClickListener {
+            // Créer un message contenant les informations du graphique
+            val donationsData = mutableMapOf<String, Double>() // Simuler les données des dons annuels
+            val message = StringBuilder()
+
+            // Récupérer les données des dons annuels (par année)
+            GetListYearDonTask(asId!!) { yearsList ->
+                var nbYear = yearsList.size
+                for (year in yearsList) {
+                    // Récupérer le total des dons pour chaque année
+                    GetTotalYearDonTask(year, asId!!) { total ->
+
+                        donationsData[year] = total
+
+                        // Vérifie si toutes les requêtes sont terminées
+                        nbYear--
+                        if (nbYear == 0) {
+                            // Générer le message à afficher
+                            message.append("Graphiques en barres illustrant le montant total des dons reçus pour chaque année :\n\n")
+                            for ((year, amount) in donationsData.entries.sortedBy { it.key.toInt() }) {
+                                message.append("$year : ${amount} €\n")
+                            }
+
+                            // Afficher la boîte de dialogue avec les données
+                            android.app.AlertDialog.Builder(requireContext())
+                                .setTitle("Texte alternative")
+                                .setMessage(message.toString()) // Le message contenant les données
+                                .setPositiveButton("OK", null) // Bouton OK pour fermer la boîte de dialogue
+                                .show()
+                        }
+                    }.execute()
+                }
+            }.execute()
+        }
     }
 }
