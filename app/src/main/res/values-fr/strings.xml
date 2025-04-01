@@ -138,4 +138,22 @@
     <string name="nov">Novembre</string>
     <string name="dec">Décembre</string>
     <string name="pashandicap">Aucun</string>
+    <string name="assospersPortrait">Association</string>
+    <string name="assosPortrait">Association</string>
+
+    <string name="search">搜索…</string>
+    <string name="select_filtre">Sélectionner des filtres</string>
+    <string name="confirm">Valider</string>
+    <string name="cancel">Annuler</string>
+
+    <string name="chroniques">Maladies chroniques</string>
+    <string name="Accidents">Accidents et effets secondaires</string>
+    <string name="dépendance">Handicap et dépendance</string>
+    <string name="mentale">Santé mentale et bien-être psychique</string>
+    <string name="Droits">Droits des patients et accès aux soins</string>
+    <string name="Soutien">Soutien aux aidants et proches</string>
+    <string name="Prévention">Prévention et santé publique</string>
+
+    <string name="more">En savoir plus</string>
+    <string name="back">Retour</string>
 </resources>

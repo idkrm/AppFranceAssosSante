@@ -22,7 +22,7 @@
             android:focusable="false"
             android:iconifiedByDefault="false"
             android:imeOptions="actionSearch"
-            android:queryHint="Rechercher..."/>
+            android:queryHint="@string/search"/>
 
         <Button
             android:id="@+id/assosFiltre"

@@ -35,12 +35,13 @@
                     android:layout_marginBottom="5dp"/>
 
                 <EditText
+                    android:id="@+id/co_mail"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:padding="10dp"
                     android:autofillHints="emailAddress"
+                    android:background="@drawable/edit_text"
                     android:inputType="textEmailAddress"
-                    android:background="@drawable/edit_text"/>
+                    android:padding="10dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -55,6 +56,7 @@
                     android:layout_marginBottom="5dp"/>
 
                 <EditText
+                    android:id="@+id/co_mdp"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:padding="10dp"

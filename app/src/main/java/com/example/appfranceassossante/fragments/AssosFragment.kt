@@ -76,20 +76,20 @@ class AssosFragment : BaseFragment() {
 
     private fun showFilterDialog() {
         val filters = getFiltersFromDatabase() // recup filtres
-        val filterNames = filters.map { it.name }.toTypedArray() // nom des filtres
-        val filterIds = filters.map { it.id }.toTypedArray() // id filtres
+        val filterNames = filters.map { it?.name ?: "" }.toTypedArray() // nom des filtres
+        val filterIds = filters.map { it?.id ?: "" }.toTypedArray() // id filtres
 
         val checkedItems = BooleanArray(filters.size)
 
         // boite de dialogue
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Sélectionner des filtres")
+        builder.setTitle(R.string.select_filtre)
 
         builder.setMultiChoiceItems(filterNames, checkedItems) { _, which, isChecked ->
             checkedItems[which] = isChecked
         }
 
-        builder.setPositiveButton("Valider") { _, _ ->
+        builder.setPositiveButton(R.string.confirm) { _, _ ->
             // recup les filtres
             val selectedFilters = filterIds.filterIndexed { index, _ -> checkedItems[index] }
 
@@ -99,28 +99,28 @@ class AssosFragment : BaseFragment() {
             }
         }
 
-        builder.setNegativeButton("Annuler") { dialog, _ ->
+        builder.setNegativeButton(R.string.cancel) { dialog, _ ->
             dialog.dismiss()
         }
 
         builder.show()
     }
 
-    private fun getFiltersFromDatabase(): List<Filter> {
+    private fun getFiltersFromDatabase(): List<Filter?> {
         return listOf(
-            Filter(1, "Maladies chroniques"),
-            Filter(2, "Accidents et effets secondaires"),
-            Filter(3, "Handicap et dépendance"),
-            Filter(4, "Santé mentale et bien-être psychique"),
-            Filter(5, "Droits des patients et accès aux soins"),
-            Filter(6, "Soutien aux aidants et proches"),
-            Filter(7, "Prévention et santé publique"),
+            context?.let { Filter(1, it.getString(R.string.chroniques)) },
+            context?.let { Filter(2, it.getString(R.string.Accidents)) },
+            context?.let { Filter(3, it.getString(R.string.dépendance)) },
+            context?.let { Filter(4, it.getString(R.string.mentale)) },
+            context?.let { Filter(5, it.getString(R.string.Droits)) },
+            context?.let { Filter(6, it.getString(R.string.Soutien)) },
+            context?.let { Filter(7, it.getString(R.string.Prévention)) },
         )
     }
 
     data class Filter(val id: Int, val name: String)
 
-    private fun applyFilters(selectedFilterIds: List<Int>) {
+    private fun applyFilters(selectedFilterIds: List<Any>) {
         val filtreString = selectedFilterIds.joinToString(",") { it.toString() }
 
         CoroutineScope(Dispatchers.Main).launch {
@@ -132,7 +132,7 @@ class AssosFragment : BaseFragment() {
     }
 
     private fun updateAssociations(associations: List<Assos>) {
-        adapter = AssosAdapter(requireContext(), R.layout.item_asso, assosListe)
+        adapter = AssosAdapter(requireContext(), R.layout.item_asso, associations)
         gridView.adapter = adapter
     }
 }
