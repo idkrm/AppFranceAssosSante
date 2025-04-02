@@ -15,10 +15,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.models.UserViewModel
+import com.example.appfranceassossante.utilsAccessibilite.AccessibilityPreferences
+import com.example.appfranceassossante.utilsAccessibilite.ColorBlindnessFilter
+import com.example.appfranceassossante.utilsAccessibilite.SharedViewModel
+import com.example.appfranceassossante.utilsAccessibilite.textSize.TextSizeManager
 import java.util.Locale
 
 class ProfilAdminFragment : BaseFragment() {
 
+    private lateinit var sharedViewModel: SharedViewModel
     private lateinit var userViewModel: UserViewModel
     private lateinit var civ: TextView
     private lateinit var nom: TextView
@@ -55,6 +60,8 @@ class ProfilAdminFragment : BaseFragment() {
         flagDrawable.setBounds(0, 0, 50, 50)
 
         val btnlangue = view.findViewById<Button>(R.id.langue)
+        btnlangue.setCompoundDrawablesWithIntrinsicBounds(flagDrawable, null, null, null)
+
         btnlangue.setOnClickListener{
             fragmentRemplace(LangueFragment()) // remplace le fragment actuel par le fragment qui suit ("LangueFragment")
         }
@@ -69,28 +76,24 @@ class ProfilAdminFragment : BaseFragment() {
             userViewModel.reinitialiserDonnees()
             userViewModel.setUserLoggedIn(false)
 
+            // enleve toutes les options d'accessibilité
+            AccessibilityPreferences.saveSpeechEnabled(requireContext(), false)
+            sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+            sharedViewModel.enableSpeech(false)
+
+            AccessibilityPreferences.saveDaltonismEnabled(requireContext(), false)
+            AccessibilityPreferences.saveDaltonismType(requireContext(), "")
+            ColorBlindnessFilter.applyFilter(requireActivity().window, "")
+
+            AccessibilityPreferences.saveTextSize(requireContext(), 0f)
+            TextSizeManager.sizeOffset = 0f
+            // FIN
+
             // pas utilisé la méthode fragmentRemplace pcq faut pas l'ajouter au backstack
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, SeConnecterFragment())
             transaction.commit()
         }
-
-        /*
-        val btnlegacy = view.findViewById<Button>(R.id.legacy)
-        btnlegacy.setOnClickListener{
-
-        }
-
-        val btnpolicy = view.findViewById<Button>(R.id.policy)
-        btnpolicy.setOnClickListener{
-
-        }
-
-        val btncondition = view.findViewById<Button>(R.id.condition)
-        btncondition.setOnClickListener{
-
-        }
-         */
 
         return view
     }
