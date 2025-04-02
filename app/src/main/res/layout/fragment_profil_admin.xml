@@ -166,49 +166,12 @@
                 android:background="@drawable/fond_violet_arrondi"/>
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_marginBottom="15dp"
-            android:text="@string/plusinfo"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/legacy"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/mention"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/fond_gris_arrondi"/>
-
-            <Button
-                android:id="@+id/policy"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/politique"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/fond_gris_arrondi"/>
-
-            <Button
-                android:id="@+id/condition"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/condition"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/fond_gris_arrondi"/>
-        </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="50dp">
 
             <Button
                 android:id="@+id/btn_deco"
