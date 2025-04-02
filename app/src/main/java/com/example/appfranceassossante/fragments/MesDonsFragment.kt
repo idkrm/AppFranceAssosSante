@@ -147,6 +147,20 @@ class MesDonsFragment : BaseFragment() {
             }
             tableMesDons.addView(row)
         }
+        val getDonRec = GetDonRecUserTask()
+        donationsRec = getDonRec.getDonRecUserInBG(mail).toMutableList()
+        // Ajouter les dons récurrents expirés (date de fin <= aujourd'hui)
+        val today = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 1) }.time
+        Log.d("DATE", today.toString())
+        donationsRec.filter { it.dateFin.before(today) }.forEach { don ->
+            val row = TableRow(context).apply {
+                addView(createDonTextView(don.association, columnWeights[0]))
+                addView(createDonTextView(formatDate(don.dateFin.toString()), columnWeights[1]))
+                addView(createDonTextView(formatMontant(don.montant), columnWeights[2]))
+                addView(createDonTextView(don.paiement, columnWeights[3]))
+            }
+            tableMesDons.addView(row)
+        }
     }
 
     // pareil que la méthode en haut mais pour les dons rec
@@ -168,7 +182,8 @@ class MesDonsFragment : BaseFragment() {
 
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) // Format de la date
 
-        donationsRec.forEach { don ->
+        val today = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 1) }.time
+        donationsRec.filter { it.dateFin.after(today) }.forEach { don ->
             val adjustedDate = Calendar.getInstance().apply {
                 // On réinitialise la date à aujourd'hui avant l'ajustement
                 time = Date()
@@ -198,7 +213,9 @@ class MesDonsFragment : BaseFragment() {
             // Maintenant, adjustedDate contient la date calculée avec le jour du mois de la date initiale
             val formattedDate = dateFormat.format(adjustedDate.time)
 
+
             val row = TableRow(context).apply {
+                tag = don
                 addView(createDonTextView(don.association, columnWeightsRec[0]))
                 addView(createDonTextView(formattedDate, columnWeightsRec[1])) // Affiche la nouvelle date formatée
                 addView(createDonTextView(formatMontant(don.montant), columnWeightsRec[2])) // Formatage du montant
@@ -214,11 +231,13 @@ class MesDonsFragment : BaseFragment() {
 
     // Fonction qui gère la sélection et la désélection d'une ligne
     private fun toggleSelection(don: DonRecurrent) {
-        val rowIndex = donationsRec.indexOf(don) + 1 // Trouve l'index du don dans la liste
+        val rowIndex = tableMesDonsRec.indexOfChild(tableMesDonsRec.findViewWithTag(don))
+        Log.d("TAG", rowIndex.toString())
+        // Trouve l'index du don dans la liste
 
         if (rowIndex != -1) {
             val row = tableMesDonsRec.getChildAt(rowIndex) as TableRow // Récupère la ligne associée
-
+            Log.d("ROW", row.toString())
             if (selectedDon == don) {
                 //désélectionner le don
                 selectedDon = null
@@ -389,6 +408,8 @@ class MesDonsFragment : BaseFragment() {
 
         // Met à jour le tableau après suppression
         updateDonationsTable()
+        tableMesDons()
+        tableMesDonsRec()
     }
 
     private fun deleteDon(email: String, assos: String, frequence:String){
