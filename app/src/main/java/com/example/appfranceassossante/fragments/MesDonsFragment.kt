@@ -33,6 +33,7 @@ import com.example.appfranceassossante.apiService.GetDonRecUserTask
 import com.example.appfranceassossante.apiService.GetDonUniqueUserTask
 import com.example.appfranceassossante.models.DonRecurrent
 import com.example.appfranceassossante.models.UserViewModel
+import io.realm.internal.Table
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
@@ -51,6 +52,7 @@ class MesDonsFragment : BaseFragment() {
     private var selectedDon: DonRecurrent? = null
     private lateinit var annulerButton: Button
     private lateinit var btnInfo: Button
+    private var rowBefore: TableRow? = null
     //private lateinit var viewLifecycleOwner: LifecycleOwner
 
     private val columnWeights = floatArrayOf(3.5f, 2.3f, 2.5f, 3f)
@@ -194,19 +196,33 @@ class MesDonsFragment : BaseFragment() {
     }
     // Fonction qui gère la sélection et la désélection d'une ligne
     private fun toggleSelection(don: DonRecurrent) {
-        // Si un don est déjà sélectionné, désélectionne-le
-        if ( selectedDon == don) {
-            selectedDon = null
-            view?.findViewById<Button>(R.id.annule)?.setBackgroundResource(R.drawable.btn_faire_don3)
-            view?.findViewById<Button>(R.id.info)?.setBackgroundResource(R.drawable.btn_faire_don3)
-        } else {
-            // Sélectionner le don
-            selectedDon = don
-            // Rendre le bouton Annuler plus foncé
-            view?.findViewById<Button>(R.id.annule)?.setBackgroundResource(R.drawable.btn_faire_don2)
-            view?.findViewById<Button>(R.id.info)?.setBackgroundResource(R.drawable.btn_faire_don2)
+        val rowIndex = donationsRec.indexOf(don) + 1 // Trouve l'index du don dans la liste
+
+        if (rowIndex != -1) {
+            val row = tableMesDonsRec.getChildAt(rowIndex) as TableRow // Récupère la ligne associée
+
+            if (selectedDon == don) {
+                //désélectionner le don
+                selectedDon = null
+                view?.findViewById<Button>(R.id.annule)?.setBackgroundResource(R.drawable.btn_faire_don3)
+                view?.findViewById<Button>(R.id.info)?.setBackgroundResource(R.drawable.btn_faire_don3)
+                // Remettre la couleur initiale
+                row.setBackgroundColor(resources.getColor(R.color.fond_bleu, null))
+                rowBefore = null
+            } else {
+                // Désélectionner la ligne précédente si elle existe
+                rowBefore?.setBackgroundColor(resources.getColor(R.color.fond_bleu, null))
+                // Sélectionner le nouveau don
+                selectedDon = don
+                view?.findViewById<Button>(R.id.annule)?.setBackgroundResource(R.drawable.btn_faire_don2)
+                view?.findViewById<Button>(R.id.info)?.setBackgroundResource(R.drawable.btn_faire_don2)
+                row.setBackgroundResource(R.drawable.btn_suivant)
+                rowBefore = row
+            }
         }
-    }
+
+
+}
 
     // pour créer la ligne du header
     private fun createHeaderTextView(text: String, weight: Float): TextView {
