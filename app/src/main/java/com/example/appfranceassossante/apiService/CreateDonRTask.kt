@@ -33,7 +33,7 @@ class CreateDonRTask(private val context: Context) {
                 else if(don.paiement.equals("ApplePay"))
                     paiement="ApplePay"
                 else
-                    paiement="Paypal"
+                    paiement="PayPal"
 
                 // Créer le corps de la requête (JSON)
                 val jsonBody = JSONObject().apply {

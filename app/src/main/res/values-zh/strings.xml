@@ -28,7 +28,7 @@
     <string name="mensuel">每月</string>
     <string name="annuel">每年</string>
     <string name="carte_bancaire">银行卡</string>
-    <string name="paypal">Paypal</string>
+    <string name="paypal">PayPal</string>
     <string name="googlepay">GooglePay</string>
     <string name="apple_pay">ApplePay</string>
     <string name="mode_de_paiement">支付方式</string>

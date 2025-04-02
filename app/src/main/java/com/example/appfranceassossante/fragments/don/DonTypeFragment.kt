@@ -162,10 +162,16 @@ class DonTypeFragment : BaseFragment() {
         android.app.AlertDialog.Builder(requireContext())
             .setMessage("Vous devez être connecté pour effectuer un don récurrent. Voulez-vous vous connecter ?")
             .setPositiveButton("Se connecter") { _, _ ->
-                // Naviguer vers le fragment de connexion
+                val seConnecterFragment = SeConnecterFragment()
+
+                // Ajouter un argument pour savoir qu'on doit revenir à DonTypeFragment
+                val bundle = Bundle()
+                bundle.putBoolean("returnToDonType", true)
+                seConnecterFragment.arguments = bundle
+
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.fragment_container, SeConnecterFragment()) // Remplacer par le fragment de connexion
-                transaction.addToBackStack(null) // Ajouter dans le backstack
+                transaction.replace(R.id.fragment_container, seConnecterFragment)
+                transaction.addToBackStack(null) // Ajoute au backstack pour revenir après
                 transaction.commit()
             }
             .setNegativeButton("Annuler") { _, _ ->

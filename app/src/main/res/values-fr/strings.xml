@@ -28,7 +28,7 @@
     <string name="mensuel">Mensuel</string>
     <string name="annuel">Annuel</string>
     <string name="carte_bancaire">Carte bancaire</string>
-    <string name="paypal">Paypal</string>
+    <string name="paypal">PayPal</string>
     <string name="googlepay">GooglePay</string>
     <string name="apple_pay">ApplePay</string>
     <string name="mode_de_paiement">Mode de paiement</string>

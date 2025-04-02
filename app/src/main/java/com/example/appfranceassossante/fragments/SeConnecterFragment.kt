@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.R
+import com.example.appfranceassossante.fragments.don.DonTypeFragment
 import com.example.appfranceassossante.fragments.inscription.InscriptionFragment
 import com.example.appfranceassossante.models.User
 import com.example.appfranceassossante.models.UserViewModel
@@ -118,9 +119,13 @@ class SeConnecterFragment : BaseFragment() {
                 }
             }
         }
-        val fragment = if (user.admin == null) {
-            ProfilFragment() // remplace le fragment actuel par le fragment qui suit ("ProfilFragment")
-        } else {
+        val returnToDonType = arguments?.getBoolean("returnToDonType", false) ?: false
+        val fragment = if (returnToDonType) {
+            DonTypeFragment()// remplace le fragment actuel par le fragment qui suit ("ProfilFragment")
+        } else if(user.admin == null){
+            ProfilFragment()
+        }
+        else {
             ProfilAdminFragment() // remplace le fragment actuel par le fragment qui suit ("ProfilAdminFragment")
         }
 
