@@ -12,7 +12,9 @@ const userSchema = new mongoose.Schema({
   },
   civilite: {
     type: String,
-    enum: ['Monsieur', 'Madame', 'Ne souhaite pas répondre', 'Autre'],
+    enum: ['Monsieur', 'Madame', 'Ne souhaite pas répondre', 'Autre',
+      '先生', '女士', '不想回答', '其他',
+      'Mr', 'Mrs', 'Do not wish to answer', 'Other'],
     required: true,
   },
   nom: {

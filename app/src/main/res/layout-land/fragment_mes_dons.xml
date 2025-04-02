@@ -69,13 +69,8 @@
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:text="@string/mesdonsrec"
+                    android:layout_marginBottom="14dp"
                     android:textStyle="bold"/>
-                <Spinner
-                    android:id="@+id/histodon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:background="@drawable/spinner_style"
-                    android:layout_alignParentEnd="true"/>
             </RelativeLayout>
 
                 <ScrollView

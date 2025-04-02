@@ -55,8 +55,8 @@ class MesDonsFragment : BaseFragment() {
     private var rowBefore: TableRow? = null
     //private lateinit var viewLifecycleOwner: LifecycleOwner
 
-    private val columnWeights = floatArrayOf(3.5f, 2.3f, 2.5f, 3f)
-    private val columnWeightsRec = floatArrayOf(3.5f, 3f, 2.5f, 2.3f)
+    private val columnWeights = floatArrayOf(4f, 2.5f, 2.6f, 3f)
+    private val columnWeightsRec = floatArrayOf(4f, 3.1f, 2.7f, 2.3f)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -93,8 +93,6 @@ class MesDonsFragment : BaseFragment() {
         tableMesDonsRec = view.findViewById(R.id.table_mes_dons_rec)
 
         loadDonationsData(view) // charge les dons
-
-        configureSpinner(view) // charge le spinner
         configureBackButton(view) // le btn back
 
         setupAnnulerButton()
@@ -219,7 +217,7 @@ class MesDonsFragment : BaseFragment() {
                 addView(createDonTextView(don.association, columnWeightsRec[0]))
                 addView(createDonTextView(formattedDate, columnWeightsRec[1])) // Affiche la nouvelle date formatée
                 addView(createDonTextView(formatMontant(don.montant), columnWeightsRec[2])) // Formatage du montant
-                addView(createDonTextView(don.frequence, columnWeightsRec[3]))
+                addView(createDonTextView(getFrequencyTranslation(don.frequence), columnWeightsRec[3]))
 
                 setOnClickListener {
                     toggleSelection(don)
@@ -228,6 +226,39 @@ class MesDonsFragment : BaseFragment() {
             tableMesDonsRec.addView(row)
         }
     }
+
+    private fun getFrequencyTranslation(frequency: String): String {
+        val currentLanguage = Locale.getDefault().language
+
+        val frequencyMap = mapOf(
+            "fr" to mapOf(
+                "Mensuel" to "Mensuel",
+                "Annuel" to "Annuel",
+                "Monthly" to "Mensuel",
+                "Annually" to "Annuel",
+                "每月" to "Mensuel",
+                "每年" to "Annuel"
+            ),
+            "en" to mapOf(
+                "Mensuel" to "Monthly",
+                "Annuel" to "Annually",
+                "Monthly" to "Monthly",
+                "Annually" to "Annually",
+                "每月" to "Monthly",
+                "每年" to "Annually"
+            ),
+            "zh" to mapOf(
+                "Mensuel" to "每月",
+                "Annuel" to "每年",
+                "Monthly" to "每月",
+                "Annually" to "每年",
+                "每月" to "每月",
+                "每年" to "每年"
+            )
+        )
+        return frequencyMap[currentLanguage]?.get(frequency) ?: frequency
+    }
+
 
     // Fonction qui gère la sélection et la désélection d'une ligne
     private fun toggleSelection(don: DonRecurrent) {
@@ -266,7 +297,7 @@ class MesDonsFragment : BaseFragment() {
         return TextView(context).apply {
             this.text = text
             setTypeface(typeface, Typeface.BOLD)
-            setPadding(13, 8, 13, 8)
+            setPadding(10, 8, 10, 8)
             gravity = Gravity.CENTER
             layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, weight)
         }
@@ -276,39 +307,13 @@ class MesDonsFragment : BaseFragment() {
     private fun createDonTextView(text: String, weight: Float): TextView  {
         return TextView(context).apply {
             this.text = text
-            setPadding(13, 10, 13, 10)
+            setPadding(10, 12, 10, 12)
             gravity = Gravity.CENTER
             textSize = 15f
             layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, weight)
         }
     }
 
-    // configure le filtre
-    private fun configureSpinner(view: View) {
-        val spinner = view.findViewById<Spinner>(R.id.histodon)
-        val filtre = arrayOf("Croissant", "Décroissant")
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, filtre)
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
-
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val ascending = position == 0 // Croissant si 0, sinon décroissant
-
-                // Trier les listes existantes
-                donations.sortWith(compareBy { it.montant })
-                donationsRec.sortWith(compareBy { it.montant })
-
-                if (!ascending) {
-                    donations.reverse()
-                    donationsRec.reverse()
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
-    }
 
     private suspend fun updateDonationsTable() {
         tableMesDons.removeAllViews()

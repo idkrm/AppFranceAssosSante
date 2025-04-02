@@ -26,7 +26,9 @@ const recurringDonationsSchema = new mongoose.Schema({
   },
   frequence: {
     type: String,
-    enum: ['Mensuel', 'Annuel'],
+    enum: ['Mensuel', 'Annuel',
+      'Monthly', 'Annually',
+      '每月', '每年'],
     required: true,
   },
   dateFin: {

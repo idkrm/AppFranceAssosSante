@@ -82,7 +82,7 @@
     <string name="civilite2">Civility *</string>
     <string name="madame">Mrs</string>
     <string name="monsieur">Mr</string>
-    <string name="sansreponse">Do not wish to respond</string>
+    <string name="sansreponse">Do not wish to answer</string>
     <string name="autre">Other</string>
     <string name="inscription_nom">Last name *</string>
     <string name="inscription_prenom">First name *</string>

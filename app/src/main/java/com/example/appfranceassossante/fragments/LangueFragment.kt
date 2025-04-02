@@ -1,5 +1,3 @@
-package com.example.appfranceassossante.fragments
-
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -65,9 +63,9 @@ class LangueFragment : BaseFragment() {
         requireContext().createConfigurationContext(config)
 
         // Met à jour le contexte des ressources
-        requireActivity().apply {
-            resources.updateConfiguration(config, resources.displayMetrics)
-        }
+//        requireActivity().apply {
+//            resources.updateConfiguration(config, resources.displayMetrics)
+//        }
 
         // selectionne l'item accueil dans le menu
         val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)

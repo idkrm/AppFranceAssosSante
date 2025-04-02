@@ -26,13 +26,6 @@
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:layout_centerVertical="true"/>
-
-            <Spinner
-                android:id="@+id/histodon"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:background="@drawable/spinner_style"
-                android:layout_alignParentEnd="true"/>
         </RelativeLayout>
 
         <ScrollView
