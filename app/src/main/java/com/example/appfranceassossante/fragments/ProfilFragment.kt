@@ -2,6 +2,8 @@
 package com.example.appfranceassossante.fragments
 
 import android.content.Context
+import androidx.appcompat.app.AlertDialog
+import android.content.DialogInterface
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -74,11 +76,7 @@ class ProfilFragment : BaseFragment() {
 
         val btnSupprUser = view.findViewById<Button>(R.id.btnSuppr)
         btnSupprUser.setOnClickListener {
-
-            // Récupérer l'email de l'utilisateur connecté
-            val userEmail = requireContext()
-                .getSharedPreferences("user_data", Context.MODE_PRIVATE)
-                .getString("user_email", null)
+            val userEmail = userViewModel.mail.value
 
             if (userEmail == null) {
                 Toast.makeText(requireContext(), "Problème de récupération du mail", Toast.LENGTH_SHORT).show()
@@ -86,18 +84,27 @@ class ProfilFragment : BaseFragment() {
             }
 
             // Boîte de dialogue pour confirmation
-            MaterialAlertDialogBuilder(requireContext()).apply {
+            AlertDialog.Builder(requireContext()).apply {
                 setTitle("Confirmation")
                 setMessage("Voulez-vous vraiment supprimer votre compte ?")
-                // _ désigne le paramètre vide
                 setPositiveButton("Supprimer") { _, _ ->
                     DeleteUserTask(requireContext()).execute(userEmail)
 
-                    // Nettoyage des données de sharedPreferences
-                    requireContext().getSharedPreferences("user_data", Context.MODE_PRIVATE)
-                        .edit()
-                        .clear()
-                        .apply()
+                    userViewModel.reinitialiserDonnees()
+                    userViewModel.setUserLoggedIn(false)
+
+                    // enleve toutes les options d'accessibilité
+                    AccessibilityPreferences.saveSpeechEnabled(requireContext(), false)
+                    sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+                    sharedViewModel.enableSpeech(false)
+
+                    AccessibilityPreferences.saveDaltonismEnabled(requireContext(), false)
+                    AccessibilityPreferences.saveDaltonismType(requireContext(), "")
+                    ColorBlindnessFilter.applyFilter(requireActivity().window, "")
+
+                    AccessibilityPreferences.saveTextSize(requireContext(), 0f)
+                    TextSizeManager.sizeOffset = 0f
+                    // FIN
 
                     val transaction = parentFragmentManager.beginTransaction()
                     transaction.replace(R.id.fragment_container, SeConnecterFragment())

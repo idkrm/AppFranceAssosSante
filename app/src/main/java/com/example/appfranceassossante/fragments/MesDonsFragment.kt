@@ -151,10 +151,8 @@ class MesDonsFragment : BaseFragment() {
     private suspend fun tableMesDonsRec() {
         tableMesDonsRec.removeAllViews()
 
-        // Définition d'un poids total pour la ligne
         tableMesDonsRec.weightSum = columnWeightsRec.sum()
 
-        // Création du header
         val rowHeader = TableRow(context).apply {
             columnWeightsRec.forEachIndexed { index, weight ->
                 addView(createHeaderTextView(listOf("Association", "Prochain\ndébit", "Montant", "Type")[index], weight))
@@ -164,26 +162,42 @@ class MesDonsFragment : BaseFragment() {
 
         val getDonUniqueRec = GetDonRecUserTask()
         donationsRec = getDonUniqueRec.getDonRecUserInBG(mail).toMutableList()
-        Log.d("MesDonsFragment", "Nombre de dons récurrents récupérés: ${donationsRec.size}")
+
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) // Format de la date
 
         donationsRec.forEach { don ->
             val adjustedDate = Calendar.getInstance().apply {
+                // On réinitialise la date à aujourd'hui avant l'ajustement
+                time = Date()
+
+                // On récupère le jour, le mois et l'année de la date de début du don (ou une autre date)
+                val originalDay = don.date?.let {
+                    Calendar.getInstance().apply { time = it }
+                }?.get(Calendar.DAY_OF_MONTH) ?: 1 // Si pas de date, on prend 1er du mois par défaut
+
+                // Ajustement selon la fréquence
                 when (don.frequence.lowercase()) {
-                    "Mensuel" -> {
-                        set(Calendar.DAY_OF_MONTH, 1) // On se place au début du mois
-                        add(Calendar.MONTH, 1) // Ajoute 1 mois à partir de maintenant
+                    "mensuel" -> {
+                        set(Calendar.MONTH, get(Calendar.MONTH) + 1) // Ajoute un mois au mois actuel
+                        set(Calendar.DAY_OF_MONTH, originalDay) // Garder le jour d'origine du don
                     }
-                    "Annuel" -> {
-                        set(Calendar.MONTH, Calendar.JANUARY) // On se place au début de l'année
-                        set(Calendar.DAY_OF_MONTH, 1)
-                        add(Calendar.YEAR, 1) // Ajoute 1 an
+                    "annuel" -> {
+                        set(Calendar.YEAR, get(Calendar.YEAR) + 1) // Ajoute un an à l'année actuelle
+                        set(Calendar.MONTH, Calendar.JANUARY) // Toujours au 1er janvier
+                        set(Calendar.DAY_OF_MONTH, originalDay) // Garder le jour d'origine
+                    }
+                    else -> {
+                        Log.w("MesDonsFragment", "Fréquence inconnue: ${don.frequence}")
                     }
                 }
-            }.time
+            }
+
+            // Maintenant, adjustedDate contient la date calculée avec le jour du mois de la date initiale
+            val formattedDate = dateFormat.format(adjustedDate.time)
 
             val row = TableRow(context).apply {
                 addView(createDonTextView(don.association, columnWeightsRec[0]))
-                addView(createDonTextView(formatDate(adjustedDate.toString()), columnWeightsRec[1])) // Affiche la nouvelle date
+                addView(createDonTextView(formattedDate, columnWeightsRec[1])) // Affiche la nouvelle date formatée
                 addView(createDonTextView(formatMontant(don.montant), columnWeightsRec[2])) // Formatage du montant
                 addView(createDonTextView(don.frequence, columnWeightsRec[3]))
 
@@ -194,6 +208,7 @@ class MesDonsFragment : BaseFragment() {
             tableMesDonsRec.addView(row)
         }
     }
+
     // Fonction qui gère la sélection et la désélection d'une ligne
     private fun toggleSelection(don: DonRecurrent) {
         val rowIndex = donationsRec.indexOf(don) + 1 // Trouve l'index du don dans la liste

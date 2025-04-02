@@ -5,12 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="20dp"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:weightSum="100"
+        android:orientation="horizontal">
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="50"
         android:paddingEnd="10dp">
 
         <LinearLayout
@@ -43,18 +48,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="10dp"
                         android:textStyle="bold"
                         android:text="@string/civilite"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="10dp"
                         android:textStyle="bold"
                         android:text="@string/nom"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="10dp"
                         android:textStyle="bold"
                         android:text="@string/prenom"/>
                     <TextView
@@ -74,15 +82,18 @@
                     <TextView
                         android:id="@+id/civilitepersonne"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"/>
                     <TextView
                         android:id="@+id/nompersonne"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"/>
                     <TextView
                         android:id="@+id/prenompersonne"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"/>
                     <TextView
                         android:id="@+id/mailpersonne"
                         android:layout_width="wrap_content"
@@ -90,46 +101,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:layout_marginBottom="15dp"
-                android:text="@string/mesdon"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/don"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/mesdonhisto"
-                    android:background="@drawable/fond_rose_arrondi"/>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:layout_marginBottom="15dp"
-                android:text="@string/paramapp"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/langue"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/changelangue"
-                    android:background="@drawable/fond_violet_arrondi"/>
-            </LinearLayout>
         </LinearLayout>
 
     </FrameLayout>
@@ -137,33 +109,72 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="50"
         android:layout_marginStart="10dp"
-        android:gravity="center">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="26dp"
+            android:layout_marginBottom="30dp"
             android:orientation="vertical">
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginBottom="15dp"
+                android:text="@string/mesdon"/>
             <Button
-                android:id="@+id/btn_deco"
-                android:layout_width="300dp"
+                android:id="@+id/don"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/deco"
-                android:layout_marginBottom="20dp"
-                android:textColor="@color/rouge2"
-                android:background="@drawable/btn_se_deconnecter"/>
+                android:text="@string/mesdonhisto"
+                android:background="@drawable/fond_rose_arrondi"/>
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginBottom="15dp"
+                android:text="@string/paramapp"/>
             <Button
-                android:id="@+id/btnSuppr"
-                android:layout_width="200dp"
+                android:id="@+id/langue"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/suppression"
-                android:textColor="@color/rouge2"
-                android:background="@drawable/btn_se_deconnecter"/>
+                android:text="@string/changelangue"
+                android:background="@drawable/fond_violet_arrondi"/>
         </LinearLayout>
     </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_deco"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="@string/deco"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/rouge2"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_se_deconnecter"/>
+
+        <Button
+            android:id="@+id/btnSuppr"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/suppression"
+            android:textColor="@color/rouge2"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_se_deconnecter"/>
+    </LinearLayout>
+
 </LinearLayout>

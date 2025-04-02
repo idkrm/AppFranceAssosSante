@@ -53,7 +53,7 @@ class CreateDonRTask(private val context: Context) {
                 val responseCode = connection.responseCode
                 if (responseCode == HttpURLConnection.HTTP_CREATED) {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Don créé avec succès", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(context, "Don créé avec succès", Toast.LENGTH_SHORT).show()
                     }
                     true
                 } else {
