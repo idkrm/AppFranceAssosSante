@@ -87,7 +87,7 @@ class DonTypeFragment : BaseFragment() {
             // Vérifier si le don est récurrent et si la date est renseignée
             if (radioRecurrent.isChecked && donViewModel.selectedDate.value == null) {
                 // Si c'est un don récurrent mais qu'aucune date n'est sélectionnée
-                dateFinEditText.error = "Veuillez entrer une date avant de continuer."}
+                dateFinEditText.error =getString(R.string.date)}
             else {
                 if(radioRecurrent.isChecked && radioMensuel.isChecked)
                     donViewModel.setMensuel(true)
@@ -160,8 +160,8 @@ class DonTypeFragment : BaseFragment() {
     private fun showLoginDialog() {
         // Créer une boîte de dialogue pour inviter l'utilisateur à se connecter
         android.app.AlertDialog.Builder(requireContext())
-            .setMessage("Vous devez être connecté pour effectuer un don récurrent. Voulez-vous vous connecter ?")
-            .setPositiveButton("Se connecter") { _, _ ->
+            .setMessage(getString(R.string.don_connexion))
+            .setPositiveButton(getString(R.string.se_connecter)) { _, _ ->
                 val seConnecterFragment = SeConnecterFragment()
 
                 // Ajouter un argument pour savoir qu'on doit revenir à DonTypeFragment
@@ -174,7 +174,7 @@ class DonTypeFragment : BaseFragment() {
                 transaction.addToBackStack(null) // Ajoute au backstack pour revenir après
                 transaction.commit()
             }
-            .setNegativeButton("Annuler") { _, _ ->
+            .setNegativeButton(getString(R.string.cancel)) { _, _ ->
                 radioRecurrent.isChecked = false
                 radioUnique.isChecked = true
                 setRecurrentOptionsEnabled(false) // Désactiver les options récurrentes

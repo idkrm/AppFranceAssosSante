@@ -137,7 +137,7 @@
     <string name="assospersPortrait">协会</string>
     <string name="assosPortrait">协会</string>
 
-    <string name="search">Search…</string>
+    <string name="search">搜索…</string>
     <string name="select_filtre">选择过滤器</string>
     <string name="confirm">确认</string>
     <string name="cancel">取消</string>
@@ -154,4 +154,26 @@
     <string name="back">返回</string>
 
     <string name="date_de_fin">结束日期 : </string>
+    <string name="date_de_deb">开始日期：</string>
+
+    <string name="modepaiement">请选择支付方式</string>
+    <string name="donok">您已捐赠！</string>
+    <string name="remerciement">感谢您的捐赠！</string>
+    <string name="retouraccueil">返回首页</string>
+    <string name="entrezdate">请在继续之前输入一个日期</string>
+    <string name="don_connexion">您需要登录才能进行定期捐赠。您想登录吗？</string>
+    <string name="date">日期</string>
+    <string name="montanttab">金额</string>
+    <string name="paiementtab">支付</string>
+    <string name="prochaindebit">下次\n支付</string>
+    <string name="type">类型</string>
+    <string name="donpasselect">未选择任何捐赠</string>
+    <string name="confir">确认</string>
+    <string name="deletedonrec">您确定要删除这个定期捐赠吗？</string>
+    <string name="delete">删除</string>
+    <string name="infodon">捐赠信息</string>
+    <string name="frequence">频率</string>
+    <string name="deleteaccount">您确定要删除您的账户吗？</string>
+    <string name="pbmail">获取电子邮件时出错</string>
+
 </resources>

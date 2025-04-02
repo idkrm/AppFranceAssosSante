@@ -79,15 +79,15 @@ class ProfilFragment : BaseFragment() {
             val userEmail = userViewModel.mail.value
 
             if (userEmail == null) {
-                Toast.makeText(requireContext(), "Problème de récupération du mail", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.pbmail), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             // Boîte de dialogue pour confirmation
             AlertDialog.Builder(requireContext()).apply {
-                setTitle("Confirmation")
-                setMessage("Voulez-vous vraiment supprimer votre compte ?")
-                setPositiveButton("Supprimer") { _, _ ->
+                setTitle(getString(R.string.confirm))
+                setMessage(getString(R.string.deleteaccount))
+                setPositiveButton(getString(R.string.delete)) { _, _ ->
                     DeleteUserTask(requireContext()).execute(userEmail)
 
                     userViewModel.reinitialiserDonnees()
@@ -110,7 +110,7 @@ class ProfilFragment : BaseFragment() {
                     transaction.replace(R.id.fragment_container, SeConnecterFragment())
                     transaction.commit()
                 }
-                setNegativeButton("Annuler", null)
+                setNegativeButton(getString(R.string.cancel), null)
             }.show()
         }
 

@@ -160,4 +160,26 @@
     <string name="more">More</string>
     <string name="back">Back</string>
     <string name="date_de_fin">End date:</string>
+    <string name="date_de_deb">Start date:</string>
+
+    <string name="modepaiement">Please select a payment method</string>
+    <string name="donok">You have made a donation!</string>
+    <string name="remerciement">thanks you for your donation!</string>
+    <string name="retouraccueil">Back to home</string>
+    <string name="entrezdate">Please enter a date before proceeding</string>
+    <string name="don_connexion">You need to be logged in to make a recurring donation. Do you want to log in?</string>
+    <string name="date">Date</string>
+    <string name="montanttab">Amount</string>
+    <string name="paiementtab">Payment</string>
+    <string name="prochaindebit">Next\npayment</string>
+    <string name="type">Type</string>
+    <string name="donpasselect">No donation selected</string>
+    <string name="confir">Confirmation</string>
+    <string name="deletedonrec">Are you sure you want to delete this recurring donation?</string>
+    <string name="delete">Delete</string>
+    <string name="infodon">Donation Information</string>
+    <string name="frequence">Frequency</string>
+    <string name="deleteaccount">Are you sure you want to delete your account?</string>
+    <string name="pbmail">Problem retrieving email</string>
+
 </resources>

@@ -125,7 +125,9 @@ class MesDonsFragment : BaseFragment() {
         // Création du header
         val rowHeader = TableRow(context).apply {
             columnWeights.forEachIndexed { index, weight ->
-                addView(createHeaderTextView(listOf("Association", "Date", "Montant", "Paiement")[index], weight))
+                addView(createHeaderTextView(listOf(getString(R.string.assospers),
+                    getString(R.string.date), getString(R.string.montanttab),
+                    getString(R.string.paiementtab))[index], weight))
             }
         }
         tableMesDons.addView(rowHeader)
@@ -155,7 +157,8 @@ class MesDonsFragment : BaseFragment() {
 
         val rowHeader = TableRow(context).apply {
             columnWeightsRec.forEachIndexed { index, weight ->
-                addView(createHeaderTextView(listOf("Association", "Prochain\ndébit", "Montant", "Type")[index], weight))
+                addView(createHeaderTextView(listOf(getString(R.string.assospers), getString(R.string.prochaindebit),
+                    getString(R.string.montanttab), getString(R.string.type))[index], weight))
             }
         }
         tableMesDonsRec.addView(rowHeader)
@@ -297,7 +300,9 @@ class MesDonsFragment : BaseFragment() {
         // Création du header
         val rowHeader = TableRow(context).apply {
             columnWeights.forEachIndexed { index, weight ->
-                addView(createHeaderTextView(listOf("Association", "Date", "Montant", "Paiement")[index], weight))
+                addView(createHeaderTextView(listOf(getString(R.string.assospers),
+                    getString(R.string.date), getString(R.string.montanttab),
+                    getString(R.string.paiementtab))[index], weight))
             }
         }
         tableMesDons.addView(rowHeader)
@@ -352,21 +357,21 @@ class MesDonsFragment : BaseFragment() {
             if (selectedDon != null) {
                 showConfirmationDialog(selectedDon!!)
             } else {
-                Toast.makeText(requireContext(), "Aucun don sélectionné", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.donpasselect), Toast.LENGTH_SHORT).show()
             }
         }
     }
     private fun showConfirmationDialog(don: DonRecurrent) {
         val dialog = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setTitle("Confirmation")
-            .setMessage("Êtes-vous sûr de vouloir supprimer ce don récurrent ?")
-            .setPositiveButton("Supprimer") { _, _ ->
+            .setTitle(getString(R.string.confirm))
+            .setMessage(getString(R.string.deletedonrec))
+            .setPositiveButton(getString(R.string.delete)) { _, _ ->
                 // Supprimer le don
                 lifecycleScope.launch {
                     onDeleteDonClick(don)
                 }
             }
-            .setNegativeButton("Annuler", null)
+            .setNegativeButton(getString(R.string.cancel), null)
             .create()
 
         dialog.show()
@@ -405,19 +410,19 @@ class MesDonsFragment : BaseFragment() {
             if (don != null) {
                 // Créer une boîte de dialogue pour afficher les informations du don
                 val dialog = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                    .setTitle("Informations sur le don")
-                    .setMessage("Association : ${don.association}\n" +
-                            "Montant : ${formatMontant(don.montant)}\n" +
-                            "Fréquence : ${don.frequence}\n" +
-                            "Date de début : ${formatDate(don.date.toString())}\n" +
-                            "Date de fin : ${formatDate(don.dateFin.toString())}")
+                    .setTitle(getString(R.string.infodon))
+                    .setMessage(getString(R.string.assospers) + " : " +  don.association + "\n" +
+                            getString(R.string.montanttab) + " : " + formatMontant(don.montant) + "\n" +
+                            getString(R.string.frequence) + " : " + don.frequence + "\n" +
+                            getString(R.string.date_de_deb) + formatDate(don.date.toString()) + "\n" +
+                            getString(R.string.date_de_fin) + formatDate(don.dateFin.toString()))
                     .setPositiveButton("OK", null)  // Le bouton "OK" pour fermer la boîte de dialogue
                     .create()
 
                 dialog.show()  // Affiche la boîte de dialogue
             } else {
                 // Si aucun don n'est sélectionné, afficher un message d'erreur
-                Toast.makeText(requireContext(), "Aucun don sélectionné", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.donpasselect), Toast.LENGTH_SHORT).show()
             }
         }
     }

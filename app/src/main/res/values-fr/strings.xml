@@ -141,7 +141,7 @@
     <string name="assospersPortrait">Association</string>
     <string name="assosPortrait">Association</string>
 
-    <string name="search">搜索…</string>
+    <string name="search">Rechercher…</string>
     <string name="select_filtre">Sélectionner des filtres</string>
     <string name="confirm">Valider</string>
     <string name="cancel">Annuler</string>
@@ -158,4 +158,28 @@
     <string name="back">Retour</string>
 
     <string name="date_de_fin">Date de fin :</string>
+    <string name="date_de_deb">Date de début :</string>
+
+    <string name="modepaiement">Veuillez sélectionner un mode de paiement</string>
+    <string name="donok">Vous avez fait un don !</string>
+    <string name="remerciement">vous remercie pour votre don !</string>
+    <string name="retouraccueil">Retour à l\'accueil</string>
+    <string name="entrezdate">Veuillez entrer une date avant de continuer</string>
+    <string name="don_connexion">Vous devez être connecté pour effectuer un don récurrent. Voulez-vous vous connecter ?</string>
+    <string name="date">Date</string>
+    <string name="montanttab">Montant</string>
+    <string name="paiementtab">Paiement</string>
+    <string name="prochaindebit">Prochain\ndébit</string>
+    <string name="type">Type</string>
+    <string name="donpasselect">Aucun don sélectionné</string>
+    <string name="confir">Confirmation</string>
+    <string name="deletedonrec">Êtes-vous sûr de vouloir supprimer ce don récurrent ?</string>
+    <string name="delete">Supprimer</string>
+    <string name="infodon">Informations sur le don</string>
+    <string name="frequence">Fréquence</string>
+    <string name="deleteaccount">Voulez-vous vraiment supprimer votre compte ?</string>
+    <string name="pbmail">Problème de récupération du mail</string>
+
+
+
 </resources>

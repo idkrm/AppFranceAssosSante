@@ -180,22 +180,6 @@
                     android:text="Mensuel : "
                     android:textStyle="bold"
                     android:layout_marginEnd="10dp"/>
-                <TextView
-                    android:id="@+id/mois_tab_mensuel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="[mois]"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="/"/>
-
-                <TextView
-                    android:id="@+id/annee_tab_mensuel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="[year]"/>
-
             </LinearLayout>
 
             <!-- Tableau des dons -->
@@ -224,12 +208,6 @@
                     android:text="Annuel : "
                     android:textStyle="bold"
                     android:layout_marginEnd="10dp"/>
-
-                <TextView
-                    android:id="@+id/annee_tab_annuel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="[year]"/>
             </LinearLayout>
 
             <!-- Tableau des dons -->

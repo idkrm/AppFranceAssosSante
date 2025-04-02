@@ -46,7 +46,7 @@ class DonPaiementFragment : BaseFragment() {
             val selectedRadioButtonId = radioGroup.checkedRadioButtonId
 
             if (selectedRadioButtonId == -1) {
-                Toast.makeText(requireContext(), "Veuillez sélectionner un mode de paiement.", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), getString(R.string.modepaiement), Toast.LENGTH_LONG).show()
                 return@setOnClickListener // Arrête l'exécution ici
             }/////
 
@@ -66,12 +66,12 @@ class DonPaiementFragment : BaseFragment() {
             //recupere l'assos a laquelle on a fait un don
             val associationName = donViewModel.getAssociationName()
             saveDonToDatabase()
-            Toast.makeText(requireContext(), "Vous avez fait un don !", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), getString(R.string.donok), Toast.LENGTH_LONG).show()
 
             // Créer et afficher un AlertDialog avec un bouton pour retourner à l'AccueilFragment
             val dialog = android.app.AlertDialog.Builder(requireContext())
-                .setMessage("$associationName vous remercie pour votre don !")
-                .setPositiveButton("Retour à l'Accueil") { _, _ ->
+                .setMessage(associationName + getString(R.string.remerciement))
+                .setPositiveButton(getString(R.string.retouraccueil)) { _, _ ->
                     // Naviguer vers l'AccueilFragment lorsque l'utilisateur clique sur le bouton
                     val transaction = requireActivity().supportFragmentManager.beginTransaction()
                     transaction.replace(R.id.fragment_container, AccueilFragment())
