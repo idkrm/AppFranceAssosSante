@@ -19,13 +19,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.appfranceassossante.utilsAccessibilite.textSize.BaseFragment
 import com.example.appfranceassossante.R
 import com.example.appfranceassossante.apiService.GetAssosIDTask
-import com.example.appfranceassossante.apiService.GetListDonsRecByYearMonthTask
-import com.example.appfranceassossante.apiService.GetListDonsRecByYearTask
+import com.example.appfranceassossante.apiService.GetDonsRecurrentsTask
 import com.example.appfranceassossante.apiService.GetListYearDonRecTask
 import com.example.appfranceassossante.apiService.GetListYearDonTask
-import com.example.appfranceassossante.apiService.GetTotalYearDonRecTask
 import com.example.appfranceassossante.apiService.GetTotalYearDonTask
-import com.example.appfranceassossante.models.DonsAggregate
 import com.example.appfranceassossante.models.UserViewModel
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
@@ -76,8 +73,7 @@ class LesdonsFragment : BaseFragment() {
 
                 totalannee = view.findViewById(R.id.totalannee)
                 GetListYearDonTask(asId!!) { yearsList ->
-                    val listTotalAnnee = listOf("") + yearsList
-                    updateYearSpinner(totalannee, listTotalAnnee)
+                    updateYearSpinner(totalannee, yearsList)
                 }.execute()
 
                 val montantannee = view.findViewById<TextView>(R.id.montantannee)
@@ -106,15 +102,16 @@ class LesdonsFragment : BaseFragment() {
 
                 anneeTab = view.findViewById(R.id.annee_tab)
                 GetListYearDonRecTask(asId!!) { yearsList ->
-                    val listAnneeTab = listOf("") + yearsList
-                    updateYearSpinner(anneeTab, listAnneeTab)
+                    updateYearSpinner(anneeTab, yearsList)
                 }.execute()
 
                 moisTab = view.findViewById(R.id.mois_tab)
-                updateYearSpinner(moisTab, listOf("", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"))
+                val monthList = listOf("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
+                updateMonthSpinner(moisTab, monthList)
 
-                val montantrec = view.findViewById<TextView>(R.id.montantanneedonation)
-                val anneedonation = view.findViewById<TextView>(R.id.anneedonation)
+                val anneetabmensuel = view.findViewById<TextView>(R.id.annee_tab_mensuel)
+                val moistabmensuel = view.findViewById<TextView>(R.id.mois_tab_mensuel)
+                val anneetabannuel = view.findViewById<TextView>(R.id.annee_tab_annuel)
 
                 anneeTab.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
@@ -125,27 +122,27 @@ class LesdonsFragment : BaseFragment() {
                     ) {
                         // Lorsque l'utilisateur sélectionne une année dans le spinner 'totalannee'
                         selectedYear = anneeTab.selectedItem.toString()
-                        anneedonation.text = selectedYear
+                        anneetabmensuel.text = selectedYear
+                        anneetabannuel.text = selectedYear
                         // Exécuter la requête pour obtenir le total des dons de l'année sélectionnée
-                        GetTotalYearDonRecTask(selectedYear, asId!!) { total_rec ->
-                            montantrec.text = "$total_rec €"
-                        }.execute()
-                        loadDonationDataAnnuel()
-                        moisTab.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                            override fun onItemSelected(
-                                parentView: AdapterView<*>,
-                                selectedItemView: View?,
-                                position: Int,
-                                id: Long
-                            ) {
-                                // Lorsque l'utilisateur sélectionne une année dans le spinner 'totalannee'
-                                selectedMonth = moisTab.selectedItem.toString()
-                                loadDonationDataMensuel()
-                            }
-                            override fun onNothingSelected(parentView: AdapterView<*>) {
-                                // Aucune action nécessaire ici
-                            }
-                        }
+                        loadDonationDataIfReady()
+                    }
+
+                    override fun onNothingSelected(parentView: AdapterView<*>) {
+                        // Aucune action nécessaire ici
+                    }
+                }
+                moisTab.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parentView: AdapterView<*>,
+                        selectedItemView: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        // Lorsque l'utilisateur sélectionne une année dans le spinner 'totalannee'
+                        selectedMonth = moisTab.selectedItem.toString()
+                        moistabmensuel.text = selectedMonth
+                        loadDonationDataIfReady()
                     }
 
                     override fun onNothingSelected(parentView: AdapterView<*>) {
@@ -170,13 +167,32 @@ class LesdonsFragment : BaseFragment() {
         }
     }
 
+    private fun updateMonthSpinner(spinner: Spinner, monthList: List<String>) {
+        if (monthList.isNotEmpty()) {
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, monthList)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+        }
+    }
+
+    private fun loadDonationDataIfReady() {
+        // Vérifier que l'année et le mois sont sélectionnés
+        if (::selectedYear.isInitialized && ::selectedMonth.isInitialized) {
+            loadDonationDataMensuel()  // Charge les données mensuelles
+            loadDonationDataAnnuel()   // Charge les données annuelles
+        }
+    }
+
     private fun loadDonationDataMensuel() {
-        GetListDonsRecByYearMonthTask(
+
+        GetDonsRecurrentsTask(
             year = selectedYear,
             month = selectedMonth,
             assosID = asId!!,
-            onSuccess = { datadons ->
-                addTableRows(tableDonMensuel, datadons)
+            onSuccess = { dons ->
+                val contenuMensuel = listOf(dons.countMensuel.toString(), dons.totalMensuel.toString() + " €")
+                Log.d("LesdonsFragment", contenuMensuel.toString())
+                addTableRows(tableDonMensuel, contenuMensuel)
             },
             onError = { error ->
                 Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
@@ -185,11 +201,14 @@ class LesdonsFragment : BaseFragment() {
     }
 
     private fun loadDonationDataAnnuel() {
-        GetListDonsRecByYearTask(
+        GetDonsRecurrentsTask(
             year = selectedYear,
+            month = selectedMonth,
             assosID = asId!!,
-            onSuccess = { datadons ->
-                addTableRows(tableDonAnnuel, datadons)
+            onSuccess = { dons ->
+                val contenuAnnuel = listOf(dons.countAnnuel.toString(), dons.totalAnnuel.toString() + " €")
+                Log.d("LesdonsFragment", contenuAnnuel.toString())
+                addTableRows(tableDonAnnuel, contenuAnnuel)
             },
             onError = { error ->
                 Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
@@ -197,11 +216,16 @@ class LesdonsFragment : BaseFragment() {
         ).execute()
     }
 
-    private fun addTableRows(table: TableLayout, data: DonsAggregate){
+    private fun addTableRows(table: TableLayout, data: List<String>){
         table.removeAllViews() // Nettoyer la table avant d'ajouter de nouvelles données
 
         // header
         val rowHeader = TableRow(requireContext()).apply {
+            gravity = Gravity.CENTER // Centrer toute la ligne
+            layoutParams = TableLayout.LayoutParams(
+                TableLayout.LayoutParams.MATCH_PARENT,
+                TableLayout.LayoutParams.WRAP_CONTENT
+            )
             listOf("Nombre de dons", "Somme des dons").forEach { headerText ->
                 val textView = TextView(requireContext()).apply {
                     text = headerText
@@ -209,18 +233,24 @@ class LesdonsFragment : BaseFragment() {
                     setPadding(8, 8, 8, 8)
                     gravity = Gravity.CENTER
                 }
-                addView(textView)
+                addView(textView,  TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f))
             }
         }
         table.addView(rowHeader)
 
         val contenu = TableRow(requireContext()).apply {
-            listOf(data.count.toString(), data.total.toString() + " €").forEach { value ->
+            gravity = Gravity.CENTER // Centrer toute la ligne
+            layoutParams = TableLayout.LayoutParams(
+                TableLayout.LayoutParams.MATCH_PARENT,
+                TableLayout.LayoutParams.WRAP_CONTENT
+            )
+            data.forEach { value ->
                 val textView = TextView(requireContext()).apply {
                     text = value
                     setPadding(8, 8, 8, 8)
+                    gravity = Gravity.CENTER // Centrer le texte dans la cellule
                 }
-                addView(textView)
+                addView(textView, TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f))
             }
         }
         table.addView(contenu)

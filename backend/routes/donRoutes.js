@@ -98,9 +98,6 @@ router.post('/recurring-donations', async (req, res) => {
   }
 });
 
-
-
-
 // Route pour récupérer la liste des années avec des dons
 router.get("/dons/annee/:assosId", async (req, res) => {
   try {
@@ -159,38 +156,38 @@ router.get("/dons_rec/annee/:assosId", async (req, res) => {
         }
       },
       {
-        $facet: {
-          startYears: [
-            { $group: { _id: { $year: "$date" } } }
-          ],
-          endYears: [
-            { $group: { _id: { $year: "$dateFin" } } }
-          ]
+        $project: {
+          startYear: { $year: "$date" },
+          endYear: { $year: "$dateFin" }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          startYears: { $addToSet: "$startYear" },
+          endYears: { $addToSet: "$endYear" }
         }
       },
       {
         $project: {
           allYears: {
-            $setUnion: [
-              "$startYears._id",
-              "$endYears._id"
-            ]
+            $setUnion: ["$startYears", "$endYears"]
           }
         }
       },
       { $unwind: "$allYears" },
-      { $replaceRoot: { newRoot: "$allYears" } },
-      { $sort: { _id: -1 } },
+      { $sort: { allYears: -1 } },
       {
         $group: {
           _id: null,
-          years: { $push: "$_id" }
+          years: { $push: "$allYears" }
         }
       }
     ]);
 
     const result = years.length > 0 ? years[0].years : [];
     res.status(200).json(result);
+
   } catch (error) {
       console.error("Erreur lors de la récupération des années des dons:", error);
       res.status(500).json({ error: "Erreur serveur" });
@@ -268,109 +265,6 @@ router.get("/dons/total/:assosId/:year", async (req, res) => {
   }
 });
 
-
-// Route pour récupérer le total des dons récurrents d'une année spécifique
-router.get("/dons/rec/total/:assosId/:year", async (req, res) => {
-  try {
-      const year = parseInt(req.params.year);
-      if (isNaN(year)) return res.status(400).json({ error: "Année invalide" });
-      
-      const associationId = req.params.assosId;
-      if (!mongoose.Types.ObjectId.isValid(associationId)) {
-        return res.status(400).json({ error: "ID d'association invalide" });
-      }
-
-      // Filtrer les dons qui appartiennent à l'année donnée
-      const dons = await RecurringDonations.aggregate([
-        {
-          $match: {
-              association: new mongoose.Types.ObjectId(associationId),
-              date: { $exists: true, $ne: null }
-          }
-      },
-      {
-          $addFields: {
-              year: { $year: "$date" } // Extraction de l'année
-          }
-      },
-      {
-          $match: {
-              year: year // Filtre sur l'année demandée
-          }
-      },
-      {
-          $group: {
-              _id: null,
-              total: { $sum: "$montant" }
-          }
-      }
-      ]);
-      if (dons.length > 0) {
-          res.json({ total_rec: dons[0].total });
-      } else {
-          res.json({ total_rec: 0 });
-      }
-  } catch (error) {
-      console.error("Erreur lors de la récupération du total des dons:", error);
-      res.status(500).json({ error: "Erreur serveur" });
-  }
-});
-
-
-// Route pour récupérer la somme de dons récurrents par mois pour une année donnée pour une association
-router.get("/dons/rec/mois/:associationId/:year", async (req, res) => {
-  try {
-      const year = parseInt(req.params.year); // Convertir l'année en nombre
-      if (isNaN(year)) return res.status(400).json({ error: "Année invalide" });
-
-      const assosId = req.params.associationId;
-      if (!mongoose.Types.ObjectId.isValid(assosId)) {
-        return res.status(400).json({ error: "ID d'association invalide" });
-      }
-      // Agrégation MongoDB pour compter les dons par mois
-      const donsParMois = await RecurringDonation.aggregate([
-          {
-              $match: {
-                  association: new mongoose.Types.ObjectId(assosId), // Filtre par association
-                  date: {
-                    $gte: new Date(Date.UTC(year, 0, 1, 0, 0, 0)), // 1er Janvier UTC
-                    $lt: new Date(Date.UTC(year + 1, 0, 1, 0, 0, 0)) // 1er Janvier année suivante
-                  }
-              }
-          },
-          {
-              $group: {
-                  _id: { $month: "$date" }, // Regrouper par mois
-                  //count: { $sum: 1 } // Compter le nombre de dons
-                  total_mois: {$sum: "$montant"}
-              }
-          }
-      ]);
-
-      // Créer un objet avec les mois vides par défaut
-      const result = {
-          "Jan": 0, "Fev": 0, "Mar": 0, "Avr": 0, "Mai": 0, "Juin": 0,
-          "Juil": 0, "Aout": 0, "Sep": 0, "Oct": 0, "Nov": 0, "Dec": 0
-      };
-
-      // Mapper les résultats de MongoDB aux mois correspondants
-      const moisMap = {
-          1: "Jan", 2: "Fev", 3: "Mar", 4: "Avr", 5: "Mai", 6: "Juin",
-          7: "Juil", 8: "Aout", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec"
-      };
-
-      //donsParMois.forEach(({ _id, count }) => {
-      donsParMois.forEach(({ _id, total_mois }) => {
-          result[moisMap[_id]] = total_mois;
-      });
-
-      res.json(result);
-  } catch (error) {
-      console.error("Erreur lors de la récupération des dons récurrents par mois:", error);
-      res.status(500).json({ error: "Erreur serveur" });
-  }
-});
-
 // Route pour récupérer les dons par le mail de l'utilisateur
 router.get("/dons/user/:email", async (req, res) => {
   try {
@@ -423,139 +317,6 @@ router.get("/donsrec/user/:email", async (req, res) => {
   }
 });
 
-
-// Route pour récupérer les dons récurrents d'une année spécifique d'une association
-router.get("/dons/rec/details-mensuel/:assosId/:year/:month", async (req, res) => {
-  try {
-      const year = parseInt(req.params.year);
-      if (isNaN(year)) return res.status(400).json({ error: "Année invalide" });
-      
-      const month = parseInt(req.params.month);
-      if (isNaN(month) || month < 1 || month > 12) return res.status(400).json({ error: "Mois invalide" });
-      
-      const associationId = req.params.assosId;
-      if (!mongoose.Types.ObjectId.isValid(associationId)) {
-        return res.status(400).json({ error: "ID d'association invalide" });
-      }
-
-      // Pipeline d'agrégation amélioré
-      const result = await RecurringDonations.aggregate([
-        {
-          $match: {
-            association: new mongoose.Types.ObjectId(associationId),
-            date: { $exists: true, $ne: null },
-            dateFin: { $exists: true, $ne: null },
-            $expr: {
-              $or: [
-                // Cas 1: Don actif pendant le mois cible
-                { $and: [
-                    { $lte: [{ $year: "$date" }, year] },
-                    { $or: [
-                        { $gte: [{ $year: "$dateFin" }, year] },
-                        { $eq: ["$dateFin", null] }
-                    ]},
-                    { $lte: [{ $month: "$date" }, month] },
-                    { $or: [
-                        { $gte: [{ $month: "$dateFin" }, month] },
-                        { $eq: ["$dateFin", null] }
-                    ]}
-                ]},
-                // Cas 2: Don commencé pendant le mois cible
-                { $and: [
-                    { $eq: [{ $year: "$date" }, year] },
-                    { $eq: [{ $month: "$date" }, month] }
-                ]}
-              ]
-            }
-          }
-        },
-        {
-          $group: {
-            _id: null,
-            total: { $sum: "$montant" },
-            count: { $sum: 1 }
-          }
-        }
-      ]);
-
-      console.log(`Résultat dons pour ${year}:`, result);
-      const responseData = result.length > 0 ? result[0] : { total: 0, count: 0 };
-      
-      res.status(200).json({data: responseData});
-
-  } catch (error) {
-      console.error("Erreur lors de la récupération des dons récurrents:", error);
-      res.status(500).json({ 
-          success: false,
-          error: "Erreur serveur",
-          details: error.message 
-      });
-  }
-});
-
-// Route pour récupérer les dons récurrents d'une année spécifique d'une association
-router.get("/dons/rec/details-annuel/:assosId/:year", async (req, res) => {
-  try {
-      const year = parseInt(req.params.year);
-      if (isNaN(year)) return res.status(400).json({ error: "Année invalide" });
-      
-      const associationId = req.params.assosId;
-      if (!mongoose.Types.ObjectId.isValid(associationId)) {
-        return res.status(400).json({ error: "ID d'association invalide" });
-      }
-
-      // Pipeline d'agrégation amélioré
-      const result = await RecurringDonations.aggregate([
-        {
-          $match: {
-              association: new mongoose.Types.ObjectId(associationId),
-              date: { $exists: true, $ne: null },
-              dateFin: { $exists: true, $ne: null }
-          }
-        },
-        {
-          $addFields: {
-              startYear: { $year: "$date" },
-              endYear: { $year: "$dateFin" }
-          }
-        },
-        {
-          $match: {
-            $or: [
-              { startYear: year },  // Débute cette année-là
-              { endYear: year },    // Termine cette année-là
-              { $and: [             // Actif durant l'année
-                  { startYear: { $lt: year } },
-                  { endYear: { $gt: year } }
-                ]
-              }
-            ]
-          }
-        },
-        {
-          $group: {
-            _id: null,
-            total: { $sum: "$montant" },
-            count: { $sum: 1 }
-          }
-        }
-      ]);
-
-      //console.log(`Résultat dons pour ${year}:`, result);
-      const responseData = result.length > 0 ? result[0] : { total: 0, count: 0 };
-    
-      res.status(200).json({data: responseData});
-
-  } catch (error) {
-      console.error("Erreur lors de la récupération des dons récurrents:", error);
-      res.status(500).json({ 
-          success: false,
-          error: "Erreur serveur",
-          details: error.message 
-      });
-  }
-});
-
 router.put('/deleteDonRecurrent', async (req, res) => {
   try {
     const { emailUser, frequence, assos } = req.body;
@@ -596,6 +357,97 @@ router.put('/deleteDonRecurrent', async (req, res) => {
   } catch (error) {
     console.error("Erreur lors de la mise à jour de la date :", error);
     res.status(500).json({ message: "Erreur du serveur" });
+  }
+});
+
+// Fonction pour calculer les dons récurrents
+async function calculerDonsRecurrent(assosID, year, month) {
+  try {
+      const dons = await RecurringDonations.find({ association: new mongoose.Types.ObjectId(assosID) }).lean();
+      console.log("Nombre de dons récurrents trouvés:", dons.length);
+
+      let totalMensuel = 0;
+      let totalAnnuel = 0;
+      let countMensuel = 0;
+      let countAnnuel = 0;
+
+      const anneeSelectionnee = parseInt(year, 10);
+      const moisSelectionne = parseInt(month, 10) - 1;
+      const current = new Date(Date.UTC(anneeSelectionnee, moisSelectionne + 1, 0));  //dernier jour du mois, pour prendre en compte tout le mois actuel
+
+      dons.forEach(don => {
+        try {
+          const { montant, frequence, date, dateFin } = don;
+          console.log(`Traitement d'un don : montant=${montant}, frequence=${frequence}, date=${date}, dateFin=${dateFin}`);
+          const debut = new Date(date);
+          const fin = new Date(dateFin);
+
+          console.log("current:", current, "debut:", debut, "fin:", fin);
+          console.log("current >= debut ?", current >= debut);
+          console.log("current <= fin ?", current <= fin);
+
+          if (current.getFullYear >= debut.getFullYear && current.getFullYear <= fin.getFullYear) {
+            if (frequence === "Annuel" ){
+              // Vérifier si le don doit être compté cette année
+              if (debut.getFullYear() <= anneeSelectionnee) {
+                totalAnnuel += montant;
+                countAnnuel++;
+
+                // Ajouter au total mensuel uniquement le mois de renouvellement
+                if (debut.getMonth() === moisSelectionne) {
+                    totalMensuel += montant;
+                    countMensuel++;
+                }
+              }
+            }
+            else if (frequence === "Mensuel") {
+              // Calcul du nombre de mois actifs dans l'année sélectionnée
+              const debutAnnee = new Date(anneeSelectionnee, 0, 1); // 1er janvier de l'année sélectionnée
+              const finAnnee = new Date(anneeSelectionnee, 11, 31); // 31 décembre de l'année sélectionnée
+
+              const debutEffectif = debut > debutAnnee ? debut : debutAnnee; // Premier mois du don dans l'année
+              const finEffectif = fin < finAnnee ? fin : finAnnee; // Dernier mois du don dans l'année
+
+              const moisDansAnnee = 
+              (finEffectif.getFullYear() - debutEffectif.getFullYear()) * 12 + 
+              (finEffectif.getMonth() - debutEffectif.getMonth() + 1);
+
+              if (moisDansAnnee > 0) {
+                  totalAnnuel += montant * moisDansAnnee;
+                  countAnnuel += moisDansAnnee;
+              }
+            }
+          }
+          if (current >= debut && current <= fin) {
+            if (frequence === "Mensuel") {
+              totalMensuel += montant;
+              countMensuel++;
+            }
+          }
+        } catch (error) {
+          console.error("Erreur lors du traitement d'un don:", error);
+        }
+      });
+
+      return { totalMensuel, countMensuel, totalAnnuel, countAnnuel };
+  } catch (error) {
+      console.error("Erreur lors du calcul des dons récurrents:", error);
+      throw error;
+  }
+}
+
+// Route API pour récupérer les dons récurrents par mois et année
+router.get("/dons/recurrents/:assosID/:year/:month", async (req, res) => {
+  try {
+      const { assosID, year, month } = req.params;
+      console.log("Paramètres reçus :", year, month);
+      const data = await calculerDonsRecurrent(assosID, year, month);
+
+      
+      console.log(`Résultat dons pour ${year}:`, data);
+      res.json({ success: true, data });
+  } catch (error) {
+      res.status(500).json({ success: false, message: "Erreur serveur" });
   }
 });
 

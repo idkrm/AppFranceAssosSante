@@ -110,7 +110,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/fond_bleu_arrondi"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             android:gravity="center">
 
@@ -126,34 +125,6 @@
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:background="@drawable/spinner_style"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginEnd="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/totalrecu"/>
-
-            <TextView
-                android:id="@+id/anneedonation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/deuxpts"/>
-
-            <TextView
-                android:id="@+id/montantanneedonation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -180,6 +151,22 @@
                     android:text="Mensuel : "
                     android:textStyle="bold"
                     android:layout_marginEnd="10dp"/>
+                <TextView
+                    android:id="@+id/mois_tab_mensuel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="[mois]"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/"/>
+
+                <TextView
+                    android:id="@+id/annee_tab_mensuel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="[year]"/>
+
             </LinearLayout>
 
             <!-- Tableau des dons -->
@@ -187,6 +174,7 @@
                 android:id="@+id/tabledonmensuel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:stretchColumns="*"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/fond_rose_arrondi"/>
         </LinearLayout>
@@ -208,6 +196,12 @@
                     android:text="Annuel : "
                     android:textStyle="bold"
                     android:layout_marginEnd="10dp"/>
+
+                <TextView
+                    android:id="@+id/annee_tab_annuel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="[year]"/>
             </LinearLayout>
 
             <!-- Tableau des dons -->
@@ -215,6 +209,7 @@
                 android:id="@+id/tabledonannuel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:stretchColumns="*"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/fond_rose_arrondi"/>
         </LinearLayout>
