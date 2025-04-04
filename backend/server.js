@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Association = require('./models/Assos');
 const cors = require('cors');
+const QRCode = require('qrcode');
 
 const userRoutes = require('./routes/userRoutes');
 const assosRoutes = require('./routes/assosRoutes');
@@ -50,6 +51,12 @@ app.get("/redirect", (req, res) => {
   `);
 });
 
+const serverRedirectUrl = "http://10.10.43.117:5000/redirect"; //mettre l'ip de la machine
+
+QRCode.toFile("qrcodet.png", serverRedirectUrl, (err) => {
+  if (err) throw err;
+  console.log("QR Code généré !");
+});
 
 // Démarrer le serveur
 const PORT = 5000;

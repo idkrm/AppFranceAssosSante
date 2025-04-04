@@ -175,5 +175,7 @@
     <string name="frequence">频率</string>
     <string name="deleteaccount">您确定要删除您的账户吗？</string>
     <string name="pbmail">获取电子邮件时出错</string>
+    <string name="moins">减</string>
+    <string name="plus">加</string>
 
 </resources>

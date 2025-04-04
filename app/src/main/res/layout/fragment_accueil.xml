@@ -122,6 +122,8 @@
                     android:text="@string/lecture"
                     android:layout_gravity="center"
                     android:visibility="gone"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     android:layout_marginBottom="30dp"
                     android:background="@drawable/btn_tts"/>
             </LinearLayout>

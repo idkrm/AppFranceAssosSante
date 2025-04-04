@@ -98,7 +98,7 @@
 
     <!-- les dons-->
     <string name="nom_asso">Association\'s name</string>
-    <string name="total">Total donations</string>
+    <string name="total">Total of one-time donations</string>
     <string name="totalrecu">"Total received this year "</string>
     <string name="deuxpts">:</string>
     <string name="donsrec">Recurring donations</string>
@@ -181,5 +181,7 @@
     <string name="frequence">Frequency</string>
     <string name="deleteaccount">Are you sure you want to delete your account?</string>
     <string name="pbmail">Problem retrieving email</string>
+    <string name="moins">MINUS</string>
+    <string name="plus">PLUS</string>
 
 </resources>

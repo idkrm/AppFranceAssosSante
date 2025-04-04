@@ -36,8 +36,8 @@
 
             <ImageView
                 android:id="@+id/img_handicap"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@drawable/accessibilite" />
             <TextView
                 android:layout_width="wrap_content"

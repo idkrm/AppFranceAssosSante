@@ -55,6 +55,21 @@
                 android:text="+"
                 android:background="@drawable/btn_plus"/>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/moins"
+                android:layout_marginEnd="50dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/plus"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
