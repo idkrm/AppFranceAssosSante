@@ -30,33 +30,33 @@ app.use('/associations', assosRoutes);
 app.use('/donations', donRoutes);
 
 //code qr
-const deepLinkUrl = "monapp://deeplink/page";  //deep link de l'app
-const playStoreUrl = "https://play.google.com/store/apps";  //url du play store
+// const deepLinkUrl = "monapp://deeplink/page";  //deep link de l'app
+// const playStoreUrl = "https://play.google.com/store/apps";  //url du play store
 
-app.get("/redirect", (req, res) => {
-  console.log("Redirection demandée !");
-  res.send(`
-    <html>
-      <head>
-        <title>Redirection...</title>
-        <script>
-          window.location.href = "${deepLinkUrl}";
-          setTimeout(() => { window.location.href = "${playStoreUrl}"; }, 2000);
-        </script>
-      </head>
-      <body>
-        <p>Si la redirection ne fonctionne pas, <a href="${playStoreUrl}">cliquez ici</a>.</p>
-      </body>
-    </html>
-  `);
-});
+// app.get("/redirect", (req, res) => {
+//   console.log("Redirection demandée !");
+//   res.send(`
+//     <html>
+//       <head>
+//         <title>Redirection...</title>
+//         <script>
+//           window.location.href = "${deepLinkUrl}";
+//           setTimeout(() => { window.location.href = "${playStoreUrl}"; }, 2000);
+//         </script>
+//       </head>
+//       <body>
+//         <p>Si la redirection ne fonctionne pas, <a href="${playStoreUrl}">cliquez ici</a>.</p>
+//       </body>
+//     </html>
+//   `);
+// });
 
-const serverRedirectUrl = "http://10.10.43.117:5000/redirect"; //mettre l'ip de la machine
+// const serverRedirectUrl = "http://10.10.43.117:5000/redirect"; //mettre l'ip de la machine
 
-QRCode.toFile("qrcodet.png", serverRedirectUrl, (err) => {
-  if (err) throw err;
-  console.log("QR Code généré !");
-});
+// QRCode.toFile("qrcodet.png", serverRedirectUrl, (err) => {
+//   if (err) throw err;
+//   console.log("QR Code généré !");
+// });
 
 // Démarrer le serveur
 const PORT = 5000;
